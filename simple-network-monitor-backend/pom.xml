@@ -187,7 +187,7 @@
                         <image>
                             <name>simple-network-monitor</name>
                             <build>
-                                <dockerFileDir>${project.basedir}/src/main/docker</dockerFileDir>
+                                <dockerFileDir>${project.basedir}/src/main/docker/maven</dockerFileDir>
                                 <assembly>
                                     <descriptorRef>artifact</descriptorRef>
                                 </assembly>
