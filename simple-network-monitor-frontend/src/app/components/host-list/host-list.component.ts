@@ -1,0 +1,200 @@
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { HostService } from '../../services/host.service';
+import { HostHal, Host } from '../../entities/host';
+import { Status } from "../../entities/status";
+import { Page } from '../../entities/page';
+import { Sort } from '../../services/sort';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { ConfigurationService } from '../../services/configuration.service';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import {Observable} from 'rxjs/Observable';
+import { forkJoin, of, interval } from 'rxjs';
+
+@Component({
+  selector: 'snm-host-list',
+  templateUrl: './host-list.component.html',
+  styleUrls: ['./host-list.component.css']
+})
+export class HostListComponent implements OnInit {
+  
+  @BlockUI() blockUI: NgBlockUI;
+
+  private hosts : HostHal = {_embedded: {hosts: new Array()}, page: null};
+  private error : any = null;
+  private page: number = 0;
+  private size: number = 10;
+  private sorts: Sort[] = Array({col: 'name', direction: 'ASC'});
+
+  modalRef: BsModalRef;
+
+  private currentHost : Host = <Host>{};
+
+  private discoveredHosts : Host[];
+
+  private selectedHosts : any = {};
+
+  @ViewChild('addTpl')
+  private addTempRef : TemplateRef<any>
+
+  @ViewChild('startAutoDiscoveryTpl')
+  private startAutoDiscoveryTpl : TemplateRef<any>
+
+  @ViewChild('autoDiscoverResultsTpl')
+  private autoDiscoverResultsTpl : TemplateRef<any>
+
+  private autoDiscoveryNetwork : string;
+
+
+  constructor( private hostService : HostService, private modalService: BsModalService, private config: ConfigurationService ) {
+    this.autoDiscoveryNetwork = config.getAutoDiscoveryNetwork();
+  }
+
+  public ngOnInit() {
+    this.reload();
+  }
+
+  public reload(){
+    this.hostService.getAll(this.page, this.size, this.sorts).subscribe(
+      hosts => { this.hosts = hosts; this.error = null; },
+      err => { this.error = err; }
+     );
+  }
+
+  public sort(col: string){
+    let f = this.sorts.find(s => s.col == col);
+    if(f !== undefined) {
+      if (f.direction=='asc') {
+        f.direction = 'desc' 
+      }
+      else {
+        this.sorts.splice(this.sorts.indexOf(f), 1);
+      }
+    }
+    else {
+      this.sorts.push({col: col, direction: 'asc'});
+    }
+    this.reload();
+  }
+
+  public numberArray(value : number) : Array<number> {
+    if(!value) return [];
+    let res = [];
+    for (let i = 0; i < value; i++) {
+        res.push(i);
+      }
+    return res;
+  }
+
+  public goto(page : number) {
+    this.page = page;
+    this.reload();
+  }
+
+  public prev() {
+    this.page--;
+    this.reload();
+  }
+
+  public next() {
+    this.page++;
+    this.reload();
+  }
+
+  public add() {
+    console.info('add');
+    this.currentHost = <Host>{properties: {}};
+    this.modalRef = this.modalService.show(this.addTempRef);
+  }
+
+  public addPerform() {
+    console.info('addPerform');
+    this.modalRef.hide();
+    this.hostService.create(this.currentHost).subscribe( x => {
+      console.log('added', x);
+      this.reload();
+      this.currentHost = <Host>{};
+    }, err => {
+      console.log('added err', err);
+      alert(err.message);
+      this.currentHost = <Host>{};
+    });
+  }
+
+  public edit(host: Host) {
+    console.info('edit');
+    this.currentHost = {...host};
+    this.modalRef = this.modalService.show(this.addTempRef);
+  }
+
+  public editPerform() {
+    console.info('editPerform');
+    this.modalRef.hide();
+    this.hostService.update(this.currentHost).subscribe( x => {
+      console.log('edited', x);
+      this.reload();
+      this.currentHost = <Host>{};
+    }, err => {
+      console.log('edited err', err);
+      alert(err.message);
+      this.currentHost = <Host>{};
+    });
+  }
+
+  public delete(host : Host) {
+    this.hostService.delete(host).subscribe( x => {
+      this.reload();
+      console.log('deleted', x);
+    }, err => {
+      alert(err.message);
+      console.log('deleted err', err);
+    });
+  }
+
+  public cancel() {
+    this.modalRef.hide();
+    this.currentHost = <Host>{};
+  }
+
+  public startAutoDiscovery() {
+    console.info('startAutoDiscovery');
+    this.modalRef = this.modalService.show(this.startAutoDiscoveryTpl);
+  }
+
+  public performAutoDiscovery() {
+    console.info('performAutoDiscovery');
+    this.modalRef.hide();
+    this.blockUI.start("Searching for hosts ...");
+    this.hostService.autoDiscovery(this.autoDiscoveryNetwork).subscribe( hosts => {
+      console.log('performAutoDiscovery', hosts);
+      this.blockUI.stop();
+      hosts.forEach( x => this.selectedHosts[x.name] = false);
+      this.discoveredHosts = hosts;
+      this.modalRef = this.modalService.show(this.autoDiscoverResultsTpl, {class: 'modal-lg'});
+    }, err => {
+      console.log('performAutoDiscovery err', err);
+      this.blockUI.stop();
+      alert(err.message);
+    });
+  }
+
+  public addSelectedHosts() {
+    console.log('addSelectedHosts', this.selectedHosts);
+    
+    let res : Observable<{}>[] = [];
+    for (let index = 0; index < this.discoveredHosts.length; index++) {
+      const h = this.discoveredHosts[index];
+      if(this.selectedHosts[h.name]) {
+        res.push(this.hostService.create(h));
+      }
+    }
+    forkJoin(res).subscribe(x => this.reload());
+    this.selectedHosts = [];
+    this.modalRef.hide();
+  }
+
+  public export() {
+    console.log('export'); // TODO
+  }
+
+}

@@ -21,3 +21,10 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+simple-network-monitor-frontend/.editorconfig
+simple-network-monitor-frontend/.idea
+simple-network-monitor-frontend/.vscode
+simple-network-monitor-frontend/dist
+simple-network-monitor-frontend/e2e
+simple-network-monitor-frontend/node_modules
+simple-network-monitor-frontend/.stylelintrc.json

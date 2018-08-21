@@ -1,0 +1,10 @@
+.table {
+    table-layout:fixed;
+}
+
+.no-overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  
+  }

@@ -1,0 +1,6 @@
+<span [ngSwitch]="value">
+  <i *ngSwitchCase="'OK'" class="far fa-check-circle text-success"></i>
+  <i *ngSwitchCase="'WARN'" class="fas fa-exclamation-triangle text-warning"></i>
+  <i *ngSwitchCase="'CRITICAL'" class="far fa-times-circle text-danger"></i>
+  <i *ngSwitchCase="'UNKNOWN'" class="far fa-question-circle text-info"></i>
+</span>

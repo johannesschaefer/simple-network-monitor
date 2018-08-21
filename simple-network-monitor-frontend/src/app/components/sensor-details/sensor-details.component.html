@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title"><snm-status [value]="sensor?.status"></snm-status> {{sensor?.name}}</h5>
+        <p class="card-text">
+            <span *ngFor="let sampleType of sensor?.sampleTypes">
+                <ngx-charts-line-chart #chart
+                    [view]="[600,200]"
+                    [results]="data[sampleType?.id]"
+                    [gradient]="gradient"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [showXAxisLabel]="true"
+                    [showYAxisLabel]="true"
+                    [xAxisLabel]="'t'"
+                    [yAxisLabel]="sampleType.name"
+                    [autoScale]="autoScale">
+                </ngx-charts-line-chart>
+            </span>
+        </p>
+    </div>
+</div>

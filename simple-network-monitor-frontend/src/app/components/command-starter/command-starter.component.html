@@ -1,0 +1,40 @@
+<span *ngFor="let command of host.commands" title="{{command.name}}&#13;&#13;{{command.description}}" (click)="run(host, command, result)">
+<i class="fas fa-play"></i>&nbsp;
+</span>
+<ng-template #confirm>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Run command {{currentCommand?.name}} for {{host.name}} </h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide(); currentCommand = null;">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                {{currentCommand?.description}}
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" (click)="run2(host, currentCommand)">Yes</button>&nbsp;
+                <button type="button" class="btn btn-secondary" (click)="modalRef.hide(); currentCommand = null;">No</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
+<ng-template #result>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Command result</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-1">
+                <snm-status [value]="status"></snm-status>
+            </div>
+            <div class="col">
+                {{msg}}
+            </div>
+        </div>
+    </div>
+</ng-template>

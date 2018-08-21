@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col">
+        <h3>Sensors</h3>
+    </div>
+    <div class="col" style="text-align: right">
+        <i class="fas fa-search-plus" (click)="autoDiscover()" title="Auto-discover new hosts"></i>&nbsp;
+        <i class="fas fa-plus" (click)="add()" title="Add new host"></i>
+    </div>
+</div>
+
+
+<span *ngFor="let sensor of host?._embedded?.sensors">
+<snm-sensor-details [sensor]="sensor"></snm-sensor-details>
+</span>

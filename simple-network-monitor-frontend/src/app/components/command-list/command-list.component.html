@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-between align-middle">
+    <h2>Commands</h2>
+    <span>
+      <i class="fas fa-file-export fa-lg" (click)="export()" title="Export hosts"></i>&nbsp;
+      <i class="fas fa-plus fa-lg" (click)="add()" title="Add new host"></i>
+  </span>
+</div>
+
+<div *ngIf="error != null">
+    Error: {{error.message}}
+</div>
+
+<div *ngIf="error == null">
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" (click)="sort('name')">Name</th>
+            <th scope="col" (click)="sort('description')">Description</th>
+            <th scope="col" (click)="sort('exec')">Exec</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let command of commands._embedded.commands">
+            <td title="{{command.name}}">{{command.name}}</td>
+            <td class="no-overflow" title="{{command.description}}">{{command.description}}</td>
+            <td class="no-overflow" title="{{command.exec}}">{{command.exec}}</td>
+            <td>
+                <div class="btn-group dropleft">
+                  <button class="btn fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" (click)="delete(command)">delete</a>
+                    <a class="dropdown-item" (click)="edit(command)">edit</a>
+                  </div>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Pagination">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [ngClass]="page == 0?'disabled':''"><a class="page-link" (click)="prev()">Previous</a></li>
+          <li class="page-item" *ngFor="let i of numberArray(commands?.page?.totalPages)" [ngClass]="i == page?'active':''"><a class="page-link" (click)="goto(i)">{{i+1}}</a></li>
+          <li class="page-item" [ngClass]="page+1 == commands?.page?.totalPages?'disabled':''"><a class="page-link" (click)="next()">Next</a></li>
+        </ul>
+    </nav>
+</div>
+
+<ng-template #addTpl>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Add Command</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="addModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+              <label for="cmdName">Name</label>
+              <input type="text" class="form-control" id="cmdName" aria-describedby="cmdNameHelp" placeholder="Enter command name" name="currentCmd.name" [(ngModel)]="currentCmd.name" required>
+              <small id="cmdNameHelp" class="form-text text-muted">Enter the name for the command.</small>
+            </div>
+            <div class="form-group">
+              <label for="cmdDescription">Description</label>
+              <input type="text" class="form-control" id="cmdDescription" aria-describedby="cmdDescriptionHelp" placeholder="Enter Description" name="currentCmd.description" [(ngModel)]="currentCmd.description">
+              <small id="cmdDescriptionHelp" class="form-text text-muted">Enter the Description for the command.</small>
+            </div>
+            <div class="form-group">
+              <label for="cmdExec">Exec</label>
+              <input type="text" class="form-control" id="cmdExec" aria-describedby="cmdExecHelp" placeholder="Enter command exec" name="currentCmd.exec" [(ngModel)]="currentCmd.exec" required>
+              <small id="cmdExecHelp" class="form-text text-muted">Enter the exec for the command.</small>
+            </div>
+            <button *ngIf="!currentCmd?.id" type="button" class="btn btn-primary" (click)="addCmd()">Save</button>
+            <button *ngIf="currentCmd?.id" type="button" class="btn btn-primary" (click)="editCmd()">Update</button>
+            &nbsp;
+            <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+          </form>
+    </div>
+  </ng-template>

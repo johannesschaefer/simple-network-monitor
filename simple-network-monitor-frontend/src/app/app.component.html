@@ -1,0 +1,13 @@
+
+<block-ui>
+</block-ui>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+    <a class="navbar-brand" routerLink="/" routerLinkActive="active"><i class="fas fa-thermometer-three-quarters fa-lg"></i> SNM</a>
+    <div>
+        <button class="btn btn-outline-success my-2 my-sm-0" [style.color]="isAutoRefreshActive()?'green':'grey'" (click)="toogleAutoRefresh()">Autorefresh</button>
+        <button class="btn btn-outline-success my-2 my-sm-0 fas fa-sync" (click)="reload()"></button>
+        <button class="btn btn-outline-success my-2 my-sm-0 fas fa-sliders-h" routerLink="/settings" routerLinkActive="active"></button>
+    </div>
+</nav>
+
+<router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>

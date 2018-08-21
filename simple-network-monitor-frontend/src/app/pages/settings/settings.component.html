@@ -1,0 +1,15 @@
+<form>
+  <div class="form-group form-check">
+      <label for="autoInterval">Autorefresh Interval</label>
+      <input type="text" class="form-control" id="autoInterval" aria-describedby="autoIntervalHelp" placeholder="Autorefresh Interval">
+      <small id="autoIntervalHelp" class="form-text text-muted">Enter here the Autorefresh Interval</small>
+  </div>
+  <button class="btn btn-primary">Save</button>
+</form>
+
+
+<button class="btn btn-primary" (click)="startService">Start Service</button>
+
+<button class="btn btn-primary" (click)="stopService">Stop Service</button>
+
+<button class="btn btn-primary" routerLink="/commands" routerLinkActive="active">Commands</button>

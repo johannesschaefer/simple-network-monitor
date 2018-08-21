@@ -1,0 +1,183 @@
+<div class="d-flex justify-content-between align-middle">
+  <h2>Hosts</h2>
+  <span>
+    <i class="fas fa-search-plus fa-lg" (click)="startAutoDiscovery()" title="Auto-discover new hosts"></i>&nbsp;
+    <i class="fas fa-file-export fa-lg" (click)="export()" title="Export hosts"></i>&nbsp;
+    <i class="fas fa-plus fa-lg" (click)="add()" title="Add new host"></i>
+  </span>
+</div>
+
+<div *ngIf="error != null">
+   Error: {{error.message}}
+</div>
+
+<div *ngIf="error == null">
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="text-center" scope="col" style="width: 70px" (click)="sort('status')">Status</th>
+            <th scope="col" (click)="sort('name')">Name</th>
+            <th scope="col" (click)="sort('description')">Description</th>
+            <th>Sensors</th>
+            <th style="width: 100px"  scope="col">Commands</th>
+            <th style="width: 60px" ></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let host of hosts._embedded.hosts">
+            <td class="text-center" title="{{host.status}}" routerLink="/host/{{host.id}}" routerLinkActive="active"><snm-status [value]="host.status"></snm-status></td>
+            <td class="no-overflow" title="{{host.name}}" routerLink="/host/{{host.id}}" routerLinkActive="active">{{host.name}}</td>
+            <td class="no-overflow" title="{{host.description}}" routerLink="/host/{{host.id}}" routerLinkActive="active">{{host.description}}</td>
+            <td>
+                <span [ngClass]="host.ok==0?'text-muted':'text-success'">{{host.ok}}</span> /
+                <span [ngClass]="host.warn==0?'text-muted':'text-warning'">{{host.warn}}</span> /
+                <span [ngClass]="host.critical==0?'text-muted':'text-danger'">{{host.critical}}</span> /
+                <span [ngClass]="host.unknown==0?'text-muted':'text-info'">{{host.unknown}}</span>
+            <td><snm-command-starter [host]="host"></snm-command-starter></td>
+            <td>
+                <div class="dropleft">
+                  <i class="btn fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  </i>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" (click)="edit(host)">edit</a>
+                    <a class="dropdown-item" (click)="delete(host)">delete</a>
+                  </div>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+    <nav aria-label="Pagination">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [ngClass]="page == 0?'disabled':''"><a class="page-link" (click)="prev()">Previous</a></li>
+          <li class="page-item" *ngFor="let i of numberArray(hosts?.page?.totalPages)" [ngClass]="i == page?'active':''"><a class="page-link" (click)="goto(i)">{{i+1}}</a></li>
+          <li class="page-item" [ngClass]="page+1 == hosts?.page?.totalPages?'disabled':''"><a class="page-link" (click)="next()">Next</a></li>
+        </ul>
+    </nav>
+</div>
+
+
+<ng-template #startAutoDiscoveryTpl>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Start Auto Discovey</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="network">Network</label>
+            <input type="text" class="form-control" id="network" aria-describedby="networkHelp" placeholder="Enter network" name="autoDiscoveryNetwork" [(ngModel)]="autoDiscoveryNetwork" required>
+            <small id="networkHelp" class="form-text text-muted">Enter network that should be used for auto discovery, format xxx.xxx.xxx.xxx/xx.</small>
+          </div>
+          <button type="button" class="btn btn-primary" (click)="performAutoDiscovery()">Start</button>
+          &nbsp;
+          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #autoDiscoverResultsTpl>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Auto Discovey Results</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <table class="table table-hover">
+          <thead>
+            <tr>
+              <th style="width: 30px"></th>
+              <th scope="col">Name</th>
+              <th scope="col">Hostname</th>
+              <th scope="col">IP v4</th>
+              <th scope="col">IP v6</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let host of discoveredHosts">
+              <td>
+                <input class="form-check-input" [(ngModel)]="selectedHosts[host.name]" type="checkbox" name="{{host.name}}" id="{{host.name}}">
+              </td>
+              <td title="{{host.name}}" class="no-overflow">
+                  {{host.name}}
+              </td>
+              <td title="{{host.hostname}}" class="no-overflow">{{host.hostname}}</td>
+              <td title="{{host.ipv4}}" class="no-overflow">{{host.ipv4}}</td>
+              <td title="{{host.ipv6}}" class="no-overflow">{{host.ipv6}}</td>
+            </tr>
+          </tbody>
+      </table>
+      <button type="button" class="btn btn-primary" (click)="addSelectedHosts()">Add selected</button>
+      &nbsp;
+      <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #addTpl>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left" *ngIf="!currentHost?.id">Add Host</h4>
+      <h4 class="modal-title pull-left" *ngIf="currentHost?.id">Edit Host</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="props-tab" data-toggle="tab" href="#props" role="tab" aria-controls="props" aria-selected="false">Properties</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="sec-props-tab" data-toggle="tab" href="#sec-props" role="tab" aria-controls="sec-props" aria-selected="false">Secret Properties</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+            <form>
+              <div class="form-group">
+                <label for="hostName">Name</label>
+                <input type="text" class="form-control" id="hostName" aria-describedby="hostNameHelp" placeholder="Enter host display name" name="currentHost.name" [(ngModel)]="currentHost.name" required>
+                <small id="hostNameHelp" class="form-text text-muted">Enter the display name for the host.</small>
+              </div>
+              <div class="form-group">
+                <label for="hostDescription">Description</label>
+                <input type="text" class="form-control" id="hostDescription" aria-describedby="hostDescriptionHelp" placeholder="Enter Description" name="currentHost.description" [(ngModel)]="currentHost.description">
+                <small id="hostDescriptionHelp" class="form-text text-muted">Enter the Description for the host.</small>
+              </div>
+              <div class="form-group">
+                <label for="hostHostname">Hostname</label>
+                <input type="text" class="form-control" id="hostHostname" aria-describedby="hostHostnameHelp" placeholder="Enter Hostname" name="currentHost.hostname" [(ngModel)]="currentHost.hostname">
+                <small id="hostHostnameHelp" class="form-text text-muted">Enter the Hostname for the host.</small>
+              </div>
+              <div class="form-group">
+                <label for="hostIpv4">IP v4</label>
+                <input type="text" class="form-control" id="hostIpv4" aria-describedby="hostIpv4Help" placeholder="Enter IP v4" name="currentHost.ipv4" [(ngModel)]="currentHost.ipv4">
+                <small id="hostIpv4Help" class="form-text text-muted">Enter the IP v4 address of the host.</small>
+              </div>
+              <div class="form-group">
+                <label for="hostIpv6">IP v6</label>
+                <input type="text" class="form-control" id="hostIpv6" aria-describedby="hostIpv6Help" placeholder="Enter IP v6" name="currentHost.ipv6" [(ngModel)]="currentHost.ipv6">
+                <small id="hostIpv6Help" class="form-text text-muted">Enter the IP v6 address of the host.</small>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="props" role="tabpanel" aria-labelledby="props-tab">
+            <snm-properties-panel [(props)]="currentHost.properties"></snm-properties-panel>
+          </div>
+          <div class="tab-pane fade" id="sec-props" role="tabpanel" aria-labelledby="sec-props-tab">
+            <snm-properties-panel secret="true" [(props)]="currentHost.secretProperties"></snm-properties-panel>
+          </div>
+          <button *ngIf="!currentHost?.id" type="button" class="btn btn-primary" (click)="addPerform()">Save</button>
+          <button *ngIf="currentHost?.id" type="button" class="btn btn-primary" (click)="editPerform()">Update</button>
+          &nbsp;
+          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        </div>
+    </div>
+  </ng-template>
