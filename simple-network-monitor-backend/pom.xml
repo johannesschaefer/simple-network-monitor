@@ -15,7 +15,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 
 	<properties>
@@ -196,33 +196,6 @@
                     </images>
                 </configuration>
             </plugin>
-
-            <!--
-                        <plugin>
-                            <groupId>cz.habarta.typescript-generator</groupId>
-                            <artifactId>typescript-generator-maven-plugin</artifactId>
-                            <version>2.5.423</version>
-                            <executions>
-                                <execution>
-                                    <id>generate</id>
-                                    <goals>
-                                        <goal>generate</goal>
-                                    </goals>
-                                    <phase>process-classes</phase>
-                                </execution>
-                            </executions>
-                            <configuration>
-                                <jsonLibrary>jackson2</jsonLibrary>
-                                <classes>
-                                    <class>Command</class>
-                                    <class>Host</class>
-                                    <class>Sample</class>
-                                    <class>SampleType</class>
-                                    <class>Sensor</class>
-                                </classes>
-                                <outputKind>module</outputKind>
-                            </configuration>
-                        </plugin>-->
 		</plugins>
 	</build>
 
