@@ -1,0 +1,29 @@
+[ {
+  "name" : "check_http",
+  "description" : "checks a http service",
+  "exec" : "/Users/johannes/Programmierung/SNM/mtp/libexec/check_http -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:80}"
+}, {
+  "name" : "check_https",
+  "description" : "checks a https service",
+  "exec" : "/Users/johannes/Programmierung/SNM/mtp/libexec/check_http -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:443} -S"
+}, {
+  "name" : "check_ping_v4",
+  "description" : "checks if a host is reachable via ping and ip4",
+  "exec" : "/Users/johannes/Programmierung/SNM/mtp/libexec/check_ping -H ${hostname:${ip_v4}} -w ${wrta:80},${wpl:1}% -c ${crta:100},${cpl:2}% -4"
+}, {
+  "name" : "check_ping_v6",
+  "description" : "checks if a host is reachable via ping and ip6",
+  "exec" : "/Users/johannes/Programmierung/SNM/mtp/libexec/check_ping -H ${hostname:${ip_v6}} -w ${wrta:80},${wpl:1}% -c ${crta:100},${cpl:2}% -6"
+}, {
+  "name" : "error",
+  "description" : "produces an error",
+  "exec" : "error"
+}, {
+  "name" : "pwd",
+  "description" : "runs the pwd command",
+  "exec" : "pwd"
+}, {
+  "name" : "uname",
+  "description" : "runs the uname command",
+  "exec" : "uname -a"
+} ]

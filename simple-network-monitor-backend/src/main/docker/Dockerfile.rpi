@@ -1,0 +1,5 @@
+FROM resin/rpi-raspbian:latest
+RUN apt-get update && apt-get -qy install curl ca-certificates monitoring-plugins
+COPY maven/snm.jar snm.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/snm.jar", "--libPath=/usr/lib/monitoring-plugins"]

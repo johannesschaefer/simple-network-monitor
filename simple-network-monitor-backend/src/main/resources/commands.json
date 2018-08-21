@@ -1,0 +1,69 @@
+[ {
+  "name" : "check_http",
+  "description" : "checks a http service",
+  "exec" : "check_http -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:80}"
+}, {
+  "name" : "check_https",
+  "description" : "checks a https service",
+  "exec" : "check_http -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:443} -S"
+}, {
+  "name" : "check_ping_v4",
+  "description" : "checks if a host is reachable via ping and ip4",
+  "exec" : "check_ping -H ${hostname:${ip_v4}} -w ${wrta:80},${wpl:1}% -c ${crta:100},${cpl:2}% -4"
+}, {
+  "name" : "check_ping_v6",
+  "description" : "checks if a host is reachable via ping and ip6",
+  "exec" : "check_ping -H ${hostname:${ip_v6}} -w ${wrta:80},${wpl:1}% -c ${crta:100},${cpl:2}% -6"
+}, {
+  "name" : "check_fritz_status",
+  "description" : "Checks the status of the FritzBox",
+  "exec" : "check_tr64_fritz -P ${password} -f status"
+}, {
+  "name" : "check_fritz_downstream",
+  "description" : "Checks the downstream of the FritzBox",
+  "exec" : "check_tr64_fritz -P ${password} -f downstream"
+}, {
+  "name" : "check_fritz_upstream",
+  "description" : "Checks the upstream of the FritzBox",
+  "exec" : "check_tr64_fritz -P ${password} -f upstream"
+}, {
+  "name" : "check_fritz_downstreamrate",
+  "description" : "Checks the downstreamrate of the FritzBox",
+  "exec" : "check_tr64_fritz -P ${password} -f downstreamrate"
+}, {
+  "name" : "check_fritz_upstreamrate",
+  "description" : "Checks the upstreamrate of the FritzBox",
+  "exec" : "check_tr64_fritz -P ${password} -f upstreamrate"
+}, {
+  "name" : "check_fritz_linkuptime",
+  "description" : "Checks the linkuptime of the FritzBox",
+  "exec" : "check_tr64_fritz -P ${password} -f linkuptime"
+}, {
+  "name" : "check_fritz_uptime",
+  "description" : "Checks the uptime of the FritzBox",
+  "exec" : "check_tr64_fritz -P ${password} -f uptime"
+}, {
+  "name" : "check_fritz_update",
+  "description" : "Checks the update of the FritzBox",
+  "exec" : "check_tr64_fritz -P ${password} -f update"
+}, {
+  "name" : "check_fritz_thermometer",
+  "description" : "Checks the thermometer of the FritzBox",
+  "exec" : "check_tr64_fritz -P ${password} -f thermometer:${index:0}}"
+}, {
+  "name" : "error",
+  "description" : "produces an error",
+  "exec" : "error"
+}, {
+  "name" : "pwd",
+  "description" : "runs the pwd command",
+  "exec" : "pwd"
+}, {
+  "name" : "uname",
+  "description" : "runs the uname command",
+  "exec" : "uname -a"
+}, {
+  "name" : "wakeonlan",
+  "description" : "wakes up the computer",
+  "exec" : "ether-wake ${mac_address}"
+} ]

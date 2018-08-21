@@ -1,0 +1,38 @@
+[ {
+  "name" : "fritzbox",
+  "description" : "FRITZ!Box 7590",
+  "hostname" : "fritz.box",
+  "ipv4" : "192.168.178.1",
+  "ipv6" : null,
+  "sensors" : [ { "name": "ping", "command": "check_ping_v4", "active": true }, { "name": "http", "command": "check_http", "active": true } ],
+  "commands" : [ ],
+  "properties" : { "test": "123", "test2": "asfe", "test3": "" },
+  "secretProperties" : { "test11": "123", "test12": "asfe", "test13": "" }
+}, {
+  "name" : "repeater",
+  "description" : "FRITZ!WLAN Repeater 1750E",
+  "hostname" : null,
+  "ipv4" : "192.168.178.25",
+  "ipv6" : null,
+  "sensors" : [ { "name": "ping", "command": "check_ping_v4", "active": true }, { "name": "http", "command": "check_http", "active": true } ],
+  "commands" : [ ],
+  "properties" : { }
+}, {
+  "name" : "johannes-mbp",
+  "description" : "Johannes MacBook Pro",
+  "hostname" : null,
+  "ipv4" : "192.168.178.20",
+  "ipv6" : null,
+  "sensors" : [ { "name": "ping", "command": "check_ping_v4", "active": true } ],
+  "commands" : [ "pwd", "uname" ],
+  "properties" : { "mac_address": "1a:00:60:28:2c:00" }
+}, {
+  "name" : "doktorschaefer.de",
+  "description" : "Praxis Webseite",
+  "hostname" : "www.doktorschaefer.de",
+  "ipv4" : null,
+  "ipv6" : null,
+  "sensors" : [ { "name": "ping", "command": "check_ping_v4", "active": true }, { "name": "http", "command": "check_http", "active": true }, { "name": "https", "command": "check_https", "active": true } ],
+  "commands" : [ ],
+  "properties" : { }
+} ]
