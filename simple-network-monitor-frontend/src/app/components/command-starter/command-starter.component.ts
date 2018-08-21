@@ -14,21 +14,21 @@ import { Host } from '../../entities/host';
 })
 export class CommandStarterComponent implements OnInit {
   @Input()
-  private host : Host;
+  host : Host;
 
-  private modalRef: BsModalRef;
+  modalRef: BsModalRef;
 
-  private msg : string;
+  msg : string;
   
-  private status : Status;
+  status : Status;
 
-  private currentCommand : Command;
+  currentCommand : Command;
   
   @ViewChild('confirm')
-  private confirmTempRef : TemplateRef<any>
+  confirmTempRef : TemplateRef<any>
 
   @ViewChild('result')
-  private resultTempRef : TemplateRef<any>
+  resultTempRef : TemplateRef<any>
 
   constructor(private hostService : HostService, private dialog : BsModalService) { }
 

@@ -10,9 +10,9 @@ import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 })
 export class HostDetailComponent implements OnInit {
 
-  private host : Host;
+  host : Host;
 
-  private error : any;
+  error : any;
 
   constructor(private hostService : HostService, private route: ActivatedRoute) { }
 

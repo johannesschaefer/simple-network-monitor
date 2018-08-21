@@ -8,7 +8,7 @@ import { Status } from '../../entities/status';
 })
 export class StatusComponent implements OnInit {
   @Input()
-  private value : Status;
+  value : Status;
 
   constructor() { }
 

@@ -7,13 +7,13 @@ import { HostService } from '../../services/host.service';
   styleUrls: ['./host-overview.component.css']
 })
 export class HostOverviewComponent implements OnInit {
-  private total : number = null;
-  private ok : number = null;
-  private warn : number = null;
-  private critical : number = null;
-  private unknown : number = null;
+  total : number = null;
+  ok : number = null;
+  warn : number = null;
+  critical : number = null;
+  unknown : number = null;
 
-  private error : any;
+  error : any;
 
   constructor(private hostService : HostService) { }
 

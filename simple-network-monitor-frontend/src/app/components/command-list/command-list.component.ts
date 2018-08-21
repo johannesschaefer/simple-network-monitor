@@ -12,18 +12,18 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 })
 export class CommandListComponent implements OnInit {
 
-  private commands : CommandHal = {_embedded: {commands: new Array()}, page: null};
-  private error : any = null;
-  private page: number = 0;
-  private size: number = 10;
-  private sorts: Sort[] = [{col: 'name', direction: 'ASC'}];
+  commands : CommandHal = {_embedded: {commands: new Array()}, page: null};
+  error : any = null;
+  page: number = 0;
+  size: number = 10;
+  sorts: Sort[] = [{col: 'name', direction: 'ASC'}];
 
   addModalRef: BsModalRef;
 
-  private currentCmd : Command = <Command>{};
+  currentCmd : Command = <Command>{};
 
   @ViewChild('addTpl')
-  private addTempRef : TemplateRef<any>
+  addTempRef : TemplateRef<any>
 
   constructor( private commandService : CommandService, private modalService: BsModalService ) { }
 

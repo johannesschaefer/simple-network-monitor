@@ -10,12 +10,12 @@ import { LineChartComponent } from '@swimlane/ngx-charts';
 })
 export class SensorDetailsComponent implements OnInit {
   @Input()
-  private sensor : Sensor;
+  sensor : Sensor;
 
   @ViewChild('chart')
-  private chart : LineChartComponent;
+  chart : LineChartComponent;
 
-  private data : any = {};
+  data : any = {};
 
   // options
   gradient = false;

@@ -8,7 +8,7 @@ import { Host } from '../../entities/host';
 })
 export class SensorListComponent implements OnInit {
   @Input()
-  private host : Host;
+  host : Host;
   
   constructor() { }
 
