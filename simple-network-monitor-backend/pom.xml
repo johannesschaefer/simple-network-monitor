@@ -27,6 +27,9 @@
     <profiles>
         <profile>
             <id>with-frontend</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
