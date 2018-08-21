@@ -80,6 +80,7 @@
                                 <phase>process-sources</phase>
                                 <configuration>
                                     <arguments>install</arguments>
+                                    <arguments>--no-optional</arguments>
                                 </configuration>
                             </execution>
                             <execution>
