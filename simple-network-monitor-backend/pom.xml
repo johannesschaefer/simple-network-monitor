@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>de.sjoe</groupId>
-	<artifactId>simple-network-monitor</artifactId>
+	<groupId>io.github.johannesschaefer</groupId>
+	<artifactId>simple-network-monitor-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>simple-network-monitor</name>
-	<description>Simple Network Monitor</description>
+	<name>simple-network-monitor-backend</name>
+	<description>Simple Network Monitor Backend</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

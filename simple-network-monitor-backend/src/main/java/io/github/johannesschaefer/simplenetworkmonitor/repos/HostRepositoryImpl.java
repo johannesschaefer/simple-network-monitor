@@ -1,7 +1,6 @@
 package io.github.johannesschaefer.simplenetworkmonitor.repos;
 
 import com.google.common.collect.Maps;
-import de.sjoe.simplenetworkmonitor.entities.*;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
