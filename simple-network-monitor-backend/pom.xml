@@ -151,6 +151,8 @@
             <groupId>org.nmap4j</groupId>
             <artifactId>org.nmap4j</artifactId>
             <version>1.0.4</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/org.nmap4j-1.0.4.jar</systemPath>
         </dependency>
 
 		<dependency>

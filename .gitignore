@@ -28,3 +28,4 @@ simple-network-monitor-frontend/dist
 simple-network-monitor-frontend/e2e
 simple-network-monitor-frontend/node_modules
 simple-network-monitor-frontend/.stylelintrc.json
+!simple-network-monitor-backend/src/main/resources/org.nmap4j-1.0.4.jar
