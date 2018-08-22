@@ -30,7 +30,7 @@ Install docker on your system.
 Then just run the following command:
 
 ```
-docker build -t snm https://github.com/johannesschaefer/simple-network-monitor.git#:simple-network-monitor-backend/src/main/docker/remote && docker run -dit --name snm -p 8080:8080 snm
+docker build -t snm https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/simple-network-monitor-backend/src/main/docker/remote/Dockerfile && docker run -dit --name snm -p 8080:8080 snm
 ```
 
 ### Docker on Raspberry
