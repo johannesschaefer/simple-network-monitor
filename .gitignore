@@ -31,3 +31,4 @@ simple-network-monitor-frontend/.stylelintrc.json
 !simple-network-monitor-backend/src/main/resources/org.nmap4j-1.0.4.jar
 .project
 .settings/org.eclipse.m2e.core.prefs
+simple-network-monitor-backend/src/main/resources/hosts2.json
