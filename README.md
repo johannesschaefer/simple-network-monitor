@@ -1,6 +1,6 @@
 # Simple Network Monitor
 
-*still under development* please wait for the first release before you report bugs or missing features.
+**still under heavy development** please wait for the first release before you report bugs or missing features.
 
 [![Build Status](https://travis-ci.org/johannesschaefer/simple-network-monitor.svg?branch=master)](https://travis-ci.org/johannesschaefer/simple-network-monitor)
 
