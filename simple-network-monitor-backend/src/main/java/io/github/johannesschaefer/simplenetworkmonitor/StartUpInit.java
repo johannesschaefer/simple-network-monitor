@@ -14,6 +14,7 @@ import io.github.johannesschaefer.simplenetworkmonitor.repos.SensorRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -41,8 +42,11 @@ public class StartUpInit {
     @Autowired
     private ScheduleService scheduleService;
 
-    @Value("${libPath}")
-    private String libPath;
+    @Value("${hosts-file}")
+    private Resource hostsResource;
+
+    @Value("${commands-file}")
+    private Resource commandResource;
 
     @PostConstruct
     public void initFromFile() throws IOException {
@@ -50,7 +54,7 @@ public class StartUpInit {
 
 
         TypeReference<List<Command>> cmdTypeReference = new TypeReference<List<Command>>(){};
-        InputStream cmdStream = this.getClass().getClassLoader().getResourceAsStream("commands.json");
+        InputStream cmdStream = commandResource.getInputStream();
         List<Command> cmds = objectMapper.readValue(cmdStream, cmdTypeReference);
         for (Command cmd : cmds) {
             log.info("loading cmd {}", cmd.getName());
@@ -58,7 +62,7 @@ public class StartUpInit {
         }
 
         TypeReference<List<Host>> hostTypeReference = new TypeReference<List<Host>>(){};
-        InputStream hostsStream = this.getClass().getClassLoader().getResourceAsStream("hosts.json");
+        InputStream hostsStream = hostsResource.getInputStream();
         objectMapper.addHandler(new DeserializationProblemHandler() {
             @Override
             public Object handleMissingInstantiator(DeserializationContext ctxt, Class<?> instClass, ValueInstantiator valueInsta, JsonParser p, String msg) throws IOException {
