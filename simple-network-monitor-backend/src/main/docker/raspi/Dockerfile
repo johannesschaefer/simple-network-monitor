@@ -8,7 +8,7 @@ RUN apt-get update && apt-get -qy install oracle-java8-jdk curl ca-certificates 
 
 #  nmap-nselibs nmap-ncat nmap-nping nmap-scripts
 
-ENV PATH /usr/lib/monitoring-plugins:/check_tr64_fritz:$PATH
+ENV PATH /usr/lib/nagios/plugins:/check_tr64_fritz:$PATH
 
 COPY snm.jar snm.jar
 
