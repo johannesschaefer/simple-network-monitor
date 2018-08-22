@@ -10,5 +10,21 @@ The Simple Network Monitor (SNM) is a small service to monitor other hosts or ne
 
 ### Docker
 
+Install docker on your system.
+
+Then just run the following command:
+
+```
+docker build -t snm https://github.com/johannesschaefer/simple-network-monitor.git#:simple-network-monitor-backend/src/main/docker/remote && docker run -dit --name snm -p 8080:8080 snm
+```
 
 ### Docker on Raspberry
+
+Please install docker. A good description can be found here: https://blog.alexellis.io/getting-started-with-docker-on-raspberry-pi/
+
+Then just run the following command:
+
+```
+docker build -t snm https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/simple-network-monitor-backend/src/main/docker/remote-raspi/Dockerfile && docker run -dit --name snm -p 8080:8080 snm
+```
+
