@@ -12,7 +12,7 @@ In all cases the application will be available under http://localhost:8080/, it 
 
 ### Run the Java file directly
 
-Download the Jar file from the Github release page and run the Jar with with following command.
+Download the Jar file from the Github [release page](https://github.com/johannesschaefer/simple-network-monitor/releases) and run the Jar with with following command.
 
 ```
 java -jar snm.jar
