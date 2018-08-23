@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public class HostRepositoryImpl implements HostRepositoryCustom {
 
+    public static final String SECRET_STRING = "43serER435gegEWR4t34";
+
     @Autowired
     private SampleRepository sampleRepo;
 
@@ -42,7 +44,7 @@ public class HostRepositoryImpl implements HostRepositoryCustom {
     public Map<String, String> getSecretProperties(Host host) {
         Map<String, String> ret = Maps.newHashMap();
         for (String k : host.getSecretProperties().keySet()) {
-            ret.put(k, "");
+            ret.put(k, SECRET_STRING);
         }
         return ret;
     }

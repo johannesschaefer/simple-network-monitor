@@ -9,7 +9,7 @@
     <tbody>
       <tr *ngFor="let entry of _props">
         <td><input type="text" class="form-control" [(ngModel)]="entry.key"></td>
-        <td><input type="{{secret?'password':'text'}}" class="form-control" [(ngModel)]="entry.value"></td>
+        <td><input type="{{secret?'password':'text'}}" class="form-control" [(ngModel)]="entry.value" (focusout)="valueChanged($event)"></td>
         <td (click)="remove(entry)">x</td>
       </tr>
     </tbody>

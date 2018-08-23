@@ -25,7 +25,7 @@ export class PropertiesPanelComponent implements OnInit {
   }
 
   get props() {
-    let ret : { [index: string]: string };
+    let ret : { [index: string]: string } = {};
     this._props.forEach( x => ret[x.key] = x.value);
     return ret;
   }
@@ -36,11 +36,13 @@ export class PropertiesPanelComponent implements OnInit {
       this._props = [];
       return;
     }
+    this._props = [];
     Object.keys(p).forEach( k => this._props.push({key: k, value: p[k]}));
   }
 
   public add() {
     this._props.push({key: "", value: ""});
+    this.propsChange.emit(this.props);
   }
 
   public remove(p : KV) {
@@ -49,5 +51,11 @@ export class PropertiesPanelComponent implements OnInit {
       return;
     }
     this._props.splice(i, 1);
+    this.propsChange.emit(this.props);
+  }
+
+  public valueChanged(ev : Event) {
+    this.propsChange.emit(this.props);
+    //ev.stopPropagation();
   }
 }

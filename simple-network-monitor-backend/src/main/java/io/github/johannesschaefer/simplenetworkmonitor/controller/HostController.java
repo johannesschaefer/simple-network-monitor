@@ -1,5 +1,6 @@
 package io.github.johannesschaefer.simplenetworkmonitor.controller;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.github.johannesschaefer.simplenetworkmonitor.SNMUtils;
@@ -11,6 +12,7 @@ import io.github.johannesschaefer.simplenetworkmonitor.entities.Sensor;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.Status;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.CommandRepository;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.HostRepository;
+import io.github.johannesschaefer.simplenetworkmonitor.repos.HostRepositoryImpl;
 import org.apache.commons.io.IOUtils;
 import org.nmap4j.Nmap4j;
 import org.nmap4j.core.nmap.NMapExecutionException;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin
@@ -108,6 +111,15 @@ public class HostController {
 
     @PostMapping("/hosts/create")
     public ResponseEntity createHost(@RequestBody Host host) {
+        if (!Strings.isNullOrEmpty(host.getId())) {
+            Optional<Host> hostOrg = hostRepo.findById(host.getId());
+            for (Map.Entry<String, String> secProp : host.getSecretProperties().entrySet()) {
+                if (HostRepositoryImpl.SECRET_STRING.equals(secProp.getValue())) {
+                    secProp.setValue(hostOrg.get().getSecretProperties().get(secProp.getKey()));
+                }
+            }
+        }
+        
         hostRepo.save(host);
         return ResponseEntity.ok(HttpStatus.OK);
     }
