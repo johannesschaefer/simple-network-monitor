@@ -7,6 +7,18 @@
   "description" : "checks a https service",
   "exec" : "check_http -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:443} -S"
 }, {
+  "name" : "check_ftp",
+  "description" : "checks a ftp service",
+  "exec" : "check_ftp -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:21}"
+}, {
+  "name" : "check_ssh",
+  "description" : "checks a ssh service",
+  "exec" : "check_ssh -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:22}"
+}, {
+  "name" : "check_dns",
+  "description" : "checks a dns service",
+  "exec" : "check_dns -H ${hostname:${ip_v4:${ip_v6}}}"
+}, {
   "name" : "check_ping_v4",
   "description" : "checks if a host is reachable via ping and ip4",
   "exec" : "check_ping -H ${hostname:${ip_v4}} -w ${wrta:80},${wpl:1}% -c ${crta:100},${cpl:2}% -4"

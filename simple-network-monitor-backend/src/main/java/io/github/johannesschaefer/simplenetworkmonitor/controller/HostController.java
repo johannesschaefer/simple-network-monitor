@@ -49,7 +49,7 @@ public class HostController {
     public List<Host> autoDiscovery(@RequestParam("network") String network) throws NMapExecutionException, NMapInitializationException {
         Nmap4j nmap = new Nmap4j("/usr/");
         nmap.includeHosts(network);
-        nmap.addFlags("-sS -p T:80,443,8080,53");
+        nmap.addFlags("-sS -p T:21,22,53,80,443,8080");
         log.info("running autodiscovery");
         nmap.execute();
         if(nmap.hasError()) {
@@ -83,8 +83,25 @@ public class HostController {
                     if (!"open".equals(port.getState().getState())) {
                         continue;
                     }
+                    if (port.getPortId() == 21) {
+                        addSensor(host, "ftp", "check_ftp");
+                    }
+                    if (port.getPortId() == 22) {
+                        addSensor(host, "ssh", "check_ssh");
+                    }
+                    if (port.getPortId() == 53) {
+                        addSensor(host, "dns", "check_dns");
+                    }
                     if (port.getPortId() == 80) {
                         addSensor(host, "http", "check_http");
+                    }
+                    if (port.getPortId() == 443) {
+                        addSensor(host, "http", "check_https");
+                    }
+                    if (port.getPortId() == 8080) {
+                        Map<String, String> props = Maps.newHashMap();
+                        props.put("port", "8080");
+                        addSensor(host, "http", "check_http", props);
                     }
                 }
             }
@@ -119,15 +136,22 @@ public class HostController {
                 }
             }
         }
-        
+
         hostRepo.save(host);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     private void addSensor(Host host, String name, String cmdName) {
+        addSensor(host, name, cmdName, Maps.newHashMap());
+    }
+    private void addSensor(Host host, String name, String cmdName, Map<String, String> props) {
+        addSensor(host, name, cmdName, props, Maps.newHashMap());
+
+    }
+    private void addSensor(Host host, String name, String cmdName, Map<String, String> props, Map<String, String> secretProps) {
         Command cmd = commandRepo.findByName(cmdName);
         if (cmd != null) {
-            Sensor sensor = Sensor.builder().command(cmd).name(name).build();
+            Sensor sensor = Sensor.builder().command(cmd).name(name).properties(props).secretProperties(secretProps).build();
             host.getSensors().add(sensor);
         }
     }
