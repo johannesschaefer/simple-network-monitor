@@ -20,7 +20,7 @@ java -jar snm.jar
 
 Requirements:
 * Java 8
-* Monitor Plugins must be available in the PATH
+* [Monitor Plugins](https://www.monitoring-plugins.org) must be available in the PATH
 * nmap must be available in the PATH
 
 ### Docker
