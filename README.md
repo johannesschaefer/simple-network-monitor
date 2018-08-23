@@ -35,7 +35,7 @@ docker build -t snm https://raw.githubusercontent.com/johannesschaefer/simple-ne
 
 ### Docker on Raspberry
 
-Please install docker. A good description can be found here: https://blog.alexellis.io/getting-started-with-docker-on-raspberry-pi/
+Install docker on your system. A good description can be found here: https://blog.alexellis.io/getting-started-with-docker-on-raspberry-pi/
 
 Then just run the following command:
 
