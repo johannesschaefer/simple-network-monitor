@@ -21,6 +21,7 @@ public class SampleType {
     private String id;
     @NonNull
     private String name;
+    private String unit;
     @NonNull
     @ManyToOne()
     private Sensor sensor;

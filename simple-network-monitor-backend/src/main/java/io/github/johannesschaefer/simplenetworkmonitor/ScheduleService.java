@@ -133,7 +133,7 @@ public class ScheduleService {
         min = getValue(split, 3);
         max = getValue(split, 4);
 
-        SampleType type = SampleType.builder().name(typeName).sensor(sensor).build();
+        SampleType type = SampleType.builder().name(typeName).unit(unit).sensor(sensor).build();
         type = sampleTypeRepo.findOrCreateSampleType(type);
 
         return Sample.builder().type(type).value(value).warn(warn).critical(critical).min(min).max(max).unit(unit).status(status).msg(msg).sensor(sensor).build();

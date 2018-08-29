@@ -2,19 +2,29 @@
     <div class="card-body">
         <h5 class="card-title"><snm-status [value]="sensor?.status"></snm-status> {{sensor?.name}}</h5>
         <p class="card-text">
-            <span *ngFor="let sampleType of sensor?.sampleTypes">
-                <ngx-charts-line-chart #chart
-                    [view]="[600,200]"
-                    [results]="data[sampleType?.id]"
-                    [gradient]="gradient"
-                    [xAxis]="true"
-                    [yAxis]="true"
-                    [showXAxisLabel]="true"
-                    [showYAxisLabel]="true"
-                    [xAxisLabel]="'t'"
-                    [yAxisLabel]="sampleType.name"
-                    [autoScale]="autoScale">
-                </ngx-charts-line-chart>
+            <span>
+                <ul class="nav nav-tabs" id="{{sensor?.name}}Tab" role="tablist">
+                    <li class="nav-item" *ngFor="let sampleType of sensor?.sampleTypes; let first = first">
+                        <a class="nav-link {{first?'active':''}}" id="{{sensor?.name}}_{{sampleType.name}}-tab" data-toggle="tab" href="#{{sensor?.name}}_{{sampleType.name}}" role="tab" attr.aria-controls="{{sensor?.name}}_{{sampleType.name}}" attr.aria-selected="{{first?'true':'false'}}">{{sampleType.name}}</a>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="{{sensor?.name}}TabContent">
+                    <div style="width: 100%; height: 200px;" class="tab-pane fade {{first?'show active':''}}" id="{{sensor?.name}}_{{sampleType.name}}" role="tabpanel" attr.aria-labelledby="{{sensor?.name}}_{{sampleType.name}}-tab" *ngFor="let sampleType of sensor?.sampleTypes; let first = first">
+                        <ngx-charts-line-chart #chart
+                            [results]="data[sampleType?.id]"
+                            [gradient]="gradient"
+                            [xAxis]="true"
+                            [yAxis]="true"
+                            [showXAxisLabel]="true"
+                            [showYAxisLabel]="true"
+                            [xAxisLabel]="'t'"
+                            [yAxisLabel]="sampleType.name + (sampleType.unit?' ('+sampleType.unit+')':'')"
+                            [animations]="false"
+                            [autoScale]="autoScale">
+                        </ngx-charts-line-chart>
+                    </div>
+                </div>
             </span>
         </p>
     </div>
