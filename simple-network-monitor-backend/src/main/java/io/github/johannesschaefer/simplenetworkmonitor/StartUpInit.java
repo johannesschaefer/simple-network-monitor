@@ -7,10 +7,8 @@ import com.fasterxml.jackson.databind.deser.DeserializationProblemHandler;
 import com.fasterxml.jackson.databind.deser.ValueInstantiator;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.Command;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.Host;
-import io.github.johannesschaefer.simplenetworkmonitor.repos.CommandRepository;
-import io.github.johannesschaefer.simplenetworkmonitor.repos.HostRepository;
-import io.github.johannesschaefer.simplenetworkmonitor.repos.SampleRepository;
-import io.github.johannesschaefer.simplenetworkmonitor.repos.SensorRepository;
+import io.github.johannesschaefer.simplenetworkmonitor.entities.Setting;
+import io.github.johannesschaefer.simplenetworkmonitor.repos.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +35,9 @@ public class StartUpInit {
     private CommandRepository commandRepo;
 
     @Autowired
+    private SettingRepository settingRepo;
+
+    @Autowired
     private SampleRepository sampleRepo;
 
     @Autowired
@@ -48,10 +49,21 @@ public class StartUpInit {
     @Value("${commands-file}")
     private Resource commandResource;
 
+    @Value("${settings-file}")
+    private Resource settingResource;
+
     @PostConstruct
     public void initFromFile() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
+
+        TypeReference<List<Setting>> settingTypeReference = new TypeReference<List<Setting>>(){};
+        InputStream settingStream = settingResource.getInputStream();
+        List<Setting> settings = objectMapper.readValue(settingStream, settingTypeReference);
+        for (Setting setting : settings) {
+            log.info("loading setting {}", setting.getName());
+            settingRepo.save(setting);
+        }
 
         TypeReference<List<Command>> cmdTypeReference = new TypeReference<List<Command>>(){};
         InputStream cmdStream = commandResource.getInputStream();

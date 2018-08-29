@@ -1,0 +1,9 @@
+[ {
+  "name" : "refreshInterval",
+  "description" : "Autorefresh interval of the GUI in millisecs",
+  "value" : "10000"
+}, {
+  "name" : "firstRun",
+  "description" : "if set to true, a welcome screen will be shown",
+  "value" : "true"
+} ]
