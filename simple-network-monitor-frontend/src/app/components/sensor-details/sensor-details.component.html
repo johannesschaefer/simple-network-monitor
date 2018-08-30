@@ -4,13 +4,13 @@
         <p class="card-text">
             <span>
                 <ul class="nav nav-tabs" id="{{sensor?.name}}Tab" role="tablist">
-                    <li class="nav-item" *ngFor="let sampleType of sensor?.sampleTypes; let first = first">
-                        <a class="nav-link {{first?'active':''}}" id="{{sensor?.name}}_{{sampleType.name}}-tab" data-toggle="tab" href="#{{sensor?.name}}_{{sampleType.name}}" role="tab" attr.aria-controls="{{sensor?.name}}_{{sampleType.name}}" attr.aria-selected="{{first?'true':'false'}}">{{sampleType.name}}</a>
+                    <li class="nav-item" *ngFor="let sampleType of sensor?.sampleTypes" (click)="setCurrentSampleType(sampleType)" >
+                        <a class="nav-link {{isActive(sampleType)?'active':''}}" id="{{sensor?.name}}_{{sampleType.name}}-tab" data-toggle="tab" href="#{{sensor?.name}}_{{sampleType.name}}" role="tab" attr.aria-controls="{{sensor?.name}}_{{sampleType.name}}" attr.aria-selected="{{isActive(sampleType)?'true':'false'}}">{{sampleType.name}}</a>
                     </li>
                 </ul>
                 
                 <div class="tab-content" id="{{sensor?.name}}TabContent">
-                    <div style="width: 100%; height: 200px;" class="tab-pane fade {{first?'show active':''}}" id="{{sensor?.name}}_{{sampleType.name}}" role="tabpanel" attr.aria-labelledby="{{sensor?.name}}_{{sampleType.name}}-tab" *ngFor="let sampleType of sensor?.sampleTypes; let first = first">
+                    <div style="width: 100%; height: 200px;" class="tab-pane fade {{isActive(sampleType)?'show active':''}}" id="{{sensor?.name}}_{{sampleType.name}}" role="tabpanel" attr.aria-labelledby="{{sensor?.name}}_{{sampleType.name}}-tab" *ngFor="let sampleType of sensor?.sampleTypes">
                         <ngx-charts-line-chart #chart
                             [results]="data[sampleType?.id]"
                             [gradient]="gradient"

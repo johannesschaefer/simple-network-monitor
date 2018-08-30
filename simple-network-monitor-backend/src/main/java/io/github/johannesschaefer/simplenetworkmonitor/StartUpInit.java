@@ -90,6 +90,8 @@ public class StartUpInit {
         List<Host> hosts = objectMapper.readValue(hostsStream, hostTypeReference);
         for (Host host : hosts) {
             log.info("loading host {}", host.getName());
+            //host.getSensors().forEach(a->a.setHost(host));
+            //host.getSensors().forEach(a->a.setCommand(commandRepo.findByName(a.getCommand().getName())));
             hostRepo.save(host);
         }
 

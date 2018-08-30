@@ -10,6 +10,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BlockUIModule } from 'ng-block-ui';
 import { BlockUIHttpModule } from 'ng-block-ui/http';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppComponent } from './app.component';
 
@@ -65,6 +66,7 @@ const appRoutes: Routes = [
   imports: [
     BlockUIModule.forRoot(),
     //BlockUIHttpModule.forRoot(),
+    NgSelectModule,
     ModalModule.forRoot(),
     NgxChartsModule,
     RouterModule.forRoot(

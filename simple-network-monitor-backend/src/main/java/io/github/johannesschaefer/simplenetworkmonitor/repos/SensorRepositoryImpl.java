@@ -37,7 +37,7 @@ public class SensorRepositoryImpl implements SensorRepositoryCustom {
     public Map<String, String> getSecretProperties(Sensor s) {
         Map<String, String> ret = Maps.newHashMap();
         for (String k : s.getSecretProperties().keySet()) {
-            ret.put(k, "");
+            ret.put(k, HostRepositoryImpl.SECRET_STRING);
         }
         return ret;
     }

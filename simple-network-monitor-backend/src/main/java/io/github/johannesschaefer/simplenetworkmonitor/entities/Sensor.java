@@ -37,10 +37,12 @@ public class Sensor {
     @Builder.Default
     private long interval = 60000;
 
-    @ManyToOne
+    //@NonNull
+    @ManyToOne//(optional = false)
     private Host host;
 
-    @OneToOne
+    //@NonNull
+    @OneToOne//(optional = false)
     private Command command;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor")

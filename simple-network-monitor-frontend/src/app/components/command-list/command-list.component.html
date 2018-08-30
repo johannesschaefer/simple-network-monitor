@@ -17,7 +17,7 @@
             <th scope="col" (click)="sort('name')">Name</th>
             <th scope="col" (click)="sort('description')">Description</th>
             <th scope="col" (click)="sort('exec')">Exec</th>
-            <th></th>
+            <th style="width: 60px"></th>
           </tr>
         </thead>
         <tbody>
@@ -30,8 +30,8 @@
                   <button class="btn fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   </button>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" (click)="delete(command)">delete</a>
                     <a class="dropdown-item" (click)="edit(command)">edit</a>
+                    <a class="dropdown-item" (click)="delete(command)">delete</a>
                   </div>
                 </div>
             </td>

@@ -23,6 +23,7 @@ export interface Sensor {
     command: Command;
     samples: Sample[];
     properties: { [index: string]: string };
+    secretProperties: { [index: string]: string };
     sampleTypes: SampleType[];
     status: Status;
 }

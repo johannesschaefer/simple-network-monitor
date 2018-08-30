@@ -3,6 +3,8 @@ import { Sensor } from '../../entities/sensor';
 import { SampleService } from '../../services/sample.service';
 import { LineChartComponent } from '@swimlane/ngx-charts';
 import { Sample } from '../../entities/sample';
+import { SampleType } from '../../entities/sampleType';
+import { sample } from 'rxjs/operators';
 
 @Component({
   selector: 'snm-sensor-details',
@@ -30,6 +32,8 @@ export class SensorDetailsComponent implements OnInit {
   };
 
   error : any[];
+
+  static currentSelection = {};
 
   constructor( private sampleService : SampleService ) { }
 
@@ -68,6 +72,18 @@ export class SensorDetailsComponent implements OnInit {
         error => this.error = error
       );
     });
+  }
+
+  isActive(sampleType : SampleType) :boolean {
+    //console.log(SensorDetailsComponent.currentSelection[this.sensor.id]);
+    if (typeof SensorDetailsComponent.currentSelection[this.sensor.id] === 'undefined') {
+      this.setCurrentSampleType(sampleType);
+    }
+    return SensorDetailsComponent.currentSelection[this.sensor.id].id === sampleType.id;
+  }
+
+  setCurrentSampleType(sampleType : SampleType) {
+    SensorDetailsComponent.currentSelection[this.sensor.id] = sampleType;
   }
 
   update() {

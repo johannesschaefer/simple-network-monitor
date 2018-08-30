@@ -42,11 +42,18 @@ public class ScheduleService {
         List<Sensor> activeSensors = sensorRepo.findByActiveTrue();
 
         for (Sensor s : activeSensors) {
-            long interval = s.getInterval();
-            Date startTime = new Date();
-            startTime.setTime(startTime.getTime() + Math.round(Math.random() * interval));
-            taskScheduler.scheduleWithFixedDelay(() -> runCommand(s), startTime, interval);
+            addSensor(s);
         }
+    }
+
+    public void addSensor(Sensor s) {
+        if (!s.isActive()) {
+            return;
+        }
+        long interval = s.getInterval();
+        Date startTime = new Date();
+        startTime.setTime(startTime.getTime() + Math.round(Math.random() * interval));
+        taskScheduler.scheduleWithFixedDelay(() -> runCommand(s), startTime, interval);
     }
 
     private void runCommand(Sensor s) {

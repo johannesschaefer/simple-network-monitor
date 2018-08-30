@@ -14,7 +14,7 @@ export class SensorService {
   }
 
   private getUrl(){
-    return this.config.getBackendUrl() + '/sensors/';
+    return this.config.getBackendUrl() + 'sensors/';
   }
   
   public getAll(page?: number, size?: number, sort?: Sort[]): Observable<SensorHal> {
@@ -37,5 +37,21 @@ export class SensorService {
   
   public get(id: string): Observable<Sensor> {
     return this.http.get<Sensor>(this.getUrl() + id);
+  }
+
+  public delete(sensor : Sensor) : Observable<{}> {
+    return this.http.delete(this.getUrl() + sensor.id);
+  }
+
+  public create(sensor : Sensor) : Observable<{}> {
+    //delete sensor['host']['_embedded'];
+    //delete sensor['host']['_links'];
+    //delete sensor['command']['_links'];
+    return this.http.post(this.getUrl() + 'create', sensor);
+  }
+
+  public update(sensor : Sensor) : Observable<{}> {
+    return this.http.post(this.getUrl(), sensor);
+//    return this.http.patch(this.getUrl() + sensor.id, sensor);
   }
 }
