@@ -9,7 +9,7 @@ import { SettingHal } from '../../entities/setting';
 })
 export class SettingsListComponent implements OnInit {
 
-  private settings : SettingHal = <SettingHal>{};
+  settings : SettingHal = <SettingHal>{};
 
   constructor( private settingService : SettingService ) { }
 
