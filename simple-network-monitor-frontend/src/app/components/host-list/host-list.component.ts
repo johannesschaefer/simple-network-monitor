@@ -23,7 +23,7 @@ export class HostListComponent implements OnInit {
   private hosts : HostHal = {_embedded: {hosts: new Array()}, page: null};
   error : any = null;
   private page: number = 0;
-  private size: number = 10;
+  size: number = 10;
   private sorts: Sort[] = Array({col: 'name', direction: 'ASC'});
 
   modalRef: BsModalRef;
