@@ -17,7 +17,11 @@ export class AppComponent implements OnInit {
   private autoRefreshSubscribtion : Subscription;
 
   ngOnInit() {
-    this.autoRefreshTimer = timer(this.config.getAutoRefreshInterval(), this.config.getAutoRefreshInterval());
+    this.config.getAutoRefreshInterval().subscribe(x => this.startAutorefresh(x), err => alert(err));
+  }
+
+  private startAutorefresh(ms : number) {
+    this.autoRefreshTimer = timer(ms, ms);
     this.autoRefreshSubscribtion = this.autoRefreshTimer.subscribe(v => this.reload());
   }
 

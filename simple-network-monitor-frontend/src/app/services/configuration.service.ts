@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { isDevMode } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Setting, SettingHal } from '../entities/setting';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +15,16 @@ export class ConfigurationService {
   getBackendUrl() : string {
     return environment.url;
   }
-
-  getAutoRefreshInterval() : number {
-    return 10000; // TODO: load from DB
+  
+  private async delay(ms: number) {
+    await new Promise( resolve => setTimeout(resolve, ms) );
   }
 
-  getAutoDiscoveryNetwork() : string {
-    return "192.168.178.0/24"; // TODO: discover the correct value automatically
+  getAutoRefreshInterval() : Observable<number> {
+    return this.http.get<Setting>(this.getBackendUrl() + 'settings/refreshInterval').map(x => parseInt(x.value));
+  }
+
+  getAutoDiscoveryNetwork() : Observable<string[]> {
+    return this.http.get<string[]>(this.getBackendUrl() + 'settings/networks');
   }
 }

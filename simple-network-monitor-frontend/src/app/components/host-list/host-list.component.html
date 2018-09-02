@@ -68,7 +68,18 @@
         <form>
           <div class="form-group">
             <label for="network">Network</label>
-            <input type="text" class="form-control" id="network" aria-describedby="networkHelp" placeholder="Enter network" name="autoDiscoveryNetwork" [(ngModel)]="autoDiscoveryNetwork" required>
+
+            <ng-select [items]="autoDiscoveryNetworks"
+              name="autoDiscoveryNetwork"
+              [addTag]="true"
+              [(ngModel)]="autoDiscoveryNetwork"
+              placeholder="Enter network"
+              id="network" aria-describedby="networkHelp">
+            </ng-select>
+<!--
+            <input type="text" class="form-control" id="network" aria-describedby="networkHelp" 
+              placeholder="Enter network" name="autoDiscoveryNetwork" [(ngModel)]="autoDiscoveryNetwork" required>
+-->
             <small id="networkHelp" class="form-text text-muted">Enter network that should be used for auto discovery, format xxx.xxx.xxx.xxx/xx.</small>
           </div>
           <button type="button" class="btn btn-primary" (click)="performAutoDiscovery()">Start</button>

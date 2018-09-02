@@ -44,10 +44,10 @@ export class HostListComponent implements OnInit {
   private autoDiscoverResultsTpl : TemplateRef<any>
 
   private autoDiscoveryNetwork : string;
+  private autoDiscoveryNetworks : string[] = [];
 
 
   constructor( private hostService : HostService, private modalService: BsModalService, private config: ConfigurationService ) {
-    this.autoDiscoveryNetwork = config.getAutoDiscoveryNetwork();
   }
 
   public ngOnInit() {
@@ -158,7 +158,18 @@ export class HostListComponent implements OnInit {
 
   public startAutoDiscovery() {
     console.info('startAutoDiscovery');
-    this.modalRef = this.modalService.show(this.startAutoDiscoveryTpl);
+    this.config.getAutoDiscoveryNetwork().subscribe(
+      x => {
+        this.autoDiscoveryNetwork = x.length>0?x[0]:'';
+        this.autoDiscoveryNetworks = x;
+        this.modalRef = this.modalService.show(this.startAutoDiscoveryTpl);
+      },
+      err => {
+        this.autoDiscoveryNetwork = '';
+        this.autoDiscoveryNetworks = [];
+        this.modalRef = this.modalService.show(this.startAutoDiscoveryTpl);
+      }
+    );
   }
 
   public performAutoDiscovery() {
