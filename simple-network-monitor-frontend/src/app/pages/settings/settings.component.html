@@ -1,7 +1,11 @@
 <snm-settings-list></snm-settings-list>
 
 <div class="form-group">
-  <button class="btn btn-outline-success disabled">Status: running</button>
+  <button class="btn disabled" style="width: 150px" [ngClass]="{
+    'btn-outline-secondary':schedulerRunning === null,
+    'btn-outline-success':schedulerRunning === true,
+    'btn-outline-danger':schedulerRunning === false
+  }">Status: {{schedulerRunning==null?'unknow':(schedulerRunning?'running':'stopped')}}</button>
   &nbsp;
   <button class="btn btn-primary" id="startService" (click)="startService()">Start Service</button>
   &nbsp;

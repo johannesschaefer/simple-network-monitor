@@ -37,12 +37,4 @@ export class SettingService {
   public update(setting : Setting) : Observable<{}> {
     return this.http.post(this.getUrl() + 'update', setting);
   }
-
-  public startScheduler() {
-    this.http.get(this.config.getBackendUrl() + 'schedule/start').subscribe( x => console.log(x), err => alert(err));
-  }
-
-  public stopScheduler() {
-    this.http.get(this.config.getBackendUrl() + 'schedule/stop').subscribe( x => console.log(x), err => alert(err));
-  }
 }

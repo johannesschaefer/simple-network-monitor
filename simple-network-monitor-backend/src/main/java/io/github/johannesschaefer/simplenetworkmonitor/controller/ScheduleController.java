@@ -25,9 +25,9 @@ public class ScheduleController {
         scheduleService.stopSchedules();
     }
 
-    @GetMapping("/schedule/status")
+    @GetMapping("/schedule/isrunning")
     @ResponseBody
-    public String getStatus() {
-        return scheduleService.isRunning() ? "running" : "stopped";
+    public Boolean isRunning() {
+        return scheduleService.isRunning();
     }
 }
