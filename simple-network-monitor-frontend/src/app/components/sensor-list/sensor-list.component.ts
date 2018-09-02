@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, TemplateRef, Output, EventEmitter } from '@angular/core';
 import { Host } from '../../entities/host';
 import { Sensor } from '../../entities/sensor';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -14,6 +14,9 @@ import { SensorService } from '../../services/sensor.service';
 export class SensorListComponent implements OnInit {
   @Input()
   host : Host;
+
+  @Output()
+  sensorChanged = new EventEmitter<boolean>();
 
   private currentSensor : Sensor = <Sensor>{};
 
@@ -60,5 +63,9 @@ export class SensorListComponent implements OnInit {
       alert(err.message);
       this.currentSensor = <Sensor>{};
     });
+  }
+
+  public performSensorChanged(ev : any) {
+    this.sensorChanged.emit(true);
   }
 }

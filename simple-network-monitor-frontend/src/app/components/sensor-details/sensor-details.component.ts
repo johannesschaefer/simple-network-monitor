@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Sensor } from '../../entities/sensor';
 import { SampleService } from '../../services/sample.service';
 import { LineChartComponent } from '@swimlane/ngx-charts';
 import { Sample } from '../../entities/sample';
 import { SampleType } from '../../entities/sampleType';
 import { sample } from 'rxjs/operators';
+import { SensorService } from '../../services/sensor.service';
 
 @Component({
   selector: 'snm-sensor-details',
@@ -14,6 +15,9 @@ import { sample } from 'rxjs/operators';
 export class SensorDetailsComponent implements OnInit {
   @Input()
   sensor : Sensor;
+
+  @Output()
+  sensorChanged = new EventEmitter<boolean>();
 
   @ViewChild('chart')
   chart : LineChartComponent;
@@ -35,7 +39,7 @@ export class SensorDetailsComponent implements OnInit {
 
   static currentSelection = {};
 
-  constructor( private sampleService : SampleService ) { }
+  constructor( private sampleService : SampleService, private sensorService : SensorService ) { }
 
   ngOnInit() {
     this.sensor.sampleTypes.forEach(type => {
@@ -88,5 +92,20 @@ export class SensorDetailsComponent implements OnInit {
 
   update() {
     this.chart.update();
+  }
+
+  edit(sensor : Sensor) {
+    console.log('edit', sensor);
+  }
+
+  delete(sensor : Sensor) {
+    console.log('delete', sensor);
+    this.sensorService.delete(sensor).subscribe( x => {
+      console.log('deleted', x);
+      this.sensorChanged.emit(true);
+    }, err => {
+      alert(err.message);
+      console.log('deleted err', err);
+    });
   }
 }

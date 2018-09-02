@@ -6,7 +6,6 @@ import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.Map;
 @NoArgsConstructor
 @Entity
 @Builder
-@Component
 public class Sensor {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -45,7 +43,7 @@ public class Sensor {
     @OneToOne//(optional = false)
     private Command command;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor", cascade = CascadeType.ALL)
     @Builder.Default
     private List<Sample> samples = Lists.newArrayList();
 
@@ -58,7 +56,7 @@ public class Sensor {
     @Builder.Default
     private Map<String, String> secretProperties = Maps.newHashMap();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor", cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
     @Builder.Default
     private List<SampleType> sampleTypes = Lists.newArrayList();

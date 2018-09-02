@@ -10,7 +10,7 @@
 
 
 <span *ngFor="let sensor of host?._embedded?.sensors">
-  <snm-sensor-details [sensor]="sensor"></snm-sensor-details>
+  <snm-sensor-details [sensor]="sensor" (sensorChanged)="performSensorChanged($event)"></snm-sensor-details>
 </span>
 
 

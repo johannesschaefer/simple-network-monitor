@@ -100,7 +100,7 @@
           <tbody>
             <tr *ngFor="let host of discoveredHosts">
               <td>
-                <input class="form-check-input" [(ngModel)]="selectedHosts[host.name]" type="checkbox" name="{{host.name}}" id="{{host.name}}">
+                <input [(ngModel)]="selectedHosts[host.name]" type="checkbox" name="{{host.name}}" id="{{host.name}}">
               </td>
               <td title="{{host.name}}" class="no-overflow">
                   {{host.name}}

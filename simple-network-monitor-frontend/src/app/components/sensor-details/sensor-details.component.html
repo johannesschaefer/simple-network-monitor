@@ -1,6 +1,18 @@
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title"><snm-status [value]="sensor?.status"></snm-status> {{sensor?.name}}</h5>
+        <div class="d-flex justify-content-between align-middle">
+          <h5 class="card-title"><snm-status [value]="sensor?.status"></snm-status> {{sensor?.name}}</h5>
+          <span>
+            <div class="dropleft">
+              <i class="btn fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              </i>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" (click)="edit(sensor)">edit</a>
+                <a class="dropdown-item" (click)="delete(sensor)">delete</a>
+              </div>
+            </div>
+          </span>
+        </div>
         <p class="card-text">
             <span>
                 <ul class="nav nav-tabs" id="{{sensor?.name}}Tab" role="tablist">

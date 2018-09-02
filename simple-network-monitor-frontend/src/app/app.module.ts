@@ -29,6 +29,8 @@ import { SensorListComponent } from './components/sensor-list/sensor-list.compon
 import { SensorDetailsComponent } from './components/sensor-details/sensor-details.component';
 import { CommandListComponent } from './components/command-list/command-list.component';
 import { PropertiesPanelComponent } from './components/properties-panel/properties-panel.component';
+import { SettingsListComponent } from './components/settings-list/settings-list.component';
+
 import { KeysPipe } from './services/keys.pipe';
 
 
@@ -58,7 +60,8 @@ const appRoutes: Routes = [
     CommandsComponent,
     CommandListComponent,
     PropertiesPanelComponent,
-    KeysPipe
+    KeysPipe,
+    SettingsListComponent
   ],
   
   exports: [

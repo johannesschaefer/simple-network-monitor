@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SettingService } from '../../services/setting.service';
 
 @Component({
   selector: 'snm-settings',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor() { }
+  constructor( private settingService : SettingService ) { }
 
   ngOnInit() {
   }
@@ -18,8 +19,10 @@ export class SettingsComponent implements OnInit {
 
   public startService() {
     console.log('startService');
+    this.settingService.startScheduler();
   }
   public stopService() {
     console.log('stopService');
+    this.settingService.stopScheduler();
   }
 }

@@ -1,15 +1,15 @@
-<form>
-  <div class="form-group form-check">
-      <label for="autoInterval">Autorefresh Interval</label>
-      <input type="text" class="form-control" id="autoInterval" aria-describedby="autoIntervalHelp" placeholder="Autorefresh Interval">
-      <small id="autoIntervalHelp" class="form-text text-muted">Enter here the Autorefresh Interval</small>
-  </div>
-  <button class="btn btn-primary">Save</button>
-</form>
+<snm-settings-list></snm-settings-list>
 
+<div class="form-group">
+  <button class="btn btn-outline-success disabled">Status: running</button>
+  &nbsp;
+  <button class="btn btn-primary" id="startService" (click)="startService()">Start Service</button>
+  &nbsp;
+  <button class="btn btn-primary" (click)="stopService()">Stop Service</button><br>
+  <small for="startService" class="form-text text-muted">Starts and stops the service which performs the host checks.</small>
+</div>
 
-<button class="btn btn-primary" (click)="startService">Start Service</button>
-
-<button class="btn btn-primary" (click)="stopService">Stop Service</button>
-
-<button class="btn btn-primary" routerLink="/commands" routerLinkActive="active">Commands</button>
+<div class="form-group">
+  <button class="btn btn-primary" routerLink="/commands" id="editCommands" routerLinkActive="active">Edit Commands</button><br>
+  <small for="editCommands" class="form-text text-muted">Configure the available commands.</small>
+</div>

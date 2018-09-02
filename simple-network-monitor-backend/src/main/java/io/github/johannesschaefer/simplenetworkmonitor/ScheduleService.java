@@ -36,6 +36,8 @@ public class ScheduleService {
     @Autowired
     private SampleTypeRepository sampleTypeRepo;
 
+    private boolean running = false;
+
     public void startSchedules() {
         taskScheduler.getScheduledThreadPoolExecutor().getQueue().clear();
 
@@ -44,6 +46,7 @@ public class ScheduleService {
         for (Sensor s : activeSensors) {
             addSensor(s);
         }
+        running = true;
     }
 
     public void addSensor(Sensor s) {
@@ -155,5 +158,10 @@ public class ScheduleService {
 
     public void stopSchedules() {
         taskScheduler.getScheduledThreadPoolExecutor().getQueue().clear();
+        running = false;
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 }

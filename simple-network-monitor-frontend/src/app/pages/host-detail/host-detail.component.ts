@@ -24,4 +24,8 @@ export class HostDetailComponent implements OnInit {
   public reload() {
     this.hostService.get(this.host.id).subscribe(x => this.host = x, err => this.error = err);
   }
+
+  public performSensorChanged(ev : any) {
+    this.reload();
+  }
 }

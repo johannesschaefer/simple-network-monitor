@@ -1,0 +1,42 @@
+<form>
+  <span *ngFor="let setting of settings?._embedded?.settings">
+    <span [ngSwitch]="setting.type">
+
+      <div class="form-group" *ngSwitchCase="'string'">
+        <label for="{{setting.name}}">{{setting.displayName}}</label>
+        <input type="text" [(ngModel)]="setting.value" class="form-control" id="{{setting.name}}" name="{{setting.name}}" attr.aria-describedby="{{setting.name}}Help"
+        [attr.maxlength]="setting.maxLength" placeholder="Enter {{setting.displayName}}">
+        <small id="{{setting.name}}Help" class="form-text text-muted">{{setting.description}}</small>
+      </div>
+
+      <div class="form-group" *ngSwitchCase="'password'">
+        <label for="{{setting.name}}">{{setting.displayName}}</label>
+        <input type="password" [(ngModel)]="setting.value" class="form-control" id="{{setting.name}}" name="{{setting.name}}" attr.aria-describedby="{{setting.name}}Help"
+        [attr.maxlength]="setting.maxLength" placeholder="Enter {{setting.displayName}}">
+        <small id="{{setting.name}}Help" class="form-text text-muted">{{setting.description}}</small>
+      </div>
+
+      <div class="form-group" *ngSwitchCase="'number'">
+        <label for="{{setting.name}}">{{setting.displayName}}</label>
+        <div class="input-group">
+          <input type="number" [(ngModel)]="setting.value" class="form-control" id="{{setting.name}}" name="{{setting.name}}" attr.aria-describedby="{{setting.name}}Help"
+           [attr.min]="setting.min" [attr.max]="setting.max" placeholder="Enter {{setting.displayName}}">
+          <div class="input-group-append" *ngIf="setting.unit">
+            <span class="input-group-text">{{setting.unit}}</span>
+          </div>
+        </div>
+        <small id="{{setting.name}}Help" class="form-text text-muted">{{setting.description}}</small>
+      </div>
+
+      <div class="form-group form-check" *ngSwitchCase="'boolean'">
+        <input type="checkbox" class="form-check-input" id="{{setting.name}}" [(ngModel)]="setting.value" name="{{setting.name}}">
+        <label class="form-check-label" for="{{setting.name}}">{{setting.displayName}}</label>
+        <small id="{{setting.name}}Help" class="form-text text-muted">{{setting.description}}</small>
+      </div>
+
+    </span>
+  </span>
+  <div class="form-group">
+    <button type="submit" (click)="save()" class="btn btn-primary">Save</button>
+  </div>
+</form>
