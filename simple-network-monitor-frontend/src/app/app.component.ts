@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
   }
 
   public toogleAutoRefresh() {
-    if(this.autoRefreshSubscribtion.closed) {
+    if(this.autoRefreshSubscribtion && this.autoRefreshSubscribtion.closed) {
       this.autoRefreshSubscribtion = this.autoRefreshTimer.subscribe(v => this.reload());
     }
     else {
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   }
 
   public isAutoRefreshActive() : boolean {
-    return !this.autoRefreshSubscribtion.closed;
+    return this.autoRefreshSubscribtion && !this.autoRefreshSubscribtion.closed;
   }
 
   reload() {

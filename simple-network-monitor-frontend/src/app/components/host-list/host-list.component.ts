@@ -208,4 +208,44 @@ export class HostListComponent implements OnInit {
     console.log('export'); // TODO
   }
 
+  public toggleADSelection(name : string) {
+    if (this.selectedHosts.hasOwnProperty(name)) {
+      this.selectedHosts[name] = !this.selectedHosts[name];
+    }
+    else {
+      this.selectedHosts[name] = true;
+    }
+  }
+
+  public toggleADSelectAll(e) {
+    if(this.isADAllSelected()) {
+      this.selectedHosts = {};
+    }
+    else {
+      this.discoveredHosts.forEach( host => this.selectedHosts[host.name] = true );
+    }
+  }
+
+  public isADAllSelected() : boolean {
+    if (this.discoveredHosts.length == 0) {
+      return false;
+    }
+    let i = 0;
+    for (const host in this.selectedHosts) {
+      if(this.selectedHosts[host]) {
+        i++;
+      }
+    }
+
+    return i == this.discoveredHosts.length;
+  }
+
+  public isADoneSelected() : boolean {
+    for (const host in this.selectedHosts) {
+      if(this.selectedHosts[host]) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

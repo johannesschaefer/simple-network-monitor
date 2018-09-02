@@ -1,9 +1,17 @@
-<div class="d-flex justify-content-between align-middle">
-  <h2>Hosts</h2>
+<div class="d-flex justify-content-between align-middle" style="align-items: center">
+  <h2><i class="fas fa-server"></i> Hosts</h2>
   <span>
-    <i class="fas fa-search-plus fa-lg" (click)="startAutoDiscovery()" title="Auto-discover new hosts"></i>&nbsp;
-    <i class="fas fa-file-export fa-lg" (click)="export()" title="Export hosts"></i>&nbsp;
-    <i class="fas fa-plus fa-lg" (click)="add()" title="Add new host"></i>
+    <form class="form-inline">
+      <select class="form-control form-control-sm" [(ngModel)]="size" (change)="reload()" name="size">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="10000">all</option>
+      </select>&nbsp;
+      <i class="fas fa-search-plus fa-lg" (click)="startAutoDiscovery()" title="Auto-discover new hosts"></i>&nbsp;
+      <i class="fas fa-file-export fa-lg" (click)="export()" title="Export hosts"></i>&nbsp;
+      <i class="fas fa-plus fa-lg" (click)="add()" title="Add new host"></i>
+    </form>
   </span>
 </div>
 
@@ -47,7 +55,7 @@
           </tr>
         </tbody>
     </table>
-    <nav aria-label="Pagination">
+    <nav aria-label="Pagination" *ngIf="hosts?.page?.totalPages !== 1">
         <ul class="pagination justify-content-center">
           <li class="page-item" [ngClass]="page == 0?'disabled':''"><a class="page-link" (click)="prev()">Previous</a></li>
           <li class="page-item" *ngFor="let i of numberArray(hosts?.page?.totalPages)" [ngClass]="i == page?'active':''"><a class="page-link" (click)="goto(i)">{{i+1}}</a></li>
@@ -68,7 +76,6 @@
         <form>
           <div class="form-group">
             <label for="network">Network</label>
-
             <ng-select [items]="autoDiscoveryNetworks"
               name="autoDiscoveryNetwork"
               [addTag]="true"
@@ -76,10 +83,6 @@
               placeholder="Enter network"
               id="network" aria-describedby="networkHelp">
             </ng-select>
-<!--
-            <input type="text" class="form-control" id="network" aria-describedby="networkHelp" 
-              placeholder="Enter network" name="autoDiscoveryNetwork" [(ngModel)]="autoDiscoveryNetwork" required>
--->
             <small id="networkHelp" class="form-text text-muted">Enter network that should be used for auto discovery, format xxx.xxx.xxx.xxx/xx.</small>
           </div>
           <button type="button" class="btn btn-primary" (click)="performAutoDiscovery()">Start</button>
@@ -101,7 +104,9 @@
       <table class="table table-hover">
           <thead>
             <tr>
-              <th style="width: 30px"></th>
+              <th style="width: 30px">
+                <input type="checkbox" (change)="toggleADSelectAll($event)" [checked]="isADAllSelected()">
+              </th>
               <th scope="col">Name</th>
               <th scope="col">Hostname</th>
               <th scope="col">IP v4</th>
@@ -113,16 +118,14 @@
               <td>
                 <input [(ngModel)]="selectedHosts[host.name]" type="checkbox" name="{{host.name}}" id="{{host.name}}">
               </td>
-              <td title="{{host.name}}" class="no-overflow">
-                  {{host.name}}
-              </td>
-              <td title="{{host.hostname}}" class="no-overflow">{{host.hostname}}</td>
-              <td title="{{host.ipv4}}" class="no-overflow">{{host.ipv4}}</td>
-              <td title="{{host.ipv6}}" class="no-overflow">{{host.ipv6}}</td>
+              <td title="{{host.name}}" class="no-overflow" (click)="toggleADSelection(host.name)">{{host.name}}</td>
+              <td title="{{host.hostname}}" class="no-overflow" (click)="toggleADSelection(host.name)">{{host.hostname}}</td>
+              <td title="{{host.ipv4}}" class="no-overflow" (click)="toggleADSelection(host.name)">{{host.ipv4}}</td>
+              <td title="{{host.ipv6}}" class="no-overflow" (click)="toggleADSelection(host.name)">{{host.ipv6}}</td>
             </tr>
           </tbody>
       </table>
-      <button type="button" class="btn btn-primary" (click)="addSelectedHosts()">Add selected</button>
+      <button type="button" class="btn btn-primary" (click)="addSelectedHosts()" [disabled]="!isADoneSelected()">Add selected</button>
       &nbsp;
       <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
     </form>
