@@ -12,6 +12,9 @@ public class HostRepositoryImpl implements HostRepositoryCustom {
     public static final String SECRET_STRING = "43serER435gegEWR4t34";
 
     @Autowired
+    private HostRepository hostRepo;
+
+    @Autowired
     private SampleRepository sampleRepo;
 
     @Override
@@ -85,4 +88,9 @@ public class HostRepositoryImpl implements HostRepositoryCustom {
     public int getUnknown(Host host) {
         return getStatusCount(host, Status.UNKNOWN);
     }
+/*
+    @Override
+    public Host save(Host host) {
+        return hostRepo.save(host);
+    }*/
 }

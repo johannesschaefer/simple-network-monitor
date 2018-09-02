@@ -1,6 +1,5 @@
 package io.github.johannesschaefer.simplenetworkmonitor.repos;
 
-import io.github.johannesschaefer.simplenetworkmonitor.entities.SensorStatus;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.Setting;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.SettingProjection;
 import org.springframework.data.repository.PagingAndSortingRepository;

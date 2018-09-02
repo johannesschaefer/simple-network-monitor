@@ -13,19 +13,19 @@
   "value" : "true",
   "type" : "boolean"
 }, {
-  "name" : "SMTPhost",
+  "name" : "smtpHost",
   "displayName" : "SMTP host",
   "description" : "SMTP host for sending notification emails",
   "value" : "",
   "type" : "string"
 }, {
-  "name" : "SMTPusername",
+  "name" : "smtpUsername",
   "displayName" : "SMTP username",
   "description" : "Username for the SMTP host",
   "value" : "",
   "type" : "string"
 }, {
-  "name" : "SMTPpassword",
+  "name" : "smtpPassword",
   "displayName" : "SMTP password",
   "description" : "Password for the SMTP host",
   "value" : "",

@@ -6,4 +6,4 @@ cp src/main/docker/local/Dockerfile target &&
 docker build -t snm target &&
 docker run -d -p 8080:8080 -p 5005:5005 --name snm snm
 
-sleep 2
+sleep 1

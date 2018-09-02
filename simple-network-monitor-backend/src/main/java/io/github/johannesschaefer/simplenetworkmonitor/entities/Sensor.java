@@ -1,5 +1,6 @@
 package io.github.johannesschaefer.simplenetworkmonitor.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.*;
@@ -35,12 +36,13 @@ public class Sensor {
     @Builder.Default
     private long interval = 60000;
 
-    //@NonNull
-    @ManyToOne//(optional = false)
+    @NonNull
+    @ManyToOne(optional = false)
+    @JsonIgnore
     private Host host;
 
-    //@NonNull
-    @OneToOne//(optional = false)
+    @NonNull
+    @ManyToOne(optional = false)
     private Command command;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor", cascade = CascadeType.ALL)

@@ -55,7 +55,7 @@
           </tr>
         </tbody>
     </table>
-    <nav aria-label="Pagination" *ngIf="hosts?.page?.totalPages !== 1">
+    <nav aria-label="Pagination" *ngIf="hosts?.page?.totalPages > 1">
         <ul class="pagination justify-content-center">
           <li class="page-item" [ngClass]="page == 0?'disabled':''"><a class="page-link" (click)="prev()">Previous</a></li>
           <li class="page-item" *ngFor="let i of numberArray(hosts?.page?.totalPages)" [ngClass]="i == page?'active':''"><a class="page-link" (click)="goto(i)">{{i+1}}</a></li>

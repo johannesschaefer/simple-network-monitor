@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.github.johannesschaefer.simplenetworkmonitor.SNMUtils;
+import io.github.johannesschaefer.simplenetworkmonitor.ScheduleService;
 import io.github.johannesschaefer.simplenetworkmonitor.dto.CommandResult;
 import io.github.johannesschaefer.simplenetworkmonitor.dto.HostOverview;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.Command;
@@ -44,6 +45,9 @@ public class HostController {
     @Autowired
     private CommandRepository commandRepo;
 
+    @Autowired
+    private ScheduleService scheduleService;
+
     @GetMapping("/hosts/autodiscovery")
     @ResponseBody
     public List<Host> autoDiscovery(@RequestParam("network") String network) throws NMapExecutionException, NMapInitializationException {
@@ -57,8 +61,6 @@ public class HostController {
         }
 
         List<Host> hosts = Lists.newArrayList();
-
-        Command wakeonlan = commandRepo.findByName("wakeonlan");
 
         final NMapRun result = nmap.getResult();
         for (org.nmap4j.data.nmaprun.Host nmapHost : result.getHosts()) {
@@ -115,8 +117,10 @@ public class HostController {
                 host.getSecretProperties().put("password", "");
             }
 
-            // TODO: fetch mac address
+            Command wakeonlan = commandRepo.findByName("wakeonlan");
             host.getCommands().add(wakeonlan);
+            // TODO: fetch mac address
+            host.getProperties().put("mac_address", "");
 
             if (!hostRepo.findByHostnameOrIpv4OrIpv6(host.getHostname(), host.getIpv4(), host.getIpv6()).isPresent()) {
                 hosts.add(host);
@@ -136,8 +140,26 @@ public class HostController {
                 }
             }
         }
+        host.getSensors().forEach(x -> x.setHost(host));
+
+        if (!Strings.isNullOrEmpty(host.getId())) {
+            Optional<Host> hostOrg = hostRepo.findById(host.getId());
+            if (hostOrg.isPresent()) {
+                for (Sensor s : host.getSensors()) {
+                    if (s.getCommand() == null) {
+                        Optional<Sensor> sOrg = hostOrg.get().getSensors().stream().filter(a -> a.getId().equals(s.getId())).findFirst();
+                        sOrg.ifPresent(a -> s.setCommand(a.getCommand()));
+                    }
+                }
+            }
+        }
 
         hostRepo.save(host);
+
+        if (scheduleService.isRunning()) {
+            scheduleService.updateSchedules();
+        }
+
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -151,7 +173,7 @@ public class HostController {
     private void addSensor(Host host, String name, String cmdName, Map<String, String> props, Map<String, String> secretProps) {
         Command cmd = commandRepo.findByName(cmdName);
         if (cmd != null) {
-            Sensor sensor = Sensor.builder().command(cmd).name(name).properties(props).secretProperties(secretProps).build();
+            Sensor sensor = Sensor.builder().host(host).command(cmd).name(name).properties(props).secretProperties(secretProps).build();
             host.getSensors().add(sensor);
         }
     }

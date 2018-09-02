@@ -37,8 +37,8 @@ public class Host {
 
     private String ipv6;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "HOST_ID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "host")
+    //@JoinColumn(name = "HOST_ID")
     @Builder.Default
     private List<Sensor> sensors = Lists.newArrayList();
 

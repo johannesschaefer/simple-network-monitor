@@ -3,13 +3,13 @@ package io.github.johannesschaefer.simplenetworkmonitor.controller;
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import io.github.johannesschaefer.simplenetworkmonitor.ScheduleService;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.Setting;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.HostRepositoryImpl;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.SettingRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.*;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @Controller

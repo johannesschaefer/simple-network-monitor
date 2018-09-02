@@ -38,6 +38,10 @@ public class ScheduleService {
 
     private boolean running = false;
 
+    public void updateSchedules() {
+        startSchedules();
+    }
+
     public void startSchedules() {
         taskScheduler.getScheduledThreadPoolExecutor().getQueue().clear();
 
@@ -98,7 +102,10 @@ public class ScheduleService {
             if (split1.length == 2) {
                 String[] split2 = split1[1].split(" ");
                 for (String sp : split2) {
-                    samples.add(parseString(sp, s, split1[0], sensor));
+                    Sample samp = parseString(sp, s, split1[0], sensor);
+                    if (samp != null) {
+                        samples.add(samp);
+                    }
                 }
             } else {
                 SampleType type = SampleType.builder().name("error").sensor(sensor).build();
@@ -125,6 +132,9 @@ public class ScheduleService {
         String unit = null;
 
         int sep1 = sp.indexOf('=');
+        if (sep1<1) {
+            return null;
+        }
         typeName = sp.substring(0, sep1);
         String[] split = sp.substring(sep1 + 1).split(";");
         if (split.length >= 1) {
@@ -136,7 +146,7 @@ public class ScheduleService {
                 }
             }
             value = Double.valueOf(valueStr.substring(0, i));
-            unit = valueStr.substring(i);
+            unit = Strings.emptyToNull(valueStr.substring(i).trim());
         }
         warn = getValue(split, 1);
         critical = getValue(split, 2);

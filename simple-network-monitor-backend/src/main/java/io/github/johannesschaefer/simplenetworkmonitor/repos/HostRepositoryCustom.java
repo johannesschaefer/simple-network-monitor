@@ -17,4 +17,6 @@ public interface HostRepositoryCustom {
     int getCritical(Host host);
 
     int getUnknown(Host host);
+
+    //Host save(Host host);
 }
