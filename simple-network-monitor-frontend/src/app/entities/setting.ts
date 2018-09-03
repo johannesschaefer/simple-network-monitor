@@ -15,4 +15,5 @@ export interface Setting {
     value: string;
     type: string;
     unit: string;
+    required: boolean;
 }

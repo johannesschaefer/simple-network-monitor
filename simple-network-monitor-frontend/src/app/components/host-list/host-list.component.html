@@ -20,7 +20,7 @@
 </div>
 
 <div *ngIf="error == null">
-    <table class="table table-hover">
+    <table class="table table-hover table-striped">
         <thead>
           <tr>
             <th class="text-center" scope="col" style="width: 70px" (click)="sort('status')">Status</th>
@@ -73,7 +73,7 @@
       </button>
     </div>
     <div class="modal-body">
-        <form>
+        <form #startAutoDiscoveryForm="ngForm">
           <div class="form-group">
             <label for="network">Network</label>
             <ng-select [items]="autoDiscoveryNetworks"
@@ -81,11 +81,11 @@
               [addTag]="true"
               [(ngModel)]="autoDiscoveryNetwork"
               placeholder="Enter network"
-              id="network" aria-describedby="networkHelp">
+              id="network" aria-describedby="networkHelp" required>
             </ng-select>
             <small id="networkHelp" class="form-text text-muted">Enter network that should be used for auto discovery, format xxx.xxx.xxx.xxx/xx.</small>
           </div>
-          <button type="button" class="btn btn-primary" (click)="performAutoDiscovery()">Start</button>
+          <button type="submit" class="btn btn-primary" (click)="performAutoDiscovery()" [disabled]="!startAutoDiscoveryForm.form.valid">Start</button>
           &nbsp;
           <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
         </form>
@@ -101,7 +101,7 @@
   </div>
   <div class="modal-body">
     <form>
-      <table class="table table-hover">
+      <table class="table table-hover table-striped">
           <thead>
             <tr>
               <th style="width: 30px">
@@ -154,7 +154,7 @@
         </ul>
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
-            <form>
+            <form #addHostForm="ngForm">
               <div class="form-group">
                 <label for="hostName">Name</label>
                 <input type="text" class="form-control" id="hostName" aria-describedby="hostNameHelp" placeholder="Enter host display name" name="currentHost.name" [(ngModel)]="currentHost.name" required>
@@ -188,8 +188,8 @@
           <div class="tab-pane fade" id="sec-props" role="tabpanel" aria-labelledby="sec-props-tab">
             <snm-properties-panel secret="true" [(props)]="currentHost.secretProperties"></snm-properties-panel>
           </div>
-          <button *ngIf="!currentHost?.id" type="button" class="btn btn-primary" (click)="addPerform()">Save</button>
-          <button *ngIf="currentHost?.id" type="button" class="btn btn-primary" (click)="editPerform()">Update</button>
+          <button *ngIf="!currentHost?.id" type="submit" class="btn btn-primary" (click)="addPerform()" [disabled]="!addHostForm.form.valid">Save</button>
+          <button *ngIf="currentHost?.id" type="submit" class="btn btn-primary" (click)="editPerform()" [disabled]="!addHostForm.form.valid">Update</button>
           &nbsp;
           <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
         </div>

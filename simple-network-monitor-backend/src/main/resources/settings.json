@@ -5,7 +5,8 @@
   "value" : "10000",
   "type" : "number",
   "unit" : "ms",
-  "min" : 500
+  "min" : 500,
+  "required": true
 }, {
   "name" : "firstRun",
   "displayName" : "First Run",

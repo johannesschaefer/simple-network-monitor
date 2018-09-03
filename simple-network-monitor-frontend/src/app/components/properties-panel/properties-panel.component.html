@@ -1,16 +1,16 @@
-<table class="table table-hover">
+<table class="table table-hover table-striped">
     <thead>
-      <tr>
+      <tr class="text-center">
         <th scope="col">Key</th>
         <th scope="col">Value</th>
-        <th (click)="add()">+</th>
+        <th (click)="add()"><i class="far fa-plus-square fa-lg"></i></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let entry of _props">
-        <td><input type="text" class="form-control" [(ngModel)]="entry.key"></td>
+      <tr *ngFor="let entry of _props" class="text-center">
+        <td><input type="text" class="form-control" [(ngModel)]="entry.key" required></td>
         <td><input type="{{secret?'password':'text'}}" class="form-control" [(ngModel)]="entry.value" (focusout)="valueChanged($event)"></td>
-        <td (click)="remove(entry)">x</td>
+        <td (click)="remove(entry)"><i class="far fa-trash-alt fa-lg"></i></td>
       </tr>
     </tbody>
 </table>

@@ -11,6 +11,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BlockUIModule } from 'ng-block-ui';
 import { BlockUIHttpModule } from 'ng-block-ui/http';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { CustomFormsModule } from 'ng2-validation'
 
 import { AppComponent } from './app.component';
 
@@ -79,6 +80,7 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    CustomFormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     ModalModule.forRoot(),

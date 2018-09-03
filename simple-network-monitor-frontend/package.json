@@ -31,6 +31,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "ng-block-ui": "^1.0.6",
+    "ng2-validation": "^4.2.0",
     "ngx-bootstrap": "^3.0.1",
     "ngx-bootstrap-modal": "^2.0.1",
     "ngx-modal-dialog": "^3.0.0",

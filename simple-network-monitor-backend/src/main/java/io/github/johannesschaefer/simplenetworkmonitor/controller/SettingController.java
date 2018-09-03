@@ -37,12 +37,30 @@ public class SettingController {
     @PostMapping("/settings/update")
     public ResponseEntity createSensor(@RequestBody Setting setting) {
         Optional<Setting> sett = settingRepo.findById(setting.getName());
-        if (sett.isPresent()) {
-            if ((!"password".equals(sett.get().getType()) || !HostRepositoryImpl.SECRET_STRING.equals(setting.getValue())) &&
-                    !Objects.equal(sett.get(), setting)) {
-                sett.get().setValue(setting.getValue());
-                settingRepo.save(sett.get());
+
+        if (!sett.isPresent()) {
+            throw new IllegalStateException("no such setting in database: " + setting.getName());
+        }
+
+        Setting sett1 = sett.get();
+        if ((!"password".equals(sett1.getType()) || !HostRepositoryImpl.SECRET_STRING.equals(setting.getValue())) &&
+                !Objects.equal(sett1, setting)) {
+
+            if (sett1.isRequired() && Strings.emptyToNull(setting.getValue()) == null) {
+                throw new IllegalArgumentException(sett1.getDisplayName() + " is required");
             }
+            if (sett1.getMaxLength() != null && Strings.nullToEmpty(setting.getValue()).length() > sett1.getMaxLength()) {
+                throw new IllegalArgumentException(sett1.getDisplayName() + " is longer than " + sett1.getMaxLength());
+            }
+            if (sett1.getMin() != null && Integer.parseInt(setting.getValue()) < sett1.getMin()) {
+                throw new IllegalArgumentException(sett1.getDisplayName() + " is lower than " + sett1.getMin());
+            }
+            if (sett1.getMax() != null && Integer.parseInt(setting.getValue()) > sett1.getMax()) {
+                throw new IllegalArgumentException(sett1.getDisplayName() + " is greater than " + sett1.getMax());
+            }
+
+            sett1.setValue(setting.getValue());
+            settingRepo.save(sett1);
         }
         return ResponseEntity.ok(HttpStatus.OK);
     }

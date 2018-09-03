@@ -11,7 +11,7 @@
 </div>
 
 <div *ngIf="error == null">
-    <table class="table">
+    <table class="table table-hover table-striped">
         <thead>
           <tr>
             <th scope="col" (click)="sort('name')">Name</th>
@@ -55,7 +55,7 @@
       </button>
     </div>
     <div class="modal-body">
-        <form>
+        <form #commandForm="ngForm">
             <div class="form-group">
               <label for="cmdName">Name</label>
               <input type="text" class="form-control" id="cmdName" aria-describedby="cmdNameHelp" placeholder="Enter command name" name="currentCmd.name" [(ngModel)]="currentCmd.name" required>
@@ -71,8 +71,8 @@
               <input type="text" class="form-control" id="cmdExec" aria-describedby="cmdExecHelp" placeholder="Enter command exec" name="currentCmd.exec" [(ngModel)]="currentCmd.exec" required>
               <small id="cmdExecHelp" class="form-text text-muted">Enter the exec for the command.</small>
             </div>
-            <button *ngIf="!currentCmd?.id" type="button" class="btn btn-primary" (click)="addCmd()">Save</button>
-            <button *ngIf="currentCmd?.id" type="button" class="btn btn-primary" (click)="editCmd()">Update</button>
+            <button *ngIf="!currentCmd?.id" type="submit" class="btn btn-primary" (click)="addCmd()" [disabled]="!commandForm.form.valid">Save</button>
+            <button *ngIf="currentCmd?.id" type="submit" class="btn btn-primary" (click)="editCmd()" [disabled]="!commandForm.form.valid">Update</button>
             &nbsp;
             <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
           </form>

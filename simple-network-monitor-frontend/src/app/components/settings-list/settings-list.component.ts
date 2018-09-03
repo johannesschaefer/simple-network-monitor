@@ -14,7 +14,7 @@ export class SettingsListComponent implements OnInit {
   constructor( private settingService : SettingService ) { }
 
   ngOnInit() {
-    this.settingService.getAll(null, null, [{col: name, direction: 'ASC'}] ).subscribe( x => this.settings = x, err => { alert(err) });
+    this.settingService.getAll(null, null, [{col: 'name', direction: 'ASC'}] ).subscribe( x => this.settings = x, err => { alert(err) });
   }
 
   save() {
