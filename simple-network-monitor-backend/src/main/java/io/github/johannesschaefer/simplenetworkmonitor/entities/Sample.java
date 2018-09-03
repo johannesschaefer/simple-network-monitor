@@ -18,10 +18,11 @@ public class Sample {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     @NonNull
-    @ManyToOne()
+    @ManyToOne(optional = false)
     private SampleType type;
     @NonNull
     @Builder.Default
+    @Column(nullable = false)
     private Date time = new Date();
     private Double value;
     private Double warn;
@@ -33,8 +34,9 @@ public class Sample {
     private String msg;
     @NonNull
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Status status;
     @NonNull
-    @ManyToOne()
+    @ManyToOne(optional = false)
     private Sensor sensor;
 }

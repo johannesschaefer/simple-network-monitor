@@ -22,4 +22,6 @@ public interface SettingProjection {
     Long getMax();
 
     Long getMaxLength();
+
+    boolean isRequired();
 }

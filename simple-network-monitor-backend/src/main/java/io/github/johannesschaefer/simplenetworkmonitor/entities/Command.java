@@ -19,9 +19,10 @@ public class Command {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     @NonNull
-    @Column(unique=true)
+    @Column(unique=true, nullable = false)
     private String name;
     private String description;
     @NonNull
+    @Column(nullable = false)
     private String exec;
 }

@@ -28,12 +28,14 @@ public class Sensor {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @NonNull
     @Builder.Default
+    @Column(nullable = false)
     private boolean active = true;
 
-    @Column(nullable = false)
+    @NonNull
     @Builder.Default
+    @Column(nullable = false)
     private long interval = 60000;
 
     @NonNull

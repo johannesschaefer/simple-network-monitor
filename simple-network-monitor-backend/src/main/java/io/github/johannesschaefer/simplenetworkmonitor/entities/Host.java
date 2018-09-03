@@ -26,7 +26,7 @@ public class Host {
     private String id;
 
     @NonNull
-    @Column(unique=true)
+    @Column(unique=true, nullable = false)
     private String name;
 
     private String description;
@@ -38,11 +38,10 @@ public class Host {
     private String ipv6;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "host")
-    //@JoinColumn(name = "HOST_ID")
     @Builder.Default
     private List<Sensor> sensors = Lists.newArrayList();
 
-    @ManyToMany()
+    @ManyToMany
     @Builder.Default
     private Set<Command> commands = Sets.newHashSet();
 

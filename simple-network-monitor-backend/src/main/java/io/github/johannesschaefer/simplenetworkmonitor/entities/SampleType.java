@@ -3,10 +3,7 @@ package io.github.johannesschaefer.simplenetworkmonitor.entities;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -20,9 +17,10 @@ public class SampleType {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     @NonNull
+    @Column(nullable = false)
     private String name;
     private String unit;
     @NonNull
-    @ManyToOne()
+    @ManyToOne(optional = false)
     private Sensor sensor;
 }
