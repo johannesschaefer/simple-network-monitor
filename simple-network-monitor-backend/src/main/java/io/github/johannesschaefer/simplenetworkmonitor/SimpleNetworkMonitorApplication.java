@@ -1,5 +1,6 @@
 package io.github.johannesschaefer.simplenetworkmonitor;
 
+import io.github.johannesschaefer.simplenetworkmonitor.repos.HostEventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InjectionPoint;
@@ -34,4 +35,10 @@ public class SimpleNetworkMonitorApplication {
         Class<?> classOnWired = injectionPoint.getMember().getDeclaringClass();
         return LoggerFactory.getLogger(classOnWired);
     }
+
+    @Bean
+    public HostEventHandler produceHostEventHandler() {
+        return new HostEventHandler();
+    }
+
 }

@@ -156,9 +156,7 @@ public class HostController {
 
         hostRepo.save(host);
 
-        if (scheduleService.isRunning()) {
-            scheduleService.updateSchedules();
-        }
+        scheduleService.updateSchedule();
 
         return ResponseEntity.ok(HttpStatus.OK);
     }

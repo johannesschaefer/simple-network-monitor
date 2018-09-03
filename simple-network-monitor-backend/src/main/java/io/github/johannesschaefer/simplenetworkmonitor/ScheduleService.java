@@ -38,8 +38,10 @@ public class ScheduleService {
 
     private boolean running = false;
 
-    public void updateSchedules() {
-        startSchedules();
+    public void updateSchedule() {
+        if (isRunning()) {
+            startSchedules();
+        }
     }
 
     public void startSchedules() {
