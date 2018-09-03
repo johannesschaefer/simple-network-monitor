@@ -26,14 +26,14 @@
             <td class="no-overflow" title="{{command.description}}">{{command.description}}</td>
             <td class="no-overflow" title="{{command.exec}}">{{command.exec}}</td>
             <td>
-                <div class="btn-group dropleft">
-                  <button class="btn fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" (click)="edit(command)">edit</a>
-                    <a class="dropdown-item" (click)="delete(command)">delete</a>
-                  </div>
+              <div class="dropleft">
+                <i class="btn fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </i>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" (click)="edit(command)">edit</a>
+                  <a class="dropdown-item" (click)="delete(command)">delete</a>
                 </div>
+              </div>
             </td>
           </tr>
         </tbody>
