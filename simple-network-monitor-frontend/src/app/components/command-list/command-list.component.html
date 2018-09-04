@@ -1,8 +1,8 @@
-<div class="d-flex justify-content-between align-middle">
-    <h2>Commands</h2>
+<div class="d-flex justify-content-between align-middle" style="align-items: center">
+  <h2><i class="fas fa-terminal"></i>&nbsp;Commands</h2>
     <span>
-      <i class="fas fa-file-export fa-lg" (click)="export()" title="Export hosts"></i>&nbsp;
-      <i class="fas fa-plus fa-lg" (click)="add()" title="Add new host"></i>
+      <i class="fas fa-file-export fa-lg" (click)="export()" title="Export commands"></i>&nbsp;
+      <i class="fas fa-plus fa-lg" (click)="add()" title="Add new command"></i>
   </span>
 </div>
 
@@ -38,12 +38,20 @@
           </tr>
         </tbody>
     </table>
-    <nav aria-label="Pagination" *ngIf="hosts?.page?.totalPages > 1">
-        <ul class="pagination justify-content-center">
+    <nav aria-label="Pagination" class="d-flex" [ngClass]="commands?.page?.totalPages > 1 ? 'justify-content-between' : 'justify-content-end'">
+        <ul class="pagination" *ngIf="commands?.page?.totalPages > 1">
           <li class="page-item" [ngClass]="page == 0?'disabled':''"><a class="page-link" (click)="prev()">«</a></li>
           <li class="page-item" *ngFor="let i of numberArray(commands?.page?.totalPages)" [ngClass]="i == page?'active':''"><a class="page-link" (click)="goto(i)">{{i+1}}</a></li>
           <li class="page-item" [ngClass]="page+1 == commands?.page?.totalPages?'disabled':''"><a class="page-link" (click)="next()">»</a></li>
         </ul>
+        <form >
+          <select class="form-control form-control-sm" [(ngModel)]="size" (change)="changePageSize()" name="size">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="10000">all</option>
+          </select>&nbsp;
+        </form>
     </nav>
 </div>
 

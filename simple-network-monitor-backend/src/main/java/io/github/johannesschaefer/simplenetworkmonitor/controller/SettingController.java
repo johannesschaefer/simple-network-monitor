@@ -1,9 +1,10 @@
 package io.github.johannesschaefer.simplenetworkmonitor.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import io.github.johannesschaefer.simplenetworkmonitor.ScheduleService;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.Setting;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.HostRepositoryImpl;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.SettingRepository;
@@ -21,6 +22,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @Controller
@@ -31,8 +33,14 @@ public class SettingController {
     @Autowired
     private SettingRepository settingRepo;
 
+    @Autowired
+    private ObjectMapper mapper;
+
     @Value("${defaultNetwork}")
     private String defaultNetwork;
+
+    @Value("${unsecureExport}")
+    private boolean unsecureExport;
 
     @PostMapping("/settings/update")
     public ResponseEntity createSensor(@RequestBody Setting setting) {
@@ -80,5 +88,23 @@ public class SettingController {
             netInt.getInterfaceAddresses().forEach(x -> ret.add(x.getAddress().toString().substring(1) + "/" + x.getNetworkPrefixLength()));
         }
         return ret;
+    }
+
+    private static Setting clearPassword(Setting a) {
+        if ("password".equals(a.getType())) {
+            a.setValue(null);
+        }
+        return a;
+    }
+
+    @GetMapping("/settings/export")
+    @ResponseBody
+    public String export() throws JsonProcessingException {
+        if (unsecureExport) {
+            return mapper.writeValueAsString(settingRepo.findAll());
+        }
+        else {
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(Lists.newArrayList(settingRepo.findAll()).stream().map(SettingController::clearPassword).collect(Collectors.toList()));
+        }
     }
 }

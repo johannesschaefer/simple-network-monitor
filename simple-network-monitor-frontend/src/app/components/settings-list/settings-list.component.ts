@@ -23,4 +23,8 @@ export class SettingsListComponent implements OnInit {
     }
   }
 
+  export() {
+    this.settingService.export();
+  }
+
 }

@@ -87,6 +87,12 @@ export class CommandListComponent implements OnInit {
     return res;
   }
 
+  public changePageSize() {
+    this.page = 0;
+    this.reload();
+  }
+
+
   public add() {
     this.addModalRef = this.modalService.show(this.addTempRef);
     console.info('add');
@@ -140,6 +146,6 @@ export class CommandListComponent implements OnInit {
   }
 
   public export() {
-    console.log('export');
+    this.commandService.export();
   }
 }

@@ -37,5 +37,12 @@ export class CommandService {
   public update(command : Command) : Observable<{}> {
     return this.http.patch(this.getUrl() + command.id, command);
   }
-  
+
+  public export() {
+    window.open(this.getUrl() + 'export');
+    /*
+    var blob = new Blob(["{data:123}"], { type: 'text/json' });
+    var url= window.URL.createObjectURL(blob);
+    window.open(url);*/
+  }
 }

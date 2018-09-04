@@ -1,5 +1,7 @@
 package io.github.johannesschaefer.simplenetworkmonitor.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -23,15 +25,18 @@ import org.nmap4j.data.host.Address;
 import org.nmap4j.data.host.ports.Port;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @Controller
@@ -47,6 +52,12 @@ public class HostController {
 
     @Autowired
     private ScheduleService scheduleService;
+
+    @Autowired
+    private ObjectMapper mapper;
+
+    @Value("${unsecureExport}")
+    private boolean unsecureExport;
 
     @GetMapping("/hosts/autodiscovery")
     @ResponseBody
@@ -218,5 +229,51 @@ public class HostController {
            }
         }
         return new HostOverview( Long.valueOf(hosts.size()), ok, warn, critical, unknown);
+    }
+
+    @GetMapping("/hosts/export")
+    @ResponseBody
+    public String export() throws JsonProcessingException {
+        List<Host> hostList = Lists.newArrayList(hostRepo.findAll());
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(hostList.stream().map(a -> exportMapping(a)).collect(Collectors.toList()));
+    }
+
+    private Map<String, Object> exportMapping(Host host) {
+        HashMap<String, Object> ret = Maps.newHashMap();
+        ret.put("name", host.getName());
+        ret.put("description", host.getDescription());
+        ret.put("hostname", host.getHostname());
+        ret.put("ipv4", host.getIpv4());
+        ret.put("ipv6", host.getIpv6());
+        ret.put("sensors", host.getSensors().stream().map(a -> mapSensor(a)).collect(Collectors.toList()));
+        ret.put("commands", host.getCommands().stream().map(Command::getName).collect(Collectors.toList()));
+        ret.put("properties", host.getProperties());
+        if (unsecureExport) {
+            ret.put("secretProperties", host.getSecretProperties());
+        }
+        else {
+            Map<String, String> safeValues = Maps.newHashMap();
+            host.getSecretProperties().keySet().forEach(k -> safeValues.put(k, null));
+            ret.put("secretProperties", safeValues);
+        }
+        return ret;
+    }
+
+    private Map<String, Object> mapSensor(Sensor sensor) {
+        HashMap<String, Object> ret = Maps.newHashMap();
+        ret.put("name", sensor.getName());
+        ret.put("command", sensor.getCommand().getName());
+        ret.put("interval", sensor.getInterval());
+
+        ret.put("properties", sensor.getProperties());
+        if (unsecureExport) {
+            ret.put("secretProperties", sensor.getSecretProperties());
+        }
+        else {
+            Map<String, String> safeValues = Maps.newHashMap();
+            sensor.getSecretProperties().keySet().forEach(k -> safeValues.put(k, null));
+            ret.put("secretProperties", safeValues);
+        }
+        return ret;
     }
 }

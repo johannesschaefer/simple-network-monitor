@@ -23,4 +23,14 @@ export class SettingService {
   public update(setting : Setting) : Observable<{}> {
     return this.http.post(this.getUrl() + 'update', setting);
   }
+
+  public export() {
+    window.open(this.getUrl() + 'export');
+    /*
+    this.http.get<string>( this.getUrl() + 'export' ).subscribe(x => {
+      var blob = new Blob([x], { type: 'text/json' });
+      var url= window.URL.createObjectURL(blob);
+      window.open(url);
+    }, err => alert(err));*/
+  }
 }

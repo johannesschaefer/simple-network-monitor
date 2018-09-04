@@ -55,4 +55,11 @@ export class HostService {
     Params.append('network', network);
     return this.http.get<Host[]>(this.getUrl() + 'autodiscovery', { 'params': { 'network': network } });
   }
+
+  public export() {
+    window.open(this.getUrl() + 'export');/*
+    var blob = new Blob(["{data:123}"], { type: 'text/json' });
+    var url= window.URL.createObjectURL(blob);
+    window.open(url);*/
+  }
 }

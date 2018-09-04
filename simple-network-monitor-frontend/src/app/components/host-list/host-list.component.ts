@@ -90,9 +90,14 @@ export class HostListComponent implements OnInit {
     if(!value) return [];
     let res = [];
     for (let i = 0; i < value; i++) {
-        res.push(i);
-      }
+      res.push(i);
+    }
     return res;
+  }
+
+  public changePageSize() {
+    this.page = 0;
+    this.reload();
   }
 
   public goto(page : number) {
@@ -214,7 +219,7 @@ export class HostListComponent implements OnInit {
   }
 
   public export() {
-    console.log('export'); // TODO
+    this.hostService.export();
   }
 
   public toggleADSelection(name : string) {
