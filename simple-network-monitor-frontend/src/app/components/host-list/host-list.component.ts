@@ -24,7 +24,7 @@ export class HostListComponent implements OnInit {
   error : any = null;
   private page: number = 0;
   size: number = 10;
-  private sorts: Sort[] = Array({col: 'name', direction: 'ASC'});
+  private sorts: Sort[] = Array({col: 'name', direction: 'asc'});
 
   modalRef: BsModalRef;
 
@@ -59,6 +59,15 @@ export class HostListComponent implements OnInit {
       hosts => { this.hosts = hosts; this.error = null; },
       err => { this.error = err; }
      );
+  }
+
+  public getSortIcon(col: string) : string {
+    for (const s of this.sorts) {
+      if (s.col == col && s.direction != null) {
+        return s.direction == 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+      }
+    }
+    return "fa-sort";
   }
 
   public sort(col: string){

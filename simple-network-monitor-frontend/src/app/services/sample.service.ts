@@ -18,21 +18,7 @@ export class SampleService {
   }
   
   public getAll(page?: number, size?: number, sort?: Sort[]): Observable<SampleHal> {
-    // Initialize Params Object
-    let params = new HttpParams();
-
-    // Begin assigning parameters
-    if(page) {
-      params = params.append('page', page.toString());
-    }
-    if(size) {
-      params = params.append('size', size.toString());
-    }
-    if(sort) {
-      sort.forEach(s => {params = params.append('sort', s.col);params = params.append(s.col + '.dir', s.direction); });
-    }
-
-    return this.http.get<SampleHal>( this.getUrl(), { 'params': params });
+    return this.http.get<SampleHal>( this.getUrl(), { 'params': this.config.getQueryParameters(page, size, sort) });
   }
   
   // http://localhost:8080/samples/search/findBySensorAndType?sensorId=7fd37590-bcc8-4b6f-80a5-9a4e605e5611&typeId=e0bf4709-10d4-4e94-8725-82912e5bcba0

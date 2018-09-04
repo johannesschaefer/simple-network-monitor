@@ -18,21 +18,7 @@ export class SensorService {
   }
   
   public getAll(page?: number, size?: number, sort?: Sort[]): Observable<SensorHal> {
-    // Initialize Params Object
-    let Params = new HttpParams();
-
-    // Begin assigning parameters
-    if(page) {
-      Params = Params.append('page', page.toString());
-    }
-    if(size) {
-      Params = Params.append('size', size.toString());
-    }
-    if(sort) {
-      sort.forEach(s => {Params = Params.append('sort', s.col);Params = Params.append(s.col + '.dir', s.direction); });
-    }
-
-    return this.http.get<SensorHal>( this.getUrl(), { params: Params });
+    return this.http.get<SensorHal>( this.getUrl(), { params: this.config.getQueryParameters(page, size, sort) });
   }
   
   public get(id: string): Observable<Sensor> {
@@ -44,14 +30,10 @@ export class SensorService {
   }
 
   public create(sensor : Sensor) : Observable<{}> {
-    //delete sensor['host']['_embedded'];
-    //delete sensor['host']['_links'];
-    //delete sensor['command']['_links'];
     return this.http.post(this.getUrl() + 'create', sensor);
   }
 
   public update(sensor : Sensor) : Observable<{}> {
     return this.http.post(this.getUrl(), sensor);
-//    return this.http.patch(this.getUrl() + sensor.id, sensor);
   }
 }

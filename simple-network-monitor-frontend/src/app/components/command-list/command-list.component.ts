@@ -38,6 +38,15 @@ export class CommandListComponent implements OnInit {
      );
   }
 
+  public getSortIcon(col: string) : string {
+    for (const s of this.sorts) {
+      if (s.col == col && s.direction != null) {
+        return s.direction == 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+      }
+    }
+    return "fa-sort";
+  }
+
   public sort(col: string){
     let f = this.sorts.find(s => s.col == col);
     if(f !== undefined) {

@@ -20,23 +20,9 @@ export class HostService {
   private getUrl(){
     return this.config.getBackendUrl() + 'hosts/';
   }
-  
+
   public getAll(page?: number, size?: number, sort?: Sort[]): Observable<HostHal> {
-    // Initialize Params Object
-    let Params = new HttpParams();
-
-    // Begin assigning parameters
-    if(page) {
-      Params = Params.append('page', page.toString());
-    }
-    if(size) {
-      Params = Params.append('size', size.toString());
-    }
-    if(sort){
-      sort.forEach(s => {Params = Params.append('sort', s.col);Params = Params.append(s.col + '.dir', s.direction); });
-    }
-
-    return this.http.get<HostHal>( this.getUrl(), { 'params': Params });
+    return this.http.get<HostHal>( this.getUrl(), { 'params': this.config.getQueryParameters(page, size, sort) });
   }
   
   public get(id: string): Observable<Host> {
