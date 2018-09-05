@@ -67,6 +67,7 @@ The following settings can be set externally. By default all settings have usefu
 | setting file    | The name of the setting file to load on startup       | --settings-file=...                               | SETTINGS_FILE=...               | settings.json     |
 | Default Network | This network will be shown in the auto discovery dialog | --defaultNetwork=...                              | DEFAULT_NETWORK=...             | 192.168.178.0/24  |
 | Unsecure Export | Set this value to true, to export also the passwords  | --unsecureExport=...                              | UNSECURE_EXPORT=...             | false             |
+| Hibernate Dialect | | --spring.jpa.properties.hibernate.dialect=... | DB_DIALECT=... | |
 
 For the file parameters, you can use an export of settings, commands or hosts from the application. The refer such a file set the value like `--hosts-file=file:/myHosts.json`.
 

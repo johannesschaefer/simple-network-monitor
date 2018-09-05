@@ -35,7 +35,7 @@ public class Sensor {
 
     @NonNull
     @Builder.Default
-    @Column(nullable = false)
+    @Column(nullable = false, name = "intval")
     private long interval = 60000;
 
     @NonNull
