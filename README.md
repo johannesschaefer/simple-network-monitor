@@ -48,3 +48,26 @@ On a RaspberryPi 1 the startup can take several minutes, but it runs.
 ### General Docker hints
 
 To change the public port, just change the first `8080` to the port number you want.
+
+
+## Setting
+
+The following settings can be set externally. By default all settings have useful values for a first test run. For a productive usage these settings should be adjusted.
+
+| Name            | Description                                           | Commandline                                       | Docker                          | Default           |
+|-----------------|-------------------------------------------------------|---------------------------------------------------|---------------------------------|-------------------|
+| H2 Console      | Enables the H2 console                                | --spring.h2.console.enabled=...                   | H2_CONSOLE_ENABLED=...          | false             |
+| H2 allow others | Expose the H2 console to other clients than localhost | --spring.h2.console.settings.web-allow-others=... | H2_CONSOLE_WEB_ALLOW_OTHERS=... | false             |
+| DB URL          | Database URL                                          | --spring.datasource.url=...                       | DB_URL=...                      | jdbc:h2:mem:snmdb |
+| DB Username     | Database username                                     | --spring.datasource.username=...                  | DB_USERNAME=...                 | sa                |
+| DB Password     | Database password                                     | --spring.datasource.password=...                  | DB_PASSWORD=...                 | org.h2.Driver     |
+| DB Driver       | Database driver class name                            | --spring.datasource.driver-class-name=...         | DB_DRIVER=...                   |                   |
+| hosts file      | The name of the host file to load on startup          | --hosts-file=...                                  | HOSTS_FILE=...                  | hosts.json        |
+| commands file   | The name of the command file to load on startup       | --commands-file=...                               | COMMANDS_FILE=...               | commands.json     |
+| setting file    | The name of the setting file to load on startup       | --settings-file=...                               | SETTINGS_FILE=...               | settings.json     |
+| Default Network | This network will be shown in the auto discovery dialog | --defaultNetwork=...                              | DEFAULT_NETWORK=...             | 192.168.178.0/24  |
+| Unsecure Export | Set this value to true, to export also the passwords  | --unsecureExport=...                              | UNSECURE_EXPORT=...             | false             |
+
+For the file parameters, you can use an export of settings, commands or hosts from the application. The refer such a file set the value like `--hosts-file=file:/myHosts.json`.
+
+### Using an persiting database

@@ -10,8 +10,13 @@ RUN apk add monitoring-plugins && \
 
 ENV PATH /usr/lib/monitoring-plugins:/check_tr64_fritz:$PATH
 
+ENV UNSECURE_EXPORT false
+ENV H2_CONSOLE_ENABLED true
+ENV H2_CONSOLE_WEB_ALLOW_OTHERS true
+ENV HOSTS_FILE file:/hosts.json
+
 COPY snm.jar snm.jar
 COPY classes/hosts2.json hosts.json
 EXPOSE 8080
 EXPOSE 5005
-ENTRYPOINT ["java",  "-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/snm.jar", "--hosts-file=file:/hosts.json"]
+ENTRYPOINT ["java",  "-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/snm.jar"]

@@ -13,13 +13,20 @@ import io.github.johannesschaefer.simplenetworkmonitor.repos.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.AbstractEnvironment;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.MapPropertySource;
+import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class StartUpInit {
@@ -44,6 +51,9 @@ public class StartUpInit {
     @Autowired
     private ScheduleService scheduleService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Value("${hosts-file}")
     private Resource hostsResource;
 
@@ -53,11 +63,12 @@ public class StartUpInit {
     @Value("${settings-file}")
     private Resource settingResource;
 
+
+    @Autowired
+    Environment env;
+
     @PostConstruct
     public void initFromFile() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-
-
         TypeReference<List<Setting>> settingTypeReference = new TypeReference<List<Setting>>(){};
         InputStream settingStream = settingResource.getInputStream();
         List<Setting> settings = objectMapper.readValue(settingStream, settingTypeReference);
@@ -70,7 +81,7 @@ public class StartUpInit {
         InputStream cmdStream = commandResource.getInputStream();
         List<Command> cmds = objectMapper.readValue(cmdStream, cmdTypeReference);
         for (Command cmd : cmds) {
-            log.info("loading cmd {}", cmd.getName());
+            log.info("loading command {}", cmd.getName());
             commandRepo.save(cmd);
         }
 
