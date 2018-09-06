@@ -1,0 +1,37 @@
+version: '3.1'
+
+services:
+  db:
+    image: mariadb
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+      MYSQL_DATABASE: snm
+      MYSQL_USER: snm
+      MYSQL_PASSWORD: snm
+    ports:
+      - 3306:3306
+    # uncomment the following lines to persist the data of the maria db on the hard drive
+    #volumes:
+    #  - ./mariadb:/var/lib/mysql
+
+  snm:
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:mariadb://db:3306/snm?useSSL=false
+      DB_USERNAME: snm
+      DB_PASSWORD: snm
+      DB_DRIVER: org.mariadb.jdbc.Driver
+      DB_DIALECT: org.hibernate.dialect.MySQL5Dialect
+
+# uncomment the following lines for an admin tool for the db
+#  adminer:
+#    image: adminer
+#    container_name: adminer
+#    depends_on:
+#      - db
+#    restart: always
+#    ports:
+#      - 8081:8080

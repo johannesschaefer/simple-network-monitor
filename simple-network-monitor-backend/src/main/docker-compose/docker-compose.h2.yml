@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  snm:
+    environment:
+      DB_URL: jdbc:h2:/db/snmdb
+      DB_USERNAME: sa
+      DB_PASSWORD: sa
+      # uncomment the following lines to active the H2 console, use the DB_URL, DB_USERNAME and DB_PASSSWORD as credentials
+      #H2_CONSOLE_ENABLED: "true"
+      #H2_CONSOLE_WEB_ALLOW_OTHERS: "true"
+    # uncomment the following lines to persist the data of the H2 db on the hard drive
+    #volumes:
+    #  - ./h2db:/db

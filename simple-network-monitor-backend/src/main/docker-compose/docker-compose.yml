@@ -1,0 +1,9 @@
+version: '3.1'
+
+services:
+  snm:
+    image: simple-network-monitor
+    container_name: simple-network-monitor
+    restart: always
+    ports:
+     - 8080:8080

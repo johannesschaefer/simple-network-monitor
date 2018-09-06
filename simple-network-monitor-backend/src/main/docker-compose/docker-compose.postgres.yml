@@ -1,0 +1,34 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: snm
+      POSTGRES_PASSWORD: snm
+      POSTGRES_DB: snm
+    # uncomment the following lines to persist the data of the postgres db on the hard drive
+    #volumes:
+    #  - ./postgres:/var/lib/postgresql/data
+
+  snm:
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/snm
+      DB_USERNAME: snm
+      DB_PASSWORD: snm
+      DB_DRIVER: org.postgresql.Driver
+      DB_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+
+# uncomment the following lines for an admin tool for the db
+#  adminer:
+#    image: adminer
+#    depends_on:
+#      - db
+#    container_name: adminer
+#    restart: always
+#    ports:
+#      - 8081:8080
