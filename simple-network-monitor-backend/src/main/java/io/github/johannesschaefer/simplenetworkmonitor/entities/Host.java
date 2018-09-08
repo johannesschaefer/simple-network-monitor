@@ -7,8 +7,12 @@ import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Host {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -37,7 +42,7 @@ public class Host {
 
     private String ipv6;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "host")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "host", orphanRemoval = true)
     @Builder.Default
     private List<Sensor> sensors = Lists.newArrayList();
 
@@ -53,4 +58,15 @@ public class Host {
     @Fetch(value = FetchMode.SUBSELECT)
     @Builder.Default
     private Map<String, String> secretProperties = Maps.newHashMap();
+
+    @Version
+    private Long version;
+
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date creationDate;
+
+    @LastModifiedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date lastModifiedDate;
 }

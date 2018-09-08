@@ -18,4 +18,6 @@ public interface HostRepository extends PagingAndSortingRepository<Host, String>
 
     @Query(value = "SELECT h FROM Host h WHERE (h.hostname IS NOT NULL AND h.hostname = ?1) OR (h.ipv4 IS NOT NULL AND h.ipv4 = ?2) OR (h.ipv6 IS NOT NULL AND h.ipv6 = ?3)")
     Optional<Host> findByHostnameOrIpv4OrIpv6(String hostname, String ipv4, String ipv6);
+
+    Optional<Host> findByName(String name);
 }

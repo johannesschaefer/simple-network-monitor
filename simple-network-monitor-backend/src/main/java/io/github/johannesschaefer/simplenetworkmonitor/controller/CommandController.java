@@ -51,6 +51,7 @@ public class CommandController {
         ret.put("name", command.getName());
         ret.put("description", command.getDescription());
         ret.put("exec", command.getExec());
+        ret.put("version", command.getVersion());
         return ret;
     }
 }

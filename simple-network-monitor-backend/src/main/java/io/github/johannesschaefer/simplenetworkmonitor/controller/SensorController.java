@@ -2,6 +2,7 @@ package io.github.johannesschaefer.simplenetworkmonitor.controller;
 
 import com.google.common.base.Strings;
 import io.github.johannesschaefer.simplenetworkmonitor.ScheduleService;
+import io.github.johannesschaefer.simplenetworkmonitor.entities.Host;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.Sensor;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.HostRepositoryImpl;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.SensorRepository;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -41,7 +43,24 @@ public class SensorController {
         }
 
         Sensor s = sensorRepo.save(sensor);
+
         scheduleService.addSensor(s);
+
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PostMapping("/sensors/delete/{sid}")
+    public ResponseEntity deleteSensor(@PathVariable("sid") String sensorId) {
+        sensorRepo.findById(sensorId).ifPresent(this::delete);
+
+        scheduleService.updateSchedule();
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    private void delete(Sensor sensor) {
+        sensor.getSamples().clear();
+        sensorRepo.save(sensor);
+        sensorRepo.delete(sensor);
     }
 }

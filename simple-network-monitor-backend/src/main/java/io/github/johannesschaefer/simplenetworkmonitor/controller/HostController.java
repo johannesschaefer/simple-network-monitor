@@ -128,8 +128,7 @@ public class HostController {
                 host.getSecretProperties().put("password", "");
             }
 
-            Command wakeonlan = commandRepo.findByName("wakeonlan");
-            host.getCommands().add(wakeonlan);
+            commandRepo.findByName("wakeonlan").ifPresent(wakeonlan -> host.getCommands().add(wakeonlan));
             // TODO: fetch mac address
             host.getProperties().put("mac_address", "");
 
@@ -139,6 +138,21 @@ public class HostController {
         }
 
         return hosts;
+    }
+
+    @PostMapping("/hosts/delete/{hid}")
+    public ResponseEntity deleteHost(@PathVariable("hid") String hostId) {
+        hostRepo.findById(hostId).ifPresent(this::delete);
+
+        scheduleService.updateSchedule();
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    private void delete(Host host) {
+        host.getSensors().forEach(a -> a.getSamples().clear());
+        hostRepo.save(host);
+        hostRepo.delete(host);
     }
 
     @PostMapping("/hosts/create")
@@ -151,17 +165,23 @@ public class HostController {
                 }
             }
         }
-        host.getSensors().forEach(x -> x.setHost(host));
 
         if (!Strings.isNullOrEmpty(host.getId())) {
             Optional<Host> hostOrg = hostRepo.findById(host.getId());
             if (hostOrg.isPresent()) {
-                for (Sensor s : host.getSensors()) {
-                    if (s.getCommand() == null) {
-                        Optional<Sensor> sOrg = hostOrg.get().getSensors().stream().filter(a -> a.getId().equals(s.getId())).findFirst();
-                        sOrg.ifPresent(a -> s.setCommand(a.getCommand()));
-                    }
-                }
+                hostOrg.get().setName(host.getName());
+                hostOrg.get().setDescription(host.getDescription());
+                hostOrg.get().setHostname(host.getHostname());
+                hostOrg.get().setIpv4(host.getIpv4());
+                hostOrg.get().setIpv6(host.getIpv6());
+                hostOrg.get().setProperties(host.getProperties());
+                hostOrg.get().setSecretProperties(host.getSecretProperties());
+                host = hostOrg.get();
+            }
+        }
+        else {
+            for (Sensor x : host.getSensors()) {
+                x.setHost(host);
             }
         }
 
@@ -175,16 +195,18 @@ public class HostController {
     private void addSensor(Host host, String name, String cmdName) {
         addSensor(host, name, cmdName, Maps.newHashMap());
     }
+
     private void addSensor(Host host, String name, String cmdName, Map<String, String> props) {
         addSensor(host, name, cmdName, props, Maps.newHashMap());
 
     }
+
     private void addSensor(Host host, String name, String cmdName, Map<String, String> props, Map<String, String> secretProps) {
-        Command cmd = commandRepo.findByName(cmdName);
-        if (cmd != null) {
+        commandRepo.findByName(cmdName).ifPresent(cmd -> {
             Sensor sensor = Sensor.builder().host(host).command(cmd).name(name).properties(props).secretProperties(secretProps).build();
             host.getSensors().add(sensor);
-        }
+        });
+
     }
 
     @GetMapping("/hosts/{hid}/commands/{cid}/run")
@@ -248,6 +270,8 @@ public class HostController {
         ret.put("sensors", host.getSensors().stream().map(a -> mapSensor(a)).collect(Collectors.toList()));
         ret.put("commands", host.getCommands().stream().map(Command::getName).collect(Collectors.toList()));
         ret.put("properties", host.getProperties());
+        ret.put("version", host.getVersion());
+
         if (unsecureExport) {
             ret.put("secretProperties", host.getSecretProperties());
         }

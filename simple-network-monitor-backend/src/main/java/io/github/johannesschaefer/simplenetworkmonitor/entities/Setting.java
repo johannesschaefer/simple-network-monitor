@@ -1,10 +1,12 @@
 package io.github.johannesschaefer.simplenetworkmonitor.entities;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Entity
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Setting {
     @Id
     @NonNull
@@ -32,4 +35,15 @@ public class Setting {
     @Builder.Default
     @Column(nullable = false)
     private boolean required = false;
+
+    @Version
+    private Long version;
+
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date creationDate;
+
+    @LastModifiedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date lastModifiedDate;
 }

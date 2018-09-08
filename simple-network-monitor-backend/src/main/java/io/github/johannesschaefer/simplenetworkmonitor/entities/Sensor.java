@@ -7,8 +7,12 @@ import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +22,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Entity
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Sensor {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -47,7 +52,7 @@ public class Sensor {
     @ManyToOne(optional = false)
     private Command command;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Sample> samples = Lists.newArrayList();
 
@@ -60,7 +65,7 @@ public class Sensor {
     @Builder.Default
     private Map<String, String> secretProperties = Maps.newHashMap();
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor", cascade = CascadeType.ALL, orphanRemoval = true)
     @Fetch(value = FetchMode.SUBSELECT)
     @Builder.Default
     private List<SampleType> sampleTypes = Lists.newArrayList();

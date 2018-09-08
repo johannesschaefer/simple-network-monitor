@@ -38,7 +38,7 @@ export class HostService {
   }
 
   public delete(host : Host) : Observable<{}> {
-    return this.http.delete(this.getUrl() + host.id);
+    return this.http.post(this.getUrl() + 'delete/' + host.id, null);
   }
 
   public create(host : Host) : Observable<{}> {

@@ -26,7 +26,7 @@ export class SensorService {
   }
 
   public delete(sensor : Sensor) : Observable<{}> {
-    return this.http.delete(this.getUrl() + sensor.id);
+    return this.http.post(this.getUrl() + 'delete/' + sensor.id, null);
   }
 
   public create(sensor : Sensor) : Observable<{}> {

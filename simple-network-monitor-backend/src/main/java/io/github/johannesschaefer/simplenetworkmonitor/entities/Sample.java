@@ -30,7 +30,6 @@ public class Sample {
     private Double min;
     private Double max;
     private String unit;
-    //@Lob
     private String msg;
     @NonNull
     @Enumerated(EnumType.STRING)

@@ -13,20 +13,15 @@ import io.github.johannesschaefer.simplenetworkmonitor.repos.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.Environment;
-import org.springframework.core.env.MapPropertySource;
-import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Consumer;
 
 @Component
 public class StartUpInit {
@@ -67,22 +62,36 @@ public class StartUpInit {
     @Autowired
     Environment env;
 
+    private <T>  void doIfPresent(Optional<T> is, Consumer<T> isTrue, Runnable isFalse) {
+        if (is.isPresent()) {
+            isFalse.run();
+        }
+        else {
+            isTrue.accept(null);
+        }
+    }
+
     @PostConstruct
     public void initFromFile() throws IOException {
         TypeReference<List<Setting>> settingTypeReference = new TypeReference<List<Setting>>(){};
         InputStream settingStream = settingResource.getInputStream();
         List<Setting> settings = objectMapper.readValue(settingStream, settingTypeReference);
         for (Setting setting : settings) {
-            log.info("loading setting {}", setting.getName());
-            settingRepo.save(setting);
+            doIfPresent(settingRepo.findByName(setting.getName()), (__) -> {
+                log.info("Loading setting {}", setting.getName());
+                settingRepo.save(setting);
+            }, () -> log.info( "Setting {} already in DB", setting.getName()));
+
         }
 
         TypeReference<List<Command>> cmdTypeReference = new TypeReference<List<Command>>(){};
         InputStream cmdStream = commandResource.getInputStream();
         List<Command> cmds = objectMapper.readValue(cmdStream, cmdTypeReference);
         for (Command cmd : cmds) {
-            log.info("loading command {}", cmd.getName());
-            commandRepo.save(cmd);
+            doIfPresent( commandRepo.findByName(cmd.getName()), (__) -> {
+                log.info("loading command {}", cmd.getName());
+                commandRepo.save(cmd);
+            }, () -> log.info( "Command {} already in DB", cmd.getName()));
         }
 
         TypeReference<List<Host>> hostTypeReference = new TypeReference<List<Host>>(){};
@@ -91,7 +100,7 @@ public class StartUpInit {
             @Override
             public Object handleMissingInstantiator(DeserializationContext ctxt, Class<?> instClass, ValueInstantiator valueInsta, JsonParser p, String msg) throws IOException {
                 if (instClass.equals(Command.class)) {
-                    return commandRepo.findByName(p.getText());
+                    return commandRepo.findByName(p.getText()).get();
                 }
                 else {
                     return this.handleMissingInstantiator(ctxt, instClass, valueInsta, p, msg);
@@ -101,9 +110,11 @@ public class StartUpInit {
 
         List<Host> hosts = objectMapper.readValue(hostsStream, hostTypeReference);
         for (Host host : hosts) {
-            log.info("loading host {}", host.getName());
-            host.getSensors().forEach(x -> x.setHost(host));
-            hostRepo.save(host);
+            doIfPresent(hostRepo.findByName(host.getName()), (__) -> {
+                log.info("loading host {}", host.getName());
+                host.getSensors().forEach(x -> x.setHost(host));
+                hostRepo.save(host);
+            }, () -> log.info("Host {} already in DB", host.getName()));
         }
 
         scheduleService.startSchedules();
