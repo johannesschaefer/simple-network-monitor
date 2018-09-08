@@ -5,7 +5,7 @@
 
 	<groupId>io.github.johannesschaefer</groupId>
 	<artifactId>simple-network-monitor-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>simple-network-monitor-backend</name>
@@ -42,7 +42,7 @@
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>${basedir}/target/frontend/</outputDirectory>
+                                    <outputDirectory>${project.build.directory}/frontend/</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>${basedir}/../simple-network-monitor-frontend</directory>
@@ -54,6 +54,58 @@
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>ca.szc.maven</groupId>
+                        <artifactId>jsonpath-maven-plugin</artifactId>
+                        <version>1.0.0</version>
+                        <executions>
+                            <execution>
+                                <id>update-version</id>
+                                <phase>process-sources</phase>
+                                <goals>
+                                    <goal>modify</goal>
+                                </goals>
+                                <configuration>
+                                    <file>${project.build.directory}/frontend/package.json</file>
+                                    <modifications>
+                                        <modification>
+                                            <expression>$.version</expression>
+                                            <value>${project.version}</value>
+                                        </modification>
+                                    </modifications>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>pl.project13.maven</groupId>
+                        <artifactId>git-commit-id-plugin</artifactId>
+                        <version>2.2.4</version>
+                        <executions>
+                            <execution>
+                                <id>get-the-git-infos</id>
+                                <goals>
+                                    <goal>revision</goal>
+                                </goals>
+                                <phase>process-sources</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <dotGitDirectory>${project.basedir}/../.git</dotGitDirectory>
+                            <prefix>git</prefix>
+                            <verbose>false</verbose>
+                            <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                            <generateGitPropertiesFilename>${project.build.directory}/frontend/git.json</generateGitPropertiesFilename>
+                            <format>json</format>
+                            <gitDescribe>
+                                <skip>false</skip>
+                                <always>false</always>
+                                <dirty>-dirty</dirty>
+                            </gitDescribe>
+                        </configuration>
                     </plugin>
 
                     <plugin>
@@ -113,6 +165,7 @@
     </profiles>
 
 	<dependencies>
+        <!-- spring boot dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -129,6 +182,11 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-rest-hal-browser</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <!-- databases -->
 		<dependency>
@@ -148,7 +206,7 @@
             <artifactId>postgresql</artifactId>
         </dependency>
 
-
+        <!-- additional dependencies -->
         <dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
@@ -171,16 +229,10 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/resources/org.nmap4j-1.0.4.jar</systemPath>
         </dependency>
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
             <version>1.18.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -198,7 +250,7 @@
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.26.0</version><!--
+                <version>0.26.0</version>
                 <executions>
                     <execution>
                         <id>docker-build</id>
@@ -206,7 +258,7 @@
                             <goal>build</goal>
                         </goals>
                     </execution>
-                </executions>-->
+                </executions>
                 <configuration>
                     <images>
                         <image>

@@ -2,26 +2,21 @@ package io.github.johannesschaefer.simplenetworkmonitor.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Objects;
-import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.Command;
-import io.github.johannesschaefer.simplenetworkmonitor.entities.Setting;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.CommandRepository;
-import io.github.johannesschaefer.simplenetworkmonitor.repos.HostRepositoryImpl;
-import io.github.johannesschaefer.simplenetworkmonitor.repos.SettingRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @CrossOrigin

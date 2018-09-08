@@ -10,7 +10,6 @@ import javax.persistence.metamodel.Type;
 
 @Configuration
 public class RestConfiguration extends RepositoryRestConfigurerAdapter {
-
     @Autowired
     private EntityManager entityManager;
 

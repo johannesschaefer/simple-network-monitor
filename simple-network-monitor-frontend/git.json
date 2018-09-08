@@ -1,0 +1,22 @@
+{
+  "git.branch" : "",
+  "git.build.host" : "",
+  "git.build.time" : "",
+  "git.build.user.email" : "",
+  "git.build.user.name" : "",
+  "git.build.version" : "",
+  "git.closest.tag.commit.count" : "",
+  "git.closest.tag.name" : "",
+  "git.commit.id" : "",
+  "git.commit.id.abbrev" : "123abcd",
+  "git.commit.id.describe" : "",
+  "git.commit.id.describe-short" : "",
+  "git.commit.message.full" : "",
+  "git.commit.message.short" : "",
+  "git.commit.time" : "",
+  "git.commit.user.email" : "",
+  "git.commit.user.name" : "",
+  "git.dirty" : "",
+  "git.remote.origin.url" : "https://github.com/johannesschaefer/simple-network-monitor.git",
+  "git.tags" : ""
+}

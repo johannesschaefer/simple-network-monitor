@@ -28,7 +28,7 @@
             <td class="text-center" title="{{host.status}}" routerLink="/host/{{host.id}}" routerLinkActive="active"><snm-status [value]="host.status"></snm-status></td>
             <td class="no-overflow" title="{{host.name}}" routerLink="/host/{{host.id}}" routerLinkActive="active">{{host.name}}</td>
             <td class="no-overflow" title="{{host.description}}" routerLink="/host/{{host.id}}" routerLinkActive="active">{{host.description}}</td>
-            <td>
+            <td routerLink="/host/{{host.id}}" routerLinkActive="active">
                 <span [ngClass]="host.ok==0?'text-muted':'text-success'">{{host.ok}}</span> /
                 <span [ngClass]="host.warn==0?'text-muted':'text-warning'">{{host.warn}}</span> /
                 <span [ngClass]="host.critical==0?'text-muted':'text-danger'">{{host.critical}}</span> /

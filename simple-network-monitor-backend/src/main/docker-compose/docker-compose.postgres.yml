@@ -21,7 +21,7 @@ services:
       DB_USERNAME: snm
       DB_PASSWORD: snm
       DB_DRIVER: org.postgresql.Driver
-      DB_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      DB_DIALECT: org.hibernate.dialect.PostgreSQL9Dialect
 
 # uncomment the following lines for an admin tool for the db
 #  adminer:

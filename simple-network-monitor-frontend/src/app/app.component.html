@@ -13,3 +13,12 @@
 <main role="main" class="container-fluid">
   <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
 </main>
+<footer class="footer">
+  <div class="container d-flex justify-content-center align-items-center">
+    <small class="px-2">Version: {{getVersion()}}</small>
+    <small class="px-2">Commit: {{getCommit()}}</small>
+    <div class="px-2">
+      <a href="https://github.com/johannesschaefer/simple-network-monitor" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
+  </div>
+</footer>

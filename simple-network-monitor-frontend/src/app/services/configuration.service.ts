@@ -17,6 +17,14 @@ export class ConfigurationService {
     return environment.url;
   }
 
+  public getVersion() : string {
+    return environment.version;
+  }
+
+  public getCommit() : string {
+    return environment.commit;
+  }
+
   public getAutoRefreshInterval() : Observable<number> {
     return this.http.get<Setting>(this.getBackendUrl() + 'settings/refreshInterval').map(x => parseInt(x.value));
   }

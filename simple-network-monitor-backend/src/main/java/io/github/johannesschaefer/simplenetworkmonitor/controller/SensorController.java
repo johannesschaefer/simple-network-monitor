@@ -2,7 +2,6 @@ package io.github.johannesschaefer.simplenetworkmonitor.controller;
 
 import com.google.common.base.Strings;
 import io.github.johannesschaefer.simplenetworkmonitor.ScheduleService;
-import io.github.johannesschaefer.simplenetworkmonitor.entities.Host;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.Sensor;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.HostRepositoryImpl;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.SensorRepository;

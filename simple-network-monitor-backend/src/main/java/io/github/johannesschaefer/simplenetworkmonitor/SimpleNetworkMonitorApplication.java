@@ -19,7 +19,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 @EnableSpringConfigured
 @EnableJpaAuditing
 public class SimpleNetworkMonitorApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(SimpleNetworkMonitorApplication.class, args);
     }
@@ -42,5 +41,4 @@ public class SimpleNetworkMonitorApplication {
     public HostEventHandler produceHostEventHandler() {
         return new HostEventHandler();
     }
-
 }

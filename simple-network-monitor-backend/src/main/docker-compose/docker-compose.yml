@@ -7,3 +7,11 @@ services:
     restart: always
     ports:
      - 8080:8080
+    #environment:
+    #  HOSTS_FILE: file:/myHosts.json
+    #  HOSTS_FILE: file:/mySettings.json
+    #  HOSTS_FILE: file:/myCommands.json
+    #volumes:
+    #  - ./myHosts.json:/myHosts.json
+    #  - ./mySettings.json:/mySettings.json
+    #  - ./myCommands.json:/myCommands.json

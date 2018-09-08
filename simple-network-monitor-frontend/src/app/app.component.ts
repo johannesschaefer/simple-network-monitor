@@ -9,7 +9,7 @@ import { ConfigurationService } from './services/configuration.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private config : ConfigurationService) { }
+  constructor(private configService : ConfigurationService) { }
 
   content : any;
 
@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   private autoRefreshSubscribtion : Subscription;
 
   ngOnInit() {
-    this.config.getAutoRefreshInterval().subscribe(x => this.startAutorefresh(x), err => alert(err));
+    this.configService.getAutoRefreshInterval().subscribe(x => this.startAutorefresh(x), err => alert(err));
   }
 
   private startAutorefresh(ms : number) {
@@ -46,5 +46,13 @@ export class AppComponent implements OnInit {
 
   public onRouterOutletActivate(event : any) {
     this.content = event;
+  }
+
+  public getVersion() : string {
+    return this.configService.getVersion();
+  }
+
+  public getCommit() : string {
+    return this.configService.getCommit();
   }
 }
