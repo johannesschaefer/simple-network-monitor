@@ -15,26 +15,26 @@
     <table class="table table-hover table-striped">
         <thead>
           <tr>
-            <th class="text-center" scope="col" style="width: 90px" (click)="sort('status')">Status&nbsp;<i class="fas" [ngClass]="getSortIcon('status')"></i></th>
-            <th scope="col" (click)="sort('name')">Name&nbsp;<i class="fas" [ngClass]="getSortIcon('name')"></i></th>
-            <th scope="col" (click)="sort('description')">Description&nbsp;<i class="fas" [ngClass]="getSortIcon('description')"></i></th>
-            <th>Sensors</th>
-            <th style="width: 100px"  scope="col">Commands</th>
-            <th style="width: 60px" ></th>
+            <th class="text-center" scope="col" style="min-width: 30px; width: 90px; max-width: 90px; white-space: nowrap" (click)="sort('status')"><span class="d-none d-sm-inline">Status&nbsp;<i class="fas" [ngClass]="getSortIcon('status')"></i></span></th>
+            <th class="" scope="col" (click)="sort('name')">Name&nbsp;<i class="fas" [ngClass]="getSortIcon('name')"></i></th>
+            <th class="d-none d-md-table-cell" scope="col" (click)="sort('description')">Description&nbsp;<i class="fas" [ngClass]="getSortIcon('description')"></i></th>
+            <th class="d-none d-sm-table-cell" style="width: 120px">Sensors</th>
+            <th class="" style="width: 100px" scope="col"><span class="d-inline d-sm-none">Cmd</span><span class="d-none d-sm-inline">Commands</span></th>
+            <th class="d-none d-sm-table-cell" style="width: 60px" ></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let host of hosts._embedded.hosts">
             <td class="text-center" title="{{host.status}}" routerLink="/host/{{host.id}}" routerLinkActive="active"><snm-status [value]="host.status"></snm-status></td>
             <td class="no-overflow" title="{{host.name}}" routerLink="/host/{{host.id}}" routerLinkActive="active">{{host.name}}</td>
-            <td class="no-overflow" title="{{host.description}}" routerLink="/host/{{host.id}}" routerLinkActive="active">{{host.description}}</td>
-            <td routerLink="/host/{{host.id}}" routerLinkActive="active">
+            <td class="no-overflow d-none d-md-table-cell" title="{{host.description}}" routerLink="/host/{{host.id}}" routerLinkActive="active">{{host.description}}</td>
+            <td class="no-overflow d-none d-sm-table-cell" routerLink="/host/{{host.id}}" routerLinkActive="active">
                 <span [ngClass]="host.ok==0?'text-muted':'text-success'">{{host.ok}}</span> /
                 <span [ngClass]="host.warn==0?'text-muted':'text-warning'">{{host.warn}}</span> /
                 <span [ngClass]="host.critical==0?'text-muted':'text-danger'">{{host.critical}}</span> /
                 <span [ngClass]="host.unknown==0?'text-muted':'text-info'">{{host.unknown}}</span>
             <td><snm-command-starter [host]="host"></snm-command-starter></td>
-            <td>
+            <td class="d-none d-sm-table-cell">
                 <div class="dropleft">
                   <i class="btn fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   </i>
