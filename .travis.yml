@@ -7,3 +7,4 @@ deploy:
   skip_cleanup: true
   on:
     repo: johannesschaefer/simple-network-monitor
+    tags: true
