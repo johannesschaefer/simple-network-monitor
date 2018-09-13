@@ -5,7 +5,7 @@
 
 	<groupId>io.github.johannesschaefer</groupId>
 	<artifactId>simple-network-monitor</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>simple-network-monitor</name>
@@ -14,4 +14,19 @@
     <modules>
         <module>simple-network-monitor-backend</module>
     </modules>
+
+
+	<scm>
+		<developerConnection>scm:git:https://github.com/johannesschaefer/simple-network-monitor.git</developerConnection>
+	</scm>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+			</plugin>
+		</plugins>
+	</build>
 </project>
