@@ -1,1 +1,9 @@
 language: java
+deploy:
+  provider: releases
+  api_key:
+    secure: RjiHhnY8kJadQJtiNbn+yl/96CZZFFDTv2XcQqamDUrk46+PrWibXDm3hTETle2HRTn+Yx328bq3lqlY8V4jnmusk9O6Gr+JuFFZ6LsyY1OdWzgVkF78Rx92BT/SzKRb8VoXyzN9tqxlTordVyZ4jPBIcq/zavm+Y/uwUnRYtRv6w4EwSA3pznaR1ZlqgfHuN9BCU5qEc5bZNO+7CoREpo1BmOAeixFH4wOACosgmeEHeXMfwV3PtbeWPw6dwGHh2zxBou5LjnpyjnkGGhpLpHWqHX73HKcGaWaldDIDrX4ILtTUAEdmtHrY1XjG1YLElNpLWWYhkaKEXQs6UrGaFd3y9ljuPSJqBNmzCLv+VOuw0nhLIPEfQH+wxhbScbqXxS3MypmIcLGHmRY9/Eh32nGyNGxrrusH5HbnBPsYErI7SPX3hlRL19bTe388p3lXXjYiHgabfSKIoSaQoRFCK1113sKQT45ijNy36Mjg02RW3lOO9AtCqCO0VJWuq5X6oZWkQQwuk39FDhtzgpDHlsSs5B1K+sFoJIxIjJTRfr9XVpMVlM/IFndIy8bgq9pp5483euVxIt+z1mSo+1+nEDLxHIq1lS5D7wA7eYqg0oslpqeVyRv3jnu0Q0PplB5LIj1/qXMRBQ4IiRp2kk3FCym5qT/qfU8SBHpyudo4uW4=
+  file: simple-network-monitor-backend/target/snm.jar
+  skip_cleanup: true
+  on:
+    repo: johannesschaefer/simple-network-monitor
