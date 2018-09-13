@@ -10,7 +10,7 @@ RUN apk add monitoring-plugins && \
 
 ENV PATH /usr/lib/monitoring-plugins:/check_tr64_fritz:$PATH
 
-RUN curl -L https://github.com/johannesschaefer/simple-network-monitor/releases/download/v0.0.1-alpha/snm.jar --output snm.jar
+RUN curl -L https://github.com/johannesschaefer/simple-network-monitor/releases/download/$SOURCE_BRANCH/snm.jar --output snm.jar
 
 EXPOSE 8080
 
