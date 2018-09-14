@@ -22,6 +22,7 @@ script:
 
 after_success:
 - ls && pwd && ls simple-network-monitor-backend && ls simple-network-monitor-backend/target
+- cp simple-network-monitor-backend/target/snm.jar simple-network-monitor-backend/src/main/docker/travis/snm.jar
 - docker login -u $DOCKER_USER -p $DOCKER_PASS
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH
   ; fi`
