@@ -4,7 +4,7 @@
 
 	<groupId>io.github.johannesschaefer</groupId>
 	<artifactId>simple-network-monitor-backend</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.0.4</version>
 	<packaging>jar</packaging>
 
 	<name>simple-network-monitor-backend</name>
@@ -309,4 +309,8 @@
             </plugin>
 		</plugins>
 	</build>
+
+  <scm>
+    <tag>simple-network-monitor-0.0.4</tag>
+  </scm>
 </project>
