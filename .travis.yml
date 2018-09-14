@@ -28,6 +28,6 @@ after_success:
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH
   ; fi`
 - export IMAGE_NAME=johannesschafer/simple-network-monitor
-- docker build -t $IMAGE_NAME:$COMMIT simple-network-monitor-backend/src/main/docker/travis/Dockerfile
+- docker build -t $IMAGE_NAME:$COMMIT simple-network-monitor-backend/src/main/docker/travis/
 - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
 - docker push $IMAGE_NAME

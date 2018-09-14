@@ -21,9 +21,44 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+        <skip.it>false</skip.it>
 	</properties>
 
     <profiles>
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.26.0</version>
+                        <executions>
+                            <execution>
+                                <id>docker-build</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <name>simple-network-monitor</name>
+                                    <build>
+                                        <dockerFileDir>${project.basedir}/src/main/docker/maven</dockerFileDir>
+                                        <assembly>
+                                            <descriptorRef>artifact</descriptorRef>
+                                        </assembly>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <profile>
             <id>with-frontend</id>
             <activation>
@@ -244,32 +279,32 @@
                 <configuration>
                     <includeSystemScope>true</includeSystemScope>
                 </configuration>
-			</plugin>
-
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.26.0</version><!--
                 <executions>
                     <execution>
-                        <id>docker-build</id>
+                        <id>pre-integration-test</id>
                         <goals>
-                            <goal>build</goal>
+                            <goal>start</goal>
                         </goals>
+                        <configuration>
+                            <skip>${skip.it}</skip>
+                        </configuration>
                     </execution>
-                </executions>-->
+                    <execution>
+                        <id>post-integration-test</id>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${skip.it}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
-                    <images>
-                        <image>
-                            <name>simple-network-monitor</name>
-                            <build>
-                                <dockerFileDir>${project.basedir}/src/main/docker/maven</dockerFileDir>
-                                <assembly>
-                                    <descriptorRef>artifact</descriptorRef>
-                                </assembly>
-                            </build>
-                        </image>
-                    </images>
+                    <skip>${skip.it}</skip>
                 </configuration>
             </plugin>
 		</plugins>
