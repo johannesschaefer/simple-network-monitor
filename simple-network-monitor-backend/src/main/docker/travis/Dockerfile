@@ -10,7 +10,7 @@ RUN apk add monitoring-plugins && \
 
 ENV PATH /usr/lib/monitoring-plugins:/check_tr64_fritz:$PATH
 
-ADD target/snm.jar snm.jar
+ADD simple-network-monitor-backend/target/snm.jar snm.jar
 
 EXPOSE 8080
 
