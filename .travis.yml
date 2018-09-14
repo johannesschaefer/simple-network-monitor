@@ -1,4 +1,9 @@
+sudo: required
+
 language: java
+
+jdk: oraclejdk8
+
 deploy:
   provider: releases
   api_key:
@@ -8,3 +13,21 @@ deploy:
   on:
     repo: johannesschaefer/simple-network-monitor
     tags: true
+
+services:
+- docker
+
+env:
+  global:
+  - secure: "oLMpnHYAgR7zg0ijPdCtEuoOtClZ1oQGLwZeP07Plnhu+fAF0ICbOL94ms0AqnnzJPquRGA/JcLV5wmK3u/S+icCHJ9PLpqaCwb/c/o0JHEVnfjvSvKq8hKoU1kZe6hog3ybg76s//PlFzYo+Ute4COukKYOYtT+Gx3v3BON11MCYEl1SqHnTlx5azD7r5mS2hXQVlpvcQzj8xPW7pB1riDk020jgot/hHwIqN25WFd89PvNUNivAvXGtdy3gTv9F5oCpiqDxzOzdEHPu5QHRdIb/SC9fLKPAWifZS3Jo/I9dlmnM0SUMtvj9E8P2X2IyTkMnYVFuTzzcIFwahLTauxe71zmbnzkYcXsPLqOHvLfe+ae5cE/ZiKu8cz0y/VpQA7zQi0uWF7eKBdDwgqcgNd+or+3jJO2zxdesxfSIV1mVXKh7SShb3gVFdNxkaswXYIbDEmGpC+vaV3FnViy0Q7MsUalZhj5TGDl/T+NqzzAxmzJO8IAr7cNs/3gX7xaIVDbMvdtUk9TYX5TjUBtNNRtfO147Eb7bxSa/+B1XmiGEac0HbQDFkqH8aw5B6IBcdPSjBUkDVgYtZP/1XqtXObs+02/jeZvc+CwVOKozYTTEGXQttTB3Kiqhspqi8WwbZKUvkYSxrHkibJ79178VC0mUxy7NckAz24JFckb+8s="
+  - secure: "HyoyoFx7eLXWnO9zCug8gY8b6jJheDmvBaVy4tsflTOwwDQyoSf20Ajh+afcc+8jNFPX4gIuV64KR2D1qDH8sUnthJPeWq+5a8KVA9AfxuL4pVKzeZUs+erKgbxBfgp1j2bzOeU4tsYFWqht6dP+3WIXB/g7DJiMBlLkje5p/XD9yghMFyQ3mF/8CpzbM4XZJGTCIiQ3y3onmoLj0S5JspUVI3Qeqlqt/xt1VaWDjGiyTBNUYLjJygTdcmVfJUJ0B20Rb9ZXsM7KTqACcsJo006fyY7x/4yUY0Pm9hwCIGk2FPBwR3xU4YGpHQeqjVmyMJH/+GuiCnZ3ipKA73vChxcvJwdbBnfV+tt6mQyEPiic+cunRhYNYWppUW/WGNnMScAFHLpP5Q98KIHozzOt/hZLh63ie8KzV2TWK9sqqB5MvUOY4xP96PDl9bKTe9v3vR7TVl6ccvDpQNEcF0ghHqNcfm6EwN1pL2nseyq37iAR8c3OtU8RZpFScmMLXsScDenFUSDBteJCQIU1FF6CMBSAQyNP0gd/WLvWWZXKJ2AoLGnjIkYHI1Nl5fyl+bY+m1u0Ceen/D/AJFsthjWUgGRdZEPC84cJQqTZWW6Kp3X6PDX+ayWHfF6L8Q5znBi0V7CtbtzFIl/3rnhIZpkzwHTXxJyjLEC4QWMOausw3a4="
+  - COMMIT=${TRAVIS_COMMIT::7}
+
+after_success:
+- docker login -u $DOCKER_USER -p $DOCKER_PASS
+- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH
+  ; fi`
+- export IMAGE_NAME=johannesschafer/simple-network-monitor
+- docker build -t $IMAGE_NAME:$COMMIT simple-network-monitor-backend/src/main/docker/travis/Dockerfile
+- docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
+- docker push $IMAGE_NAME
