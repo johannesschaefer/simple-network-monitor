@@ -5,6 +5,7 @@
 [![Build Status](https://travis-ci.org/johannesschaefer/simple-network-monitor.svg?branch=master)](https://travis-ci.org/johannesschaefer/simple-network-monitor)
 ![Docker Automated build](https://img.shields.io/docker/automated/johannesschafer/simple-network-monitor.svg)
 ![Docker Build Status](https://img.shields.io/docker/build/johannesschafer/simple-network-monitor.svg)
+![GitHub tag](https://img.shields.io/github/tag/johannesschaefer/simple-network-monitor.svg)
 
 The Simple Network Monitor (SNM) is a small service to monitor other hosts or network devices. It checks cyclic the availability of certain services. The SNM saves all probes in a database and creates charts out of it.
 
