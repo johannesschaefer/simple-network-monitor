@@ -45,7 +45,7 @@
                         <configuration>
                             <images>
                                 <image>
-                                    <name>simple-network-monitor</name>
+                                    <name>johannesschafer/simple-network-monitor</name>
                                     <build>
                                         <dockerFileDir>${project.basedir}/src/main/docker/maven</dockerFileDir>
                                         <assembly>
