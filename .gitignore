@@ -32,3 +32,4 @@ simple-network-monitor-frontend/.stylelintrc.json
 .project
 .settings/org.eclipse.m2e.core.prefs
 simple-network-monitor-backend/src/main/resources/hosts2.json
+.idea
