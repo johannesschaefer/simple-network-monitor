@@ -33,14 +33,16 @@ Install docker on your system.
 Then just run the following command:
 
 ```
-docker docker run -dit --name simple-network-monitor -p 8080:8080 johannesschafer/simple-network-monitor
+docker run -dit --name simple-network-monitor -p 8080:8080 johannesschafer/simple-network-monitor
 ```
 
-Run with an persited H2 db:
+Run with an persisted H2 db:
 
 ```
-docker docker run -dit --name simple-network-monitor -p 8080:8080 -e DB_URL=jdbc:h2:/db/snmdb johannesschafer/simple-network-monitor
+docker run -dit --name simple-network-monitor -p 8080:8080 -e "DB_URL=jdbc:h2:/db/snmdb" johannesschafer/simple-network-monitor
 ```
+
+Please check the simple-network-monitor-backend/src/main/docker-compose directory for docker-compose examples. Here you can also find the setup for different databases.
 
 ### Docker on Raspberry
 
