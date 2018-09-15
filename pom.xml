@@ -17,8 +17,8 @@
 
 	<scm>
 		<developerConnection>scm:git:https://github.com/johannesschaefer/simple-network-monitor.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+	    <tag>HEAD</tag>
+    </scm>
 
 	<build>
 		<plugins>
