@@ -57,6 +57,19 @@
                                         </tags>
                                     </build>
                                 </image>
+                                <image>
+                                    <name>johannesschafer/simple-network-monitor-raspi</name>
+                                    <build>
+                                        <dockerFileDir>${project.basedir}/src/main/docker/raspi</dockerFileDir>
+                                        <assembly>
+                                            <descriptorRef>artifact</descriptorRef>
+                                        </assembly>
+                                        <tags>
+                                            <tag>${project.version}</tag>
+                                            <tag>latest</tag>
+                                        </tags>
+                                    </build>
+                                </image>
                             </images>
                         </configuration>
                     </plugin>

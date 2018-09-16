@@ -10,7 +10,7 @@ RUN apt-get update && apt-get -qy install oracle-java8-jdk curl ca-certificates 
 
 ENV PATH /usr/lib/nagios/plugins:/check_tr64_fritz:$PATH
 
-COPY snm.jar snm.jar
+COPY maven/snm.jar snm.jar
 
 EXPOSE 8080
 
