@@ -40,7 +40,7 @@ Run with an persisted H2 db:
 docker run -dit --name simple-network-monitor -p 8080:8080 -e "DB_URL=jdbc:h2:/db/snmdb" johannesschafer/simple-network-monitor
 ```
 
-Please check the simple-network-monitor-backend/src/main/docker-compose directory for docker-compose examples. Here you can also find the setup for different databases.
+Please check the [docker-compose](https://github.com/johannesschaefer/simple-network-monitor/simple-network-monitor-backend/src/main/docker-compose) directory for docker-compose examples. Here you can also find the setup for different databases.
 
 ### Docker on Raspberry
 
@@ -49,10 +49,14 @@ Install docker on your system. A good description can be found here: https://blo
 Then just run the following command:
 
 ```
-docker build -t snm https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/simple-network-monitor-backend/src/main/docker/remote-raspi/Dockerfile && docker run -dit --name snm -p 8080:8080 snm
+docker run -dit --name simple-network-monitor -p 8080:8080 johannesschafer/simple-network-monitor-raspi
 ```
 
+To persist the database add an `-e "DB_URL=jdbc:h2:/db/snmdb"` after the port mapping.
+
 On a RaspberryPi 1 the startup can take several minutes, but it runs.
+
+It is possible to use the docker-compose files from [docker-compose](https://github.com/johannesschaefer/simple-network-monitor/simple-network-monitor-backend/src/main/docker-compose), just add change the image name of the snm service to `johannesschafer/simple-network-monitor-raspi`.
 
 ### General Docker hints
 
@@ -79,5 +83,3 @@ The following settings can be set externally. By default all settings have usefu
 | Hibernate Dialect | | --spring.jpa.properties.hibernate.dialect=... | DB_DIALECT=... | |
 
 For the file parameters, you can use an export of settings, commands or hosts from the application. The refer such a file set the value like `--hosts-file=file:/myHosts.json`.
-
-### Using an persiting database

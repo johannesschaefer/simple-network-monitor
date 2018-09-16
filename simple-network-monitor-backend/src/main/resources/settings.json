@@ -2,7 +2,7 @@
   "name" : "refreshInterval",
   "displayName" : "Refresh Interval",
   "description" : "Autorefresh interval of the GUI in millisecs",
-  "value" : "10000",
+  "value" : "60000",
   "type" : "number",
   "unit" : "ms",
   "min" : 500,
