@@ -4,7 +4,7 @@
 
 	<groupId>io.github.johannesschaefer</groupId>
 	<artifactId>simple-network-monitor</artifactId>
-	<version>0.0.6</version>
+	<version>0.0.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>simple-network-monitor</name>
@@ -17,7 +17,7 @@
 
 	<scm>
 		<developerConnection>scm:git:https://github.com/johannesschaefer/simple-network-monitor.git</developerConnection>
-	    <tag>v0.0.6</tag>
+	    <tag>HEAD</tag>
     </scm>
 
 	<build>
