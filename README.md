@@ -60,6 +60,8 @@ There are several setups prepared in the [docker-compose](https://github.com/joh
 
 Please also check the content of the compose files, there are more options described.
 
+To stop and shutdown a running compose setup just run `docker-compose down --remove-orphans`. This also removes all container.
+
 ### Docker on Raspberry Pi
 
 Install docker on your system. A good description can be found here: https://blog.alexellis.io/getting-started-with-docker-on-raspberry-pi/
