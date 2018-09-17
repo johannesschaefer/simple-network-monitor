@@ -41,7 +41,7 @@ docker run -dit --name simple-network-monitor -p 8080:8080 -e "DB_URL=jdbc:h2:/d
 ```
 #### docker-compose
 
-There are several setups prepared in the [docker-compose](https://github.com/johannesschaefer/simple-network-monitor/simple-network-monitor-backend/src/main/docker-compose) directory. Just check out the files from there and run one of the following variants.
+There are several setups prepared in the [docker-compose](https://github.com/johannesschaefer/simple-network-monitor/tree/master/simple-network-monitor-backend/src/main/docker-compose) directory. Just check out the files from there and run one of the following variants.
 
 **h2 db in memory**
 `docker-compose up -d`
@@ -76,7 +76,7 @@ To persist the database add an `-e "DB_URL=jdbc:h2:/db/snmdb"` after the port ma
 
 On a Raspberry Pi 1 the startup can take several minutes, but it runs.
 
-It is also possible to use the docker-compose files from [docker-compose](https://github.com/johannesschaefer/simple-network-monitor/simple-network-monitor-backend/src/main/docker-compose), just add change the image name of the snm service to `johannesschafer/simple-network-monitor-raspi`.
+It is also possible to use the docker-compose files from [docker-compose](https://github.com/johannesschaefer/simple-network-monitor/tree/master/simple-network-monitor-backend/src/main/docker-compose), just add change the image name of the snm service to `johannesschafer/simple-network-monitor-raspi`.
 
 ### General Docker hints
 
