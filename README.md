@@ -39,10 +39,28 @@ Run with an persisted H2 db:
 ```
 docker run -dit --name simple-network-monitor -p 8080:8080 -e "DB_URL=jdbc:h2:/db/snmdb" johannesschafer/simple-network-monitor
 ```
+#### docker-compose
 
-Please check the [docker-compose](https://github.com/johannesschaefer/simple-network-monitor/simple-network-monitor-backend/src/main/docker-compose) directory for docker-compose examples. Here you can also find the setup for different databases.
+There are several setups prepared in the [docker-compose](https://github.com/johannesschaefer/simple-network-monitor/simple-network-monitor-backend/src/main/docker-compose) directory. Just check out the files from there and run one of the following variants.
 
-### Docker on Raspberry
+**h2 db in memory**
+`docker-compose up -d`
+
+**h2 db in file**
+`docker-compose -f docker-compose.yml -f docker-compose.h2.yml up -d`
+
+**maria db**
+`docker-compose -f docker-compose.yml -f docker-compose.mariadb.yml up -d`
+
+**mysql**
+`docker-compose -f docker-compose.yml -f docker-compose.mysql.yml up -d`
+
+**postgres**
+`docker-compose -f docker-compose.yml -f docker-compose.postgres.yml up -d`
+
+Please also check the content of the compose files, there are more options described.
+
+### Docker on Raspberry Pi
 
 Install docker on your system. A good description can be found here: https://blog.alexellis.io/getting-started-with-docker-on-raspberry-pi/
 
@@ -54,9 +72,9 @@ docker run -dit --name simple-network-monitor -p 8080:8080 johannesschafer/simpl
 
 To persist the database add an `-e "DB_URL=jdbc:h2:/db/snmdb"` after the port mapping.
 
-On a RaspberryPi 1 the startup can take several minutes, but it runs.
+On a Raspberry Pi 1 the startup can take several minutes, but it runs.
 
-It is possible to use the docker-compose files from [docker-compose](https://github.com/johannesschaefer/simple-network-monitor/simple-network-monitor-backend/src/main/docker-compose), just add change the image name of the snm service to `johannesschafer/simple-network-monitor-raspi`.
+It is also possible to use the docker-compose files from [docker-compose](https://github.com/johannesschaefer/simple-network-monitor/simple-network-monitor-backend/src/main/docker-compose), just add change the image name of the snm service to `johannesschafer/simple-network-monitor-raspi`.
 
 ### General Docker hints
 
