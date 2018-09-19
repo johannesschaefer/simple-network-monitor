@@ -97,24 +97,34 @@ public class HostController {
                         continue;
                     }
                     if (port.getPortId() == 21) {
-                        addSensor(host, "ftp", "check_ftp");
+                        addSensor(host, "FTP", "check_ftp");
                     }
                     if (port.getPortId() == 22) {
-                        addSensor(host, "ssh", "check_ssh");
+                        addSensor(host, "SSH", "check_ssh");
                     }
                     if (port.getPortId() == 53) {
-                        addSensor(host, "dns", "check_dns");
+                        addSensor(host, "DNS", "check_dns");
                     }
                     if (port.getPortId() == 80) {
-                        addSensor(host, "http", "check_http");
+                        addSensor(host, "HTTP", "check_http");
                     }
                     if (port.getPortId() == 443) {
-                        addSensor(host, "http", "check_https");
+                        addSensor(host, "HTTPS", "check_https");
                     }
                     if (port.getPortId() == 8080) {
                         Map<String, String> props = Maps.newHashMap();
                         props.put("port", "8080");
-                        addSensor(host, "http", "check_http", props);
+                        addSensor(host, "HTTP", "check_http", props);
+                    }
+                    if (port.getPortId() == 8443) {
+                        Map<String, String> props = Maps.newHashMap();
+                        props.put("port", "8443");
+                        addSensor(host, "HTTPS", "check_https", props);
+                    }
+                    if (port.getPortId() == 9990) {
+                        Map<String, String> props = Maps.newHashMap();
+                        props.put("port", "9990");
+                        addSensor(host, "JBoss/Wildfly Admin Interface", "check_http", props);
                     }
                 }
             }

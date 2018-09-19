@@ -31,14 +31,19 @@ Install docker on your system.
 Then just run the following command:
 
 ```
-docker run -dit --name simple-network-monitor -p 8080:8080 johannesschafer/simple-network-monitor
+docker run -dit --name simple-network-monitor --network host --restart unless-stopped johannesschafer/simple-network-monitor
 ```
 
 Run with an persisted H2 db:
 
 ```
-docker run -dit --name simple-network-monitor -p 8080:8080 -e "DB_URL=jdbc:h2:/db/snmdb" johannesschafer/simple-network-monitor
+docker run -dit --name simple-network-monitor --network host -e "DB_URL=jdbc:h2:/db/snmdb" --restart unless-stopped johannesschafer/simple-network-monitor
 ```
+
+This setup is using the network mode `host`. No port mapping is needed, it exposes the real network interface directly in the docker container. The reason for this is, that some operations only work correctly when the network interface is not virtual. E.g. the `arp` or `etherwake` command.
+
+The network mode `host` only works correctly on Linux machines. Please use a port mapping on other machines instead, e.g. `-p 8080:8080` instead of `--network host`.
+
 #### docker-compose
 
 There are several setups prepared in the [docker-compose](https://github.com/johannesschaefer/simple-network-monitor/tree/master/simple-network-monitor-backend/src/main/docker-compose) directory. Just check out the files from there and run one of the following variants.
@@ -69,10 +74,10 @@ Install docker on your system. A good description can be found here: https://blo
 Then just run the following command:
 
 ```
-docker run -dit --name simple-network-monitor -p 8080:8080 johannesschafer/simple-network-monitor-raspi
+docker run -dit --name simple-network-monitor --network host --restart unless-stopped johannesschafer/simple-network-monitor-raspi
 ```
 
-To persist the database add an `-e "DB_URL=jdbc:h2:/db/snmdb"` after the port mapping.
+To persist the database add an `-e "DB_URL=jdbc:h2:/db/snmdb"` after the run.
 
 On a Raspberry Pi 1 the startup can take several minutes, but it runs.
 
