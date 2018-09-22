@@ -1,5 +1,5 @@
-<i *ngIf="tag == 'i'" (click)="open()" [ngClass]="class" attr.title="{{title}}">{{text}}</i>
-<a *ngIf="tag === 'a'" (click)="open()" [ngClass]="class" attr.title="{{title}}">{{text}}</a>
+<i *ngIf="tag == 'i'" (click)="open()" [ngClass]="class" attr.title="{{text}}">{{text}}</i>
+<a *ngIf="tag === 'a'" (click)="open()" [ngClass]="class" attr.title="{{text}}">{{text}}</a>
 
 
 <ng-template #addTpl>

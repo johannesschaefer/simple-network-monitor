@@ -19,13 +19,7 @@ export class SensorEditAddComponent implements OnInit {
   class : string;
   
   @Input()
-  title : string;
-  
-  @Input()
   text : string;
-  
-  @Input()
-  click : any;
 
   @Input()
   sensor : Sensor;
