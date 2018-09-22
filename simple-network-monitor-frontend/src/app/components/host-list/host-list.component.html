@@ -149,7 +149,10 @@
             <a class="nav-link" id="props-tab" data-toggle="tab" href="#props" role="tab" aria-controls="props" aria-selected="false">Properties</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="sec-props-tab" data-toggle="tab" href="#sec-props" role="tab" aria-controls="sec-props" aria-selected="false">Secret Properties</a>
+            <a class="nav-link" id="sec-props-tab" data-toggle="tab" href="#sec-props" role="tab" aria-controls="sec-props" aria-selected="false">Secret Prop.</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="commands-tab" data-toggle="tab" href="#commands" role="tab" aria-controls="commands" aria-selected="false">Commands</a>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -187,6 +190,35 @@
           </div>
           <div class="tab-pane fade" id="sec-props" role="tabpanel" aria-labelledby="sec-props-tab">
             <snm-properties-panel secret="true" [(props)]="currentHost.secretProperties"></snm-properties-panel>
+          </div>
+          <div class="tab-pane fade" id="commands" role="tabpanel" aria-labelledby="commands-tab">
+
+
+            <table class="table table-hover table-striped">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col">Command</th>
+                  <th (click)="addCommand()"><i class="far fa-plus-square fa-lg"></i></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let command of currentHost.commands; let index = index" class="text-center">
+                  <td>
+                    
+                    <ng-select [items]="commandList"
+                      bindLabel="name"
+                      name="command"
+                      [(ngModel)]="currentHost.commands[index]"
+                      placeholder="Select the command"
+                      id="command" required>
+                    </ng-select>
+                
+                  </td>
+                  <td (click)="removeCommand(command)"><i class="far fa-trash-alt fa-lg"></i></td>
+                </tr>
+              </tbody>
+          </table>
+          
           </div>
           <button *ngIf="!currentHost?.id" type="submit" class="btn btn-primary" (click)="addPerform()" [disabled]="!addHostForm.form.valid">Save</button>
           <button *ngIf="currentHost?.id" type="submit" class="btn btn-primary" (click)="editPerform()" [disabled]="!addHostForm.form.valid">Update</button>

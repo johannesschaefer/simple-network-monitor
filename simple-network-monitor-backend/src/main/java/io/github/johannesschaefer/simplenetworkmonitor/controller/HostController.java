@@ -186,6 +186,7 @@ public class HostController {
                 hostOrg.get().setIpv6(host.getIpv6());
                 hostOrg.get().setProperties(host.getProperties());
                 hostOrg.get().setSecretProperties(host.getSecretProperties());
+                hostOrg.get().setCommands(host.getCommands());
                 host = hostOrg.get();
             }
         }
@@ -193,6 +194,10 @@ public class HostController {
             for (Sensor x : host.getSensors()) {
                 x.setHost(host);
             }
+        }
+
+        for (int i = 0; i < host.getCommands().size(); i++) {
+            host.getCommands().set(i, commandRepo.findById(host.getCommands().get(i).getId()).get());
         }
 
         hostRepo.save(host);

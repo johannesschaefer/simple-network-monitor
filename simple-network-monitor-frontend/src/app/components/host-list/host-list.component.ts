@@ -10,6 +10,8 @@ import { ConfigurationService } from '../../services/configuration.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import {Observable} from 'rxjs/Observable';
 import { forkJoin, of, interval } from 'rxjs';
+import { Command } from '../../entities/command';
+import { CommandService } from '../../services/command.service';
 
 @Component({
   selector: 'snm-host-list',
@@ -46,8 +48,9 @@ export class HostListComponent implements OnInit {
   private autoDiscoveryNetwork : string;
   private autoDiscoveryNetworks : string[] = [];
 
+  commandList : Command[] = [];
 
-  constructor( private hostService : HostService, private modalService: BsModalService, private config: ConfigurationService ) {
+  constructor( private commandService : CommandService, private hostService : HostService, private modalService: BsModalService, private config: ConfigurationService ) {
   }
 
   public ngOnInit() {
@@ -118,7 +121,16 @@ export class HostListComponent implements OnInit {
   public add() {
     console.info('add');
     this.currentHost = <Host>{properties: {}};
-    this.modalRef = this.modalService.show(this.addTempRef);
+    this.commandService.getAll().subscribe(
+      x => {
+        this.commandList = x._embedded.commands;
+        this.modalRef = this.modalService.show(this.addTempRef);
+      }, err => {
+        console.log('add err', err);
+        alert(err.message);
+      }
+    );
+
   }
 
   public addPerform() {
@@ -138,7 +150,16 @@ export class HostListComponent implements OnInit {
   public edit(host: Host) {
     console.info('edit');
     this.currentHost = {...host};
-    this.modalRef = this.modalService.show(this.addTempRef);
+    this.currentHost.commands = host.commands.map(x => Object.assign({}, x));
+    this.commandService.getAll().subscribe(
+      x => {
+        this.commandList = x._embedded.commands;
+        this.modalRef = this.modalService.show(this.addTempRef);
+      }, err => {
+        console.log('add err', err);
+        alert(err.message);
+      }
+    );
   }
 
   public editPerform() {
@@ -261,5 +282,19 @@ export class HostListComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  public addCommand() {
+    if(typeof this.currentHost.commands === 'undefined') {
+      this.currentHost.commands = [];
+    }
+    this.currentHost.commands.push(<Command>{});
+  }
+
+  public removeCommand( command : Command ) {
+    const index = this.currentHost.commands.indexOf(command, 0);
+    if (index > -1) {
+      this.currentHost.commands.splice(index, 1);
+    }
   }
 }

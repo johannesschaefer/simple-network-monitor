@@ -50,7 +50,7 @@ public class Host {
 
     @ManyToMany
     @Builder.Default
-    private Set<Command> commands = Sets.newHashSet();
+    private List<Command> commands = Lists.newArrayList();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

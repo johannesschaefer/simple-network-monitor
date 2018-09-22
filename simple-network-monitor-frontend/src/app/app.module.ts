@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SettingsComponent } from './pages/settings/settings.component';
-import { HostEditComponent } from './pages/host-edit/host-edit.component';
 import { CommandsComponent } from './pages/commands/commands.component';
 import { HostDetailComponent } from './pages/host-detail/host-detail.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -39,7 +38,6 @@ import { KeysPipe } from './services/keys.pipe';
 const appRoutes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'host/:id', component: HostDetailComponent },
-  { path: 'host/edit/:id', component: HostEditComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'commands', component: CommandsComponent },
   { path: '**', component: PageNotFoundComponent }
@@ -58,7 +56,6 @@ const appRoutes: Routes = [
     SensorListComponent,
     SensorDetailsComponent,
     SettingsComponent,
-    HostEditComponent,
     CommandsComponent,
     CommandListComponent,
     PropertiesPanelComponent,
