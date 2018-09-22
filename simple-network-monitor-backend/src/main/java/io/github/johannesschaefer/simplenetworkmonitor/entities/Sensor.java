@@ -1,6 +1,8 @@
 package io.github.johannesschaefer.simplenetworkmonitor.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import lombok.*;
@@ -42,7 +44,7 @@ public class Sensor {
 
     @NonNull
     @ManyToOne(optional = false)
-    @JsonIgnore
+    @JsonBackReference
     private Host host;
 
     @NonNull

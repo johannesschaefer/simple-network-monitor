@@ -7,7 +7,7 @@
               <i class="btn fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               </i>
               <div class="dropdown-menu">
-                <a class="dropdown-item" (click)="edit(sensor)">edit</a>
+                <snm-sensor-edit-add [tag]="'a'" [class]="'dropdown-item'" [text]="'edit'" [click]="editPerform" [sensor]="sensor" (sensorChanged)="sensorChanged.emit(true)"></snm-sensor-edit-add>
                 <a class="dropdown-item" (click)="delete(sensor)">delete</a>
               </div>
             </div>

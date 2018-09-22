@@ -23,6 +23,10 @@ public interface SensorStatus {
     @Value("#{@sensorRepository.getSecretProperties(target)}")
     Map<String, String> getSecretProperties();
 
+    Command getCommand();
+
+    Host getHost();
+
     @Value("#{@sensorRepository.getStatus(target)}")
     String getStatus();
 }

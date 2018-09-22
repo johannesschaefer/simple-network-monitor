@@ -6,6 +6,7 @@ import { Sample } from '../../entities/sample';
 import { SampleType } from '../../entities/sampleType';
 import { sample } from 'rxjs/operators';
 import { SensorService } from '../../services/sensor.service';
+import { Host } from '../../entities/host';
 
 @Component({
   selector: 'snm-sensor-details',
@@ -38,6 +39,9 @@ export class SensorDetailsComponent implements OnInit {
   error : any[];
 
   static currentSelection = {};
+  
+//  @Input()
+//  host : Host;
 
   constructor( private sampleService : SampleService, private sensorService : SensorService ) { }
 
@@ -79,7 +83,6 @@ export class SensorDetailsComponent implements OnInit {
   }
 
   isActive(sampleType : SampleType) :boolean {
-    //console.log(SensorDetailsComponent.currentSelection[this.sensor.id]);
     if (typeof SensorDetailsComponent.currentSelection[this.sensor.id] === 'undefined') {
       this.setCurrentSampleType(sampleType);
     }
@@ -92,10 +95,6 @@ export class SensorDetailsComponent implements OnInit {
 
   update() {
     this.chart.update();
-  }
-
-  edit(sensor : Sensor) {
-    console.log('edit', sensor);
   }
 
   delete(sensor : Sensor) {

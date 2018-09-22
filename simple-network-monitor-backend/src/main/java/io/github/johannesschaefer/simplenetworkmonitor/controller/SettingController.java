@@ -43,7 +43,7 @@ public class SettingController {
     private boolean unsecureExport;
 
     @PostMapping("/settings/update")
-    public ResponseEntity createSensor(@RequestBody Setting setting) {
+    public ResponseEntity createSetting(@RequestBody Setting setting) {
         Optional<Setting> sett = settingRepo.findById(setting.getName());
 
         if (!sett.isPresent()) {

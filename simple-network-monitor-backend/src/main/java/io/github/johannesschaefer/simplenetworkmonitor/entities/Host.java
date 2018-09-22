@@ -1,5 +1,6 @@
 package io.github.johannesschaefer.simplenetworkmonitor.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -44,6 +45,7 @@ public class Host {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "host", orphanRemoval = true)
     @Builder.Default
+    @JsonManagedReference
     private List<Sensor> sensors = Lists.newArrayList();
 
     @ManyToMany

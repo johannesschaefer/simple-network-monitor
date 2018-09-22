@@ -3,6 +3,8 @@ package io.github.johannesschaefer.simplenetworkmonitor.controller;
 import com.google.common.base.Strings;
 import io.github.johannesschaefer.simplenetworkmonitor.ScheduleService;
 import io.github.johannesschaefer.simplenetworkmonitor.entities.Sensor;
+import io.github.johannesschaefer.simplenetworkmonitor.repos.CommandRepository;
+import io.github.johannesschaefer.simplenetworkmonitor.repos.HostRepository;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.HostRepositoryImpl;
 import io.github.johannesschaefer.simplenetworkmonitor.repos.SensorRepository;
 import org.slf4j.Logger;
@@ -28,6 +30,12 @@ public class SensorController {
     private SensorRepository sensorRepo;
 
     @Autowired
+    private CommandRepository commandRepo;
+
+    @Autowired
+    private HostRepository hostRepo;
+
+    @Autowired
     private ScheduleService scheduleService;
 
     @PostMapping("/sensors/create")
@@ -41,7 +49,23 @@ public class SensorController {
             }
         }
 
-        Sensor s = sensorRepo.save(sensor);
+        sensor.setCommand(commandRepo.findById(sensor.getCommand().getId()).get());
+
+        Sensor s;
+        if (!Strings.isNullOrEmpty(sensor.getId())) {
+            Sensor sensorOrg = sensorRepo.findById(sensor.getId()).get();
+            sensorOrg.setName(sensor.getName());
+            sensorOrg.setCommand(sensor.getCommand());
+            sensorOrg.setActive(sensor.isActive());
+            sensorOrg.setProperties(sensor.getProperties());
+            sensorOrg.setSecretProperties(sensor.getSecretProperties());
+            sensorOrg.setInterval(sensor.getInterval());
+            s = sensorRepo.save(sensorOrg);
+        }
+        else {
+            sensor.setHost(hostRepo.findById(sensor.getHost().getId()).get());
+            s = sensorRepo.save(sensor);
+        }
 
         scheduleService.addSensor(s);
 

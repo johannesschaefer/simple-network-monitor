@@ -2,9 +2,9 @@
     <div class="col">
         <h3>Sensors</h3>
     </div>
-    <div class="col" style="text-align: right">
-        <i class="fas fa-search-plus" (click)="autoDiscover()" title="Auto-discover new sensors"></i>&nbsp;
-        <i class="fas fa-plus" (click)="add()" title="Add new sensor"></i>
+    <div class="col" style="text-align: right"><!--
+        <i class="fas fa-search-plus" (click)="autoDiscover()" title="Auto-discover new sensors"></i>&nbsp;-->
+        <snm-sensor-edit-add [tag]="'i'" [class]="'fas fa-plus'" [title]="'Add new sensor'" [click]="addPerform" [host]="host" (sensorChanged)="performSensorChanged($event)"></snm-sensor-edit-add>
     </div>
 </div>
 
@@ -12,72 +12,3 @@
 <span *ngFor="let sensor of host?._embedded?.sensors">
   <snm-sensor-details [sensor]="sensor" (sensorChanged)="performSensorChanged($event)"></snm-sensor-details>
 </span>
-
-
-<ng-template #addTpl>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Add Sensor</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true">General</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="props-tab" data-toggle="tab" href="#props" role="tab" aria-controls="props" aria-selected="false">Properties</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="sec-props-tab" data-toggle="tab" href="#sec-props" role="tab" aria-controls="sec-props" aria-selected="false">Secret Properties</a>
-          </li>
-        </ul>
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
-            <form>
-              <div class="form-group">
-                <label for="sensorName">Name</label>
-                <input type="text" class="form-control" id="sensorName" aria-describedby="sensorNameHelp" placeholder="Enter sensor display name" name="currentSensor.name" [(ngModel)]="currentSensor.name" required>
-                <small id="sensorNameHelp" class="form-text text-muted">Enter the display name for the sensor.</small>
-              </div>
-              <div class="form-group form-check">
-                <input class="form-check-input" type="checkbox" id="sensorActive" aria-describedby="sensorActiveHelp" name="currentSensor.active" [(ngModel)]="currentSensor.active">
-                <label for="sensorActive">Active</label>
-                <small id="sensorActiveHelp" class="form-text text-muted">Check to activate the sensor.</small>
-              </div>
-              <div class="form-group">
-                <label for="sensorInterval">Interval</label>
-                <div class="input-group mb-3">
-                  <input type="number" class="form-control" id="sensorInterval" aria-describedby="sensorIntervalHelp" placeholder="Enter the sensor interval" name="currentSensor.interval" [(ngModel)]="currentSensor.interval" required>
-                  <div class="input-group-append">
-                    <span class="input-group-text" id="basic-addon2">ms</span>
-                  </div>
-                </div>
-                <small id="sensorIntervalHelp" class="form-text text-muted">Enter the sensor interval.</small>
-              </div>
-              <div class="form-group">
-                <label for="sensorCommand">Command</label>
-                <ng-select [items]="commandList"
-                          bindLabel="name"
-                          name="currentSensor.command"
-                          [(ngModel)]="currentSensor.command"
-                          placeholder="Select the command for the sensor"
-                          id="sensorCommand" aria-describedby="sensorCommandHelp" required>
-                </ng-select>
-                <small id="sensorCommandHelp" class="form-text text-muted">Select the command for the sensor.</small>
-              </div>
-            </form>
-          </div>
-          <div class="tab-pane fade" id="props" role="tabpanel" aria-labelledby="props-tab">
-            <snm-properties-panel [(props)]="currentSensor.properties"></snm-properties-panel>
-          </div>
-          <div class="tab-pane fade" id="sec-props" role="tabpanel" aria-labelledby="sec-props-tab">
-            <snm-properties-panel secret="true" [(props)]="currentSensor.secretProperties"></snm-properties-panel>
-          </div>
-          <button type="button" class="btn btn-primary" (click)="addPerform()">Save</button>
-          &nbsp;
-          <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Cancel</button>
-        </div>
-    </div>
-  </ng-template>
