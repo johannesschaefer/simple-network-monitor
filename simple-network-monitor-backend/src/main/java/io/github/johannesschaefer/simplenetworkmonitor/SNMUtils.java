@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SNMUtils {
     private static Logger log = LoggerFactory.getLogger(SNMUtils.class);
@@ -42,23 +44,22 @@ public class SNMUtils {
 // from https://stackoverflow.com/a/40347087
     public static String getMacAddrHost(String host) {
         try {
-            boolean ok = ping3(host);
+            boolean ok = ping(host);
 
             if (ok) {
                 InetAddress address = InetAddress.getByName(host);
                 String ip = address.getHostAddress();
-                return runProgram("arp -a " + ip);
+                return arp(ip);
             }
         }
         catch(InterruptedException | IOException e) {
             log.warn("Can't get the MAC address for host {}.", host);
         }
 
-        return null;
+        return "";
     }
 
-
-    private static boolean ping3(String host) throws IOException, InterruptedException {
+    private static boolean ping(String host) throws IOException, InterruptedException {
         boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
 
         ProcessBuilder processBuilder = new ProcessBuilder("ping", isWindows ? "-n" : "-c", "1", host);
@@ -68,32 +69,34 @@ public class SNMUtils {
         return returnVal == 0;
     }
 
-    private static String runProgram(String param) throws IOException {
-        Process p = Runtime.getRuntime().exec(param);
+    private static String arp(String ip) throws IOException {
+        Process p = Runtime.getRuntime().exec("arp -a " + ip);
         BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
         String line;
         while ((line = input.readLine()) != null) {
-            if (!line.trim().equals("")) {
-                // keep only the process name
-                line = line.substring(1);
-                String mac = extractMacAddr(line);
-                if (mac.isEmpty() == false) {
-                    return mac;
-                }
-            }
-
-        }
-        return null;
-    }
-
-    private static String extractMacAddr(String str) {
-        String arr[] = str.split("   ");
-        for (String string : arr) {
-            if (string.trim().length() == 17) {
-                return string.trim().toUpperCase();
+            String mac = getMacAddr(line);
+            if (!Strings.isNullOrEmpty(mac)) {
+                return mac;
             }
         }
         return "";
+    }
+
+    static String getMacAddr(String mac) {
+        log.warn("searching mac in string '{}'", mac);
+
+        if (mac == null) {
+            return "";
+        }
+
+        Pattern p = Pattern.compile("(?:[0-9a-fA-F]:?){12}");
+        Matcher m = p.matcher(mac);
+        if (m.find()) {
+            return m.group();
+        }
+        else {
+            return "";
+        }
     }
 // end https://stackoverflow.com/a/40347087
 
