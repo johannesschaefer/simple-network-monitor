@@ -63,6 +63,7 @@ public class CommandController {
     @GetMapping("/commands/icons")
     @ResponseBody
     public List<String> getIcons() throws IOException {
-        return IOUtils.readLines(iconsRes.getInputStream(), Charset.defaultCharset());
+        return IOUtils.readLines(iconsRes.getInputStream(), Charset.defaultCharset())
+                .stream().filter(a -> !(a.trim().isEmpty() || a.startsWith("----"))).collect(Collectors.toList());
     }
 }

@@ -2,6 +2,8 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~@fortawesome/fontawesome-free/css/all.css";
+@import "~typicons.font/src/font/typicons.css";
+@import "~@mdi/font/css/materialdesignicons.css";
 
 .ng-valid[required], .ng-valid.required  {
   border-left: 5px solid #42A948; /* green */
