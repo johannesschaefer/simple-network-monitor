@@ -102,9 +102,9 @@ public class HostController {
                     if (port.getPortId() == 22) {
                         addSensor(host, "SSH", "check_ssh");
                     }
-                    if (port.getPortId() == 53) {
-                        addSensor(host, "DNS", "check_dns");
-                    }
+                    //if (port.getPortId() == 53) {
+                    //    addSensor(host, "DNS", "check_dns");
+                    //}
                     if (port.getPortId() == 80) {
                         addSensor(host, "HTTP", "check_http");
                     }
@@ -139,8 +139,8 @@ public class HostController {
             }
 
             commandRepo.findByName("wakeonlan").ifPresent(wakeonlan -> host.getCommands().add(wakeonlan));
-            // TODO: fetch mac address
-            host.getProperties().put("mac_address", "");
+
+            host.getProperties().put("mac_address", SNMUtils.getMacAddrHost(host.getHostname()));
 
             if (!hostRepo.findByHostnameOrIpv4OrIpv6(host.getHostname(), host.getIpv4(), host.getIpv6()).isPresent()) {
                 hosts.add(host);
