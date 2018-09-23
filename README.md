@@ -4,9 +4,9 @@
 
 The Simple Network Monitor (SNM) is a small service to monitor other hosts or network devices. It checks cyclic the availability of certain services. The SNM saves all probes in a database and creates charts out of it.
 
-![Dashboard on tablets](docs/screenshots/dashboard_2_tablet.png){:class="img-responsive"}
 
-![Dashboard on phones](docs/screenshots/dashboard_1_phone.png){:height="150px"}
+<img src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/dashboard_2_tablet.png" alt="Dashboard on tablets" height="300" />&nbsp;<img src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/dashboard_1_phone.png" alt="Dashboard on phones" height="300" />
+
 
 ## How to run
 
