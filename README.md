@@ -4,10 +4,11 @@
 
 The Simple Network Monitor (SNM) is a small service to monitor other hosts or network devices. It checks cyclic the availability of certain services. The SNM saves all probes in a database and creates charts out of it.
 
-<img align="center" style="display: inline" src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/dashboard_2_tablet.png" alt="Dashboard on tablets" width="90%" />
+<p align="center">
+  <img align="center" style="display: inline" src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/dashboard_2_tablet.png" alt="Dashboard on tablets" width="90%" />
 
-<img style="display: inline" src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/dashboard_1_phone.png" alt="Dashboard on phones" height="200" />&nbsp;<img style="display: inline" src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/host_details_2_tablet.png" alt="Host details" height="200" />&nbsp;<img style="display: inline" src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/dashboard_autodiscovery_1_phone.png" alt="Auto discovery of hosts" height="200" />&nbsp;<img style="display: inline" src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/dashboard_autodiscovery_2_tablet.png" alt="Results of auto discovery" height="200" />
-
+  <img src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/dashboard_1_phone.png" alt="Dashboard on phones" height="200" />&nbsp;<img src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/host_details_2_tablet.png" alt="Host details" height="200" />&nbsp;<img src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/dashboard_autodiscovery_1_phone.png" alt="Auto discovery of hosts" height="200" />&nbsp;<img src="https://raw.githubusercontent.com/johannesschaefer/simple-network-monitor/master/docs/screenshots/dashboard_autodiscovery_2_tablet.png" alt="Results of auto discovery" height="200" />
+</p>
 
 ## How to run
 
