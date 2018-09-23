@@ -1,5 +1,5 @@
 <span *ngFor="let command of host.commands" title="{{command.name}}&#13;&#13;{{command.description}}" (click)="run(host, command, result)">
-<i class="fas fa-play"></i>&nbsp;
+<i [ngClass]="command.icon"></i>&nbsp;
 </span>
 <ng-template #confirm>
     <div class="modal-header">

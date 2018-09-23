@@ -33,6 +33,7 @@ import { SettingsListComponent } from './components/settings-list/settings-list.
 import { SensorEditAddComponent } from './components/sensor-edit-add/sensor-edit-add.component';
 
 import { KeysPipe } from './services/keys.pipe';
+import { TextFilterPipe } from './services/text-filter.pipe';
 
 
 const appRoutes: Routes = [
@@ -61,7 +62,8 @@ const appRoutes: Routes = [
     PropertiesPanelComponent,
     KeysPipe,
     SettingsListComponent,
-    SensorEditAddComponent
+    SensorEditAddComponent,
+    TextFilterPipe
   ],
   
   exports: [

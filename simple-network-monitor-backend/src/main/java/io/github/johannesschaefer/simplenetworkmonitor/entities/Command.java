@@ -20,13 +20,20 @@ public class Command {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+
     @NonNull
     @Column(unique=true, nullable = false)
     private String name;
+
     private String description;
+
     @NonNull
     @Column(nullable = false)
     private String exec;
+
+    @NonNull
+    @Column(nullable = false)
+    private String icon = "fas fa-terminal";
 
     @Version
     private Long version;

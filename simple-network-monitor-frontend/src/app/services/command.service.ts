@@ -40,9 +40,9 @@ export class CommandService {
 
   public export() {
     window.open(this.getUrl() + 'export');
-    /*
-    var blob = new Blob(["{data:123}"], { type: 'text/json' });
-    var url= window.URL.createObjectURL(blob);
-    window.open(url);*/
+  }
+
+  public getIcons() : Observable<String[]> {
+    return this.http.get<String[]>(this.getUrl() + 'icons');
   }
 }

@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between align-middle" style="align-items: center">
-  <h2><i class="fas fa-terminal"></i>&nbsp;Commands</h2>
+  <h2 class="no-overflow"><i class="fas fa-terminal"></i>&nbsp;Commands</h2>
     <span>
       <i class="fas fa-file-export fa-lg" (click)="export()" title="Export commands"></i>&nbsp;
       <i class="fas fa-plus fa-lg" (click)="add()" title="Add new command"></i>
@@ -14,17 +14,19 @@
     <table class="table table-hover table-striped">
         <thead>
           <tr>
+            <th style="width: 30px"></th>
             <th scope="col" (click)="sort('name')">Name&nbsp;<i class="fas" [ngClass]="getSortIcon('name')"></i></th>
-            <th scope="col" (click)="sort('description')">Description&nbsp;<i class="fas" [ngClass]="getSortIcon('description')"></i></th>
-            <th scope="col" (click)="sort('exec')">Exec&nbsp;<i class="fas" [ngClass]="getSortIcon('exec')"></i></th>
+            <th class="d-none d-md-table-cell" scope="col" (click)="sort('description')">Description&nbsp;<i class="fas" [ngClass]="getSortIcon('description')"></i></th>
+            <th class="d-none d-sm-table-cell" scope="col" (click)="sort('exec')">Exec&nbsp;<i class="fas" [ngClass]="getSortIcon('exec')"></i></th>
             <th style="width: 60px"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let command of commands._embedded.commands">
-            <td title="{{command.name}}">{{command.name}}</td>
-            <td class="no-overflow" title="{{command.description}}">{{command.description}}</td>
-            <td class="no-overflow" title="{{command.exec}}">{{command.exec}}</td>
+            <td><i [ngClass]="command.icon"></i></td>
+            <td class="no-overflow" title="{{command.name}}">{{command.name}}</td>
+            <td class="no-overflow d-none d-md-table-cell" title="{{command.description}}">{{command.description}}</td>
+            <td class="no-overflow d-none d-sm-table-cell" title="{{command.exec}}">{{command.exec}}</td>
             <td>
               <div class="dropleft">
                 <i class="btn fas fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -78,6 +80,28 @@
               <label for="cmdExec">Exec</label>
               <input type="text" class="form-control" id="cmdExec" aria-describedby="cmdExecHelp" placeholder="Enter command exec" name="currentCmd.exec" [(ngModel)]="currentCmd.exec" required>
               <small id="cmdExecHelp" class="form-text text-muted">Enter the exec for the command.</small>
+            </div>
+            <div class="form-group">
+              <label for="cmdIcon">Icon</label>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i [ngClass]="currentCmd.icon"></i></span>
+                </div>
+                <input type="text" class="form-control" id="cmdIcon" aria-describedby="cmdIconHelp" placeholder="Enter command icon" name="currentCmd.icon" [(ngModel)]="currentCmd.icon" required>
+
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                  <div class="dropdown-menu" style="height: 250px; width: 324px; overflow-y: scroll;">
+                    <input type="search" [(ngModel)]="iconFilter" name="iconFilter" placeholder="Search..." class="form-control" /><br />
+                    <a class="m-2" *ngFor="let i of icons | textFilter:iconFilter; let idx = index" (click)="currentCmd.icon = i">
+                      <i [ngClass]="i" style="font-size: 1.2em; width: 30px; height: 30px;"></i><br *ngIf="idx%7===6" />
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+              <small id="cmdIconHelp" class="form-text text-muted">Enter the icon for the command.</small>
             </div>
             <button *ngIf="!currentCmd?.id" type="submit" class="btn btn-primary" (click)="addCmd()" [disabled]="!commandForm.form.valid">Save</button>
             <button *ngIf="currentCmd?.id" type="submit" class="btn btn-primary" (click)="editCmd()" [disabled]="!commandForm.form.valid">Update</button>

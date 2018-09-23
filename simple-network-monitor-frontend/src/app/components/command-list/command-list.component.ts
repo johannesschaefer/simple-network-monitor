@@ -22,6 +22,8 @@ export class CommandListComponent implements OnInit {
 
   currentCmd : Command = <Command>{};
 
+  icons : String[] = [];
+
   @ViewChild('addTpl')
   addTempRef : TemplateRef<any>
 
@@ -94,8 +96,17 @@ export class CommandListComponent implements OnInit {
 
 
   public add() {
-    this.addModalRef = this.modalService.show(this.addTempRef);
-    console.info('add');
+    this.commandService.getIcons().subscribe(
+      x => {
+        this.icons = x;
+        this.addModalRef = this.modalService.show(this.addTempRef);
+        console.info('add');
+      },
+      err => {
+        alert(err.message);
+        console.log('add err', err);
+      }
+    );
   }
 
   public addCmd() {
@@ -112,20 +123,29 @@ export class CommandListComponent implements OnInit {
   }
 
   public edit(command : Command) {
-    this.currentCmd = {id: command.id, name: command.name, description: command.description, exec: command.exec};
-    this.addModalRef = this.modalService.show(this.addTempRef);
-    console.info('edit');
+    this.commandService.getIcons().subscribe(
+      x => {
+        this.icons = x;
+        this.currentCmd = {id: command.id, name: command.name, description: command.description, exec: command.exec, icon: command.icon};
+        this.addModalRef = this.modalService.show(this.addTempRef);
+        console.info('edit');
+      },
+      err => {
+        alert(err.message);
+        console.log('add err', err);
+      }
+    );
   }
 
   public editCmd() {
     this.addModalRef.hide();
     this.commandService.update(this.currentCmd).subscribe( x => {
       this.reload();
-      console.log('deleted', x);
+      console.log('editCmd', x);
       this.currentCmd = <Command>{};
     }, err => {
       alert(err.message);
-      console.log('deleted err', err);
+      console.log('editCmd err', err);
       this.currentCmd = <Command>{};
     });
   }

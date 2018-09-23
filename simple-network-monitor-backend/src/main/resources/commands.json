@@ -1,81 +1,101 @@
 [ {
   "name" : "check_http",
   "description" : "checks a http service",
-  "exec" : "check_http -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:80}"
+  "exec" : "check_http -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:80}",
+  "icon": "fas fa-heartbeat"
 }, {
   "name" : "check_https",
   "description" : "checks a https service",
-  "exec" : "check_http -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:443} -S"
+  "exec" : "check_http -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:443} -S",
+  "icon": "fas fa-heartbeat"
 }, {
   "name" : "check_ftp",
   "description" : "checks a ftp service",
-  "exec" : "check_ftp -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:21}"
+  "exec" : "check_ftp -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:21}",
+  "icon": "fas fa-heartbeat"
 }, {
   "name" : "check_ssh",
   "description" : "checks a ssh service",
-  "exec" : "check_ssh -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:22}"
+  "exec" : "check_ssh -H ${hostname:${ip_v4:${ip_v6}}} -p ${port:22}",
+  "icon": "fas fa-heartbeat"
 }, {
   "name" : "check_dns",
   "description" : "checks a dns service",
-  "exec" : "check_dns -H ${hostname:${ip_v4:${ip_v6}}}"
+  "exec" : "check_dns -H ${hostname:${ip_v4:${ip_v6}}}",
+  "icon": "fas fa-heartbeat"
 }, {
   "name" : "check_ping_v4",
   "description" : "checks if a host is reachable via ping and ip4",
-  "exec" : "check_ping -H ${hostname:${ip_v4}} -w ${wrta:80},${wpl:1}% -c ${crta:100},${cpl:2}% -4"
+  "exec" : "check_ping -H ${hostname:${ip_v4}} -w ${wrta:80},${wpl:1}% -c ${crta:100},${cpl:2}% -4",
+  "icon": "fas fa-heartbeat"
 }, {
   "name" : "check_ping_v6",
   "description" : "checks if a host is reachable via ping and ip6",
-  "exec" : "check_ping -H ${hostname:${ip_v6}} -w ${wrta:80},${wpl:1}% -c ${crta:100},${cpl:2}% -6"
+  "exec" : "check_ping -H ${hostname:${ip_v6}} -w ${wrta:80},${wpl:1}% -c ${crta:100},${cpl:2}% -6",
+  "icon": "fas fa-heartbeat"
 }, {
   "name" : "check_fritz_status",
   "description" : "Checks the status of the FritzBox",
-  "exec" : "check_tr64_fritz -P ${password} -f status"
+  "exec" : "check_tr64_fritz -P ${password} -f status",
+  "icon": "fas fa-hdd"
 }, {
   "name" : "check_fritz_downstream",
   "description" : "Checks the downstream of the FritzBox",
-  "exec" : "check_tr64_fritz -P ${password} -f downstream"
+  "exec" : "check_tr64_fritz -P ${password} -f downstream",
+  "icon": "fas fa-hdd"
 }, {
   "name" : "check_fritz_upstream",
   "description" : "Checks the upstream of the FritzBox",
-  "exec" : "check_tr64_fritz -P ${password} -f upstream"
+  "exec" : "check_tr64_fritz -P ${password} -f upstream",
+  "icon": "fas fa-hdd"
 }, {
   "name" : "check_fritz_downstreamrate",
   "description" : "Checks the downstreamrate of the FritzBox",
-  "exec" : "check_tr64_fritz -P ${password} -f downstreamrate"
+  "exec" : "check_tr64_fritz -P ${password} -f downstreamrate",
+  "icon": "fas fa-hdd"
 }, {
   "name" : "check_fritz_upstreamrate",
   "description" : "Checks the upstreamrate of the FritzBox",
-  "exec" : "check_tr64_fritz -P ${password} -f upstreamrate"
+  "exec" : "check_tr64_fritz -P ${password} -f upstreamrate",
+  "icon": "fas fa-hdd"
 }, {
   "name" : "check_fritz_linkuptime",
   "description" : "Checks the linkuptime of the FritzBox",
-  "exec" : "check_tr64_fritz -P ${password} -f linkuptime"
+  "exec" : "check_tr64_fritz -P ${password} -f linkuptime",
+  "icon": "fas fa-hdd"
 }, {
   "name" : "check_fritz_uptime",
   "description" : "Checks the uptime of the FritzBox",
-  "exec" : "check_tr64_fritz -P ${password} -f uptime"
+  "exec" : "check_tr64_fritz -P ${password} -f uptime",
+  "icon": "fas fa-hdd"
 }, {
   "name" : "check_fritz_update",
   "description" : "Checks the update of the FritzBox",
-  "exec" : "check_tr64_fritz -P ${password} -f update"
+  "exec" : "check_tr64_fritz -P ${password} -f update",
+  "icon": "fas fa-hdd"
 }, {
   "name" : "check_fritz_thermometer",
   "description" : "Checks the thermometer of the FritzBox",
-  "exec" : "check_tr64_fritz -P ${password} -f thermometer:${index:0}}"
+  "exec" : "check_tr64_fritz -P ${password} -f thermometer:${index:0}}",
+  "icon": "fas fa-hdd"
 }, {
   "name" : "error",
   "description" : "produces an error",
-  "exec" : "error"
+  "exec" : "error",
+  "icon": "fas fa-terminal"
 }, {
   "name" : "pwd",
   "description" : "runs the pwd command",
-  "exec" : "pwd"
+  "exec" : "pwd",
+  "icon": "fas fa-terminal"
 }, {
   "name" : "uname",
   "description" : "runs the uname command",
-  "exec" : "uname -a"
+  "exec" : "uname -a",
+  "icon": "fas fa-terminal"
 }, {
   "name" : "wakeonlan",
   "description" : "wakes up the computer",
-  "exec" : "ether-wake ${mac_address}"
+  "exec" : "ether-wake ${mac_address}",
+  "icon": "fas fa-play"
 } ]
