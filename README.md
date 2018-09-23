@@ -77,7 +77,7 @@ Then just run the following command:
 docker run -dit --name simple-network-monitor --network host --restart unless-stopped johannesschafer/simple-network-monitor-raspi
 ```
 
-To persist the database add an `-e "DB_URL=jdbc:h2:/db/snmdb"` after the run.
+To persist the database add an `-e "DB_URL=jdbc:h2:/db/snmdb"` after the run parameter.
 
 On a Raspberry Pi 1 the startup can take several minutes, but it runs.
 
