@@ -98,4 +98,9 @@
   "description" : "wakes up the computer",
   "exec" : "ether-wake ${mac_address}",
   "icon": "fas fa-play"
+}, {
+  "name" : "shutdownWindows",
+  "description" : "shutdown a windows computer",
+  "exec" : "net rpc shutdown -I ${ip_v4} -U ${username}%${password}",
+  "icon": "fas fa-stop-circle"
 } ]

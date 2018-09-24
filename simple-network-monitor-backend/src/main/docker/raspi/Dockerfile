@@ -1,7 +1,7 @@
 FROM resin/rpi-raspbian:latest
 
 RUN apt-get update
-RUN apt-get -qy install etherwake net-tools oracle-java8-jdk curl ca-certificates monitoring-plugins nmap && \
+RUN apt-get -qy install etherwake net-tools oracle-java8-jdk curl ca-certificates monitoring-plugins nmap samba-common && \
     curl -L https://github.com/mcktr/check_tr64_fritz/archive/v2.3.tar.gz | tar -xz && \
     mv check_tr64_fritz-2.3 check_tr64_fritz
 

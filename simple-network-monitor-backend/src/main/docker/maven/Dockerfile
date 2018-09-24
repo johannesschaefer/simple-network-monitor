@@ -5,6 +5,8 @@ RUN apk add monitoring-plugins && \
     apk add nmap nmap-nselibs nmap-ncat nmap-nping nmap-scripts && \
     apk add bc && \
     apk add curl && \
+    apk add samba-common && \
+    apk add samba-common-tools && \
     curl -L https://github.com/mcktr/check_tr64_fritz/archive/v2.3.tar.gz | tar -xz && \
     mv check_tr64_fritz-2.3 check_tr64_fritz
 
