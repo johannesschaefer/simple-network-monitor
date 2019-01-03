@@ -121,7 +121,7 @@ export class HostListComponent implements OnInit {
   public add() {
     console.info('add');
     this.currentHost = <Host>{properties: {}};
-    this.commandService.getAll().subscribe(
+    this.commandService.getAll(0, 1000, [{col: 'name', direction: 'ASC'}]).subscribe(
       x => {
         this.commandList = x._embedded.commands;
         this.modalRef = this.modalService.show(this.addTempRef);
@@ -151,7 +151,7 @@ export class HostListComponent implements OnInit {
     console.info('edit');
     this.currentHost = {...host};
     this.currentHost.commands = host.commands.map(x => Object.assign({}, x));
-    this.commandService.getAll().subscribe(
+    this.commandService.getAll(0, 1000, [{col: 'name', direction: 'ASC'}]).subscribe(
       x => {
         this.commandList = x._embedded.commands;
         this.modalRef = this.modalService.show(this.addTempRef);
