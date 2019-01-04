@@ -1,3 +1,5 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { isDevMode } from '@angular/core';
 import { environment } from '../../environments/environment';
@@ -26,7 +28,7 @@ export class ConfigurationService {
   }
 
   public getAutoRefreshInterval() : Observable<number> {
-    return this.http.get<Setting>(this.getBackendUrl() + 'settings/refreshInterval').map(x => parseInt(x.value));
+    return this.http.get<Setting>(this.getBackendUrl() + 'settings/refreshInterval').pipe(map(x => parseInt(x.value)));
   }
 
   public getAutoDiscoveryNetwork() : Observable<string[]> {
@@ -39,9 +41,17 @@ export class ConfigurationService {
     if(page) {
       params = params.append('page', page.toString());
     }
+    else {
+      params = params.append('page', '0');
+    }
+
     if(size) {
       params = params.append('size', size.toString());
     }
+    else {
+      params = params.append('page', '1000');
+    }
+
     if(sort){
       sort.forEach(s => {params = params.append('sort', s.col + ',' + s.direction); }); // Params = Params.append(s.col + '.dir', s.direction);
     }

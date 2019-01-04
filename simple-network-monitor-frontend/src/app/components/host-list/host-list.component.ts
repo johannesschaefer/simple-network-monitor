@@ -8,8 +8,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { ConfigurationService } from '../../services/configuration.service';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import {Observable} from 'rxjs/Observable';
-import { forkJoin, of, interval } from 'rxjs';
+import {Observable,  forkJoin, of, interval } from 'rxjs';
 import { Command } from '../../entities/command';
 import { CommandService } from '../../services/command.service';
 
