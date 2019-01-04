@@ -45,7 +45,12 @@ docker run -dit --name simple-network-monitor --network host -e "DB_URL=jdbc:h2:
 
 This setup is using the network mode `host`. No port mapping is needed, it exposes the real network interface directly in the docker container. The reason for this is, that some operations only work correctly when the network interface is not virtual. E.g. the `arp` or `etherwake` command.
 
-The network mode `host` only works correctly on Linux machines. Please use a port mapping on other machines instead, e.g. `-p 8080:8080` instead of `--network host`.
+The network mode `host` only works correctly on Linux machines. Please use a port mapping on other machines instead, e.g. `--publish 8080:8080` instead of `--network host`.
+
+```
+docker run -dit --name simple-network-monitor --publish 8080:8080 --restart unless-stopped johannesschafer/simple-network-monitor
+```
+
 
 #### docker-compose
 
