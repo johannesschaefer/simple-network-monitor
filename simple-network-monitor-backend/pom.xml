@@ -172,7 +172,7 @@
                                 </goals>
                                 <phase>generate-sources</phase>
                                 <configuration>
-                                    <nodeVersion>v8.11.3</nodeVersion>
+                                    <nodeVersion>v10.15.0</nodeVersion>
                                 </configuration>
                             </execution>
                             <execution>
