@@ -27,7 +27,7 @@
     "@mdi/font": "^3.3.92",
     "@ng-select/ng-select": "^2.5.1",
     "@swimlane/ngx-charts": "^10.0.0",
-    "bootstrap": "^4.1.3",
+    "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
@@ -45,9 +45,9 @@
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.11.4",
+    "@angular-devkit/build-angular": "^0.13.6",
     "@angular/cli": "^7.1.4",
-    "@angular/compiler-cli": "^7.1.4",
+    "@angular/compiler-cli": "^7.2.9",
     "@angular/language-service": "^7.1.4",
     "@types/jasmine": "~3.3.5",
     "@types/jasminewd2": "~2.0.3",
